@@ -37,10 +37,12 @@ export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnD
       //  super(cd);
     }
 
-    public ngAfterViewInit(): void {
-        this.lazy.load().subscribe(_ => {
-            this.initTiny();
-        });
+    public async ngAfterViewInit(): Promise<any> {
+        await this.lazy.load();
+        if (this.type === 2) {
+            await this.lazy.loadFull();
+        }
+        this.initTiny();
     }
 
     public setFocus() {
@@ -100,23 +102,22 @@ export class EditorComponent implements AfterViewInit, ControlValueAccessor, OnD
     private onChange = (value: string) => { };
 
     private getPlugins(): string {
-        const common = `autolink image paste customEmoticons`;
-        const type1 = `advlist lists link hr media textcolor colorpicker ${common}`;
+        const common = `image paste customEmoticons`;
+        const type1 = ` link  media ${common}`;
         if (this.type === 1) {
             return type1;
         }
         if (this.type === 2) {
-            return `code fullscreen table visualblocks ${type1}`;
+            return `autolink advlist lists code textcolor colorpicker hr fullscreen table visualblocks ${type1}`;
         }
         return common;
     }
 
     private getToolbar(): string {
-        const common =
-            `bold italic underline strikethrough | customEmoticons`;
-        const type1 = `styleselect | ${common} | link image media | fontsizeselect hr
-                                 | bullist numlist | forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent`;
-        const type2 = `undo redo | fullscreen ${type1} | table code | visualblocks`;
+        const common = `bold italic underline strikethrough | customEmoticons`;
+        const type1 = `${common} | link image media`;
+        const type2 = `undo redo | fullscreen styleselect |${type1} | fontsizeselect hr
+        | bullist numlist | forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent | table code | visualblocks`;
         if (this.type === 1) {
             return type1;
         }

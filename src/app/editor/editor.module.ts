@@ -1,4 +1,4 @@
-﻿import { NgModule, SystemJsNgModuleLoader } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { EditorComponent } from './editor.component';
@@ -17,7 +17,6 @@ import { LazyLoadingModuleService } from './lazy-loading-module.service';
         EditorComponent
     ],
     providers: [
-        SystemJsNgModuleLoader,
         LazyLoadingModuleService
     ]
 })

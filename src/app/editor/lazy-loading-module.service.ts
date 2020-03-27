@@ -1,30 +1,35 @@
-﻿import { Injectable, SystemJsNgModuleLoader, NgModuleFactory } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 
-import { Observable, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable()
 export class LazyLoadingModuleService {
     private loaded: ReplaySubject<boolean>;
-    constructor(private loader: SystemJsNgModuleLoader) {
+    private loadedFull: ReplaySubject<boolean>;
+    constructor() { }
 
+    public async load(): Promise<any> {
+        if (this.loaded) {
+            return;
+        }
+
+        await import('src/app/editor/tiny-module/tiny.module');
+
+        this.loaded = new ReplaySubject();
+        this.loaded.next(true);
+        this.loaded.complete();
     }
 
-    public load(): Observable<any> {
-        if (this.loaded) {
-            return this.loaded.asObservable();
+    public async loadFull(): Promise<any> {
+        if (this.loadedFull) {
+            return;
         }
-        this.loaded = new ReplaySubject();
 
-        if (this.getTinymce()) {
-            this.loaded.next(true);
-            this.loaded.complete();
-        }
-        this.loader.load('src/app/editor/tiny-module/tiny.module#TinyModule')
-            .then(() => {
-                this.loaded.next(true);
-                this.loaded.complete();
-            });
-        return this.loaded.asObservable();
+        await import('src/app/editor/tiny-module/tiny-full.module');
+
+        this.loadedFull = new ReplaySubject();
+        this.loadedFull.next(true);
+        this.loadedFull.complete();
     }
 
     public getTinymce = () => {
