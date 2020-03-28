@@ -20,11 +20,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
         return next.handle(request)
             .pipe(
-           //     retry(1),
+                retry(1),
 
                 catchError((error: HttpErrorResponse) => {
 
-                    if (isUnauthorizedError(error) || error.error instanceof ErrorEvent || error.error instanceof ProgressEvent) {
+                    if (isUnauthorizedError(error) || error.error instanceof HttpErrorResponse) {
                         return throwError(error);
                     }
 
@@ -64,7 +64,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     public parseBlobResponseError(err: HttpErrorResponse): Observable<NoticeMessage> {
         const reader: FileReader = new FileReader();
 
-        const obs = Observable.create((observer: Observer<NoticeMessage>) => {
+        const obs = new Observable((observer: Observer<NoticeMessage>) => {
             reader.onloadend = (e) => {
                 const error = JSON.parse(reader.result as any);
                 const title = `Status Code: ${error.status || HttpStatusCode.BAD_REQUEST}`;
