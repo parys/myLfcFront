@@ -1,9 +1,8 @@
-﻿<ng-container *ngIf="{ isEditor: isEditor$ | async } as data">
-    <div *ngIf="item">
+﻿<ng-container *ngIf="{ isEditor: isEditor$ | async, categories: categories$ | async } as data">
         <form class="form-horizontal" name="editForm" role="form" [formGroup]="editForm" (ngSubmit)="onSubmit()">
             <mat-form-field class="full-width">
                 <mat-select placeholder="Категория" formControlName="categoryId">
-                    <mat-option *ngFor="let category of categories" [value]="category.id" [textContent]="category.name">
+                    <mat-option *ngFor="let category of data.categories" [value]="category.id" [textContent]="category.name">
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -66,5 +65,4 @@
                 </mat-checkbox>
             </div>
         </form>
-    </div>
 </ng-container>

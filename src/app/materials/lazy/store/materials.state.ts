@@ -63,9 +63,9 @@ export class MaterialsState {
     }
 
     constructor(protected network: MaterialService,
-                private storage: StorageService,
-                @Inject(PLATFORM_ID) private platformId: object,
-                protected titleService: CustomTitleMetaService ) { }
+        private storage: StorageService,
+        @Inject(PLATFORM_ID) private platformId: object,
+        protected titleService: CustomTitleMetaService) { }
 
     @Action(ChangeSort)
     @Action(ChangePage)
@@ -103,20 +103,22 @@ export class MaterialsState {
 
     @Action(GetMaterialById)
     onGetMaterialById({ patchState, dispatch }: StateContext<MaterialsStateModel>, { payload }: GetMaterialById) {
-        return (payload.id ? this.network.getSingle2(payload.id) : of(new GetMaterialDetailQuery.Response()))
+        return (payload.id > 0 ? this.network.getSingle2(payload.id) : of(new GetMaterialDetailQuery.Response()))
             .pipe(
                 tap(material => {
-                    patchState({ material });
+                    if (material.id) {
+                        patchState({ material });
 
-                    this.titleService.setTitle(material.title);
-                    this.titleService.updateDescriptionMetaTag(material.brief);
-                    this.titleService.updateKeywordsMetaTag(material.tags);
-                    this.titleService.updateOgImageMetaTag(`https://mylfc.ru${material.photoPreview}`);
+                        this.titleService.setTitle(material.title);
+                        this.titleService.updateDescriptionMetaTag(material.brief);
+                        this.titleService.updateKeywordsMetaTag(material.tags);
+                        this.titleService.updateOgImageMetaTag(`https://mylfc.ru${material.photoPreview}`);
 
-                    dispatch(new AddView(payload.id));
-                    if (isPlatformBrowser(this.platformId)) {
-                        if (material.socialLinks) {
-                            ssn();
+                        dispatch(new AddView(payload.id));
+                        if (isPlatformBrowser(this.platformId)) {
+                            if (material.socialLinks) {
+                                ssn();
+                            }
                         }
                     }
                 })
