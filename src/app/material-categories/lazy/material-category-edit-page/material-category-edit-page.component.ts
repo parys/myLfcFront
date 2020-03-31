@@ -11,10 +11,10 @@ import { CustomTitleMetaService } from '@core/services';
 import { MaterialCategoryService } from '@material-categories/core';
 
 @Component({
-    selector: 'materialCategory-edit',
-    templateUrl: './materialCategory-edit.component.html'
+    selector: 'material-category-edit-page',
+    templateUrl: './material-category-edit-page.component.html'
 })
-export class MaterialCategoryEditComponent implements OnInit, OnDestroy {
+export class MaterialCategoryEditPageComponent implements OnInit, OnDestroy {
     public editCategoryForm: FormGroup;
     private id = 0;
     private sub: Subscription;

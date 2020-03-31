@@ -1,2 +1,2 @@
-﻿export * from './materialCategory.service';
-export * from './materialCategory-core.module';
+﻿export * from './material-сategory.service';
+export * from './material-сategory-core.module';

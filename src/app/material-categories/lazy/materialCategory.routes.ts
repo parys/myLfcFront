@@ -1,13 +1,13 @@
 ﻿import { Routes } from '@angular/router';
-import { MaterialCategoryListComponent } from '@material-categories/lazy/materialCategory-list';
-import { MaterialCategoryEditComponent } from '@material-categories/lazy/materialCategory-edit';
+import { MaterialCategoryListPageComponent } from '@material-categories/lazy/material-сategory-list-page';
+import { MaterialCategoryEditPageComponent } from '@material-categories/lazy/material-category-edit-page';
 import { RoleGuard, RolesEnum } from '@base/auth';
 
 export const materialCategoryRoutes: Routes = [
-    { path: '', component: MaterialCategoryListComponent },
+    { path: '', component: MaterialCategoryListPageComponent },
     {
         path: ':id/edit',
-        component: MaterialCategoryEditComponent,
+        component: MaterialCategoryEditPageComponent,
         data: { roles: [RolesEnum[RolesEnum.NewsFull], RolesEnum[RolesEnum.BlogFull]] },
         canActivate: [RoleGuard]
     }

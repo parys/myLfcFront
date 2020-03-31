@@ -12,7 +12,7 @@ import { CustomTitleMetaService } from '@core/services';
 
 import { MaterialCategoriesStateModel } from './material-categories-state.model';
 import { MaterialCategoryActions } from './material-categories.actions';
-import { MaterialCategoryService } from '../materialCategory.service';
+import { MaterialCategoryService } from '../material-сategory.service';
 import { GetMaterialCategoriesListQuery, GetMaterialCategoryDetailQuery } from '@network/shared/material-categories';
 
 @State<MaterialCategoriesStateModel>({
@@ -43,7 +43,7 @@ export class MaterialCategoriesState {
     onGetMaterialCategoriesList(ctx: StateContext<MaterialCategoriesStateModel>,
          { payload }: MaterialCategoryActions.GetMaterialCategoriesList) {
 
-        return this.network.getAll2(new GetMaterialCategoriesListQuery.Request({materialType: payload}))
+        return this.network.getAll(new GetMaterialCategoriesListQuery.Request({materialType: payload}))
             .pipe(
                 tap(response => {
                     ctx.patchState({ materialCategories: response.results || [] });
@@ -53,7 +53,7 @@ export class MaterialCategoriesState {
     @Action(MaterialCategoryActions.GetMaterialCategoryById)
     onGetMaterialCategoryById({ patchState }: StateContext<MaterialCategoriesStateModel>,
          { payload }: MaterialCategoryActions.GetMaterialCategoryById) {
-        return (payload ? this.network.getSingle2(payload) : of(new GetMaterialCategoryDetailQuery.Response()))
+        return (payload ? this.network.getSingle(payload) : of(new GetMaterialCategoryDetailQuery.Response()))
             .pipe(
                 tap(materialCategory => {
                     patchState({ materialCategory });
@@ -66,19 +66,19 @@ export class MaterialCategoriesState {
     @Action(MaterialCategoryActions.DeleteMaterialCategory)
     onDeleteMaterialCategory({ setState, getState, patchState, dispatch }: StateContext<MaterialCategoriesStateModel>,
          { payload }: MaterialCategoryActions.DeleteMaterialCategory) {
-        return this.network.delete(payload.id).pipe(
+        return this.network.delete(payload).pipe(
             tap(result => {
                 const { materialCategory } = getState();
-                if (result && materialCategory && payload.id === materialCategory.id) {
+                if (result && materialCategory && payload === materialCategory.id) {
                     patchState({ materialCategory: null });
                 }
                 setState(
                     patch({
                         materialCategories: removeMany<GetMaterialCategoriesListQuery.MaterialCategoryListDto>
-                            (item => item.id === payload.id)
+                            (item => item.id === payload)
                     })
                 );
-                dispatch(new ShowNotice(NoticeMessage.success('Материал удален', '')));
+                dispatch(new ShowNotice(NoticeMessage.success('Категория удалена', '')));
             })
         );
     }

@@ -14,6 +14,6 @@ export namespace MaterialCategoryActions {
 
     export class DeleteMaterialCategory {
         static readonly type = '[MaterialCategories] Delete material category';
-        constructor(public readonly payload: { id: number, redirect: boolean }) { }
+        constructor(public readonly payload: number) { }
     }
 }

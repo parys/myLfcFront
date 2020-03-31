@@ -5,11 +5,11 @@ import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 
 import { BreadcrumbService } from '@base/breadcrumbs';
-import { BLOG_CATEGORIES_ROUTE, NEWS_CATEGORIES_ROUTE } from '@constants/index';
+import { BLOG_CATEGORIES_ROUTE, NEWS_CATEGORIES_ROUTE } from '@constants/routes.constants';
 
 import { materialCategoryRoutes } from '@material-categories/lazy/materialCategory.routes';
-import { MaterialCategoryListComponent } from '@material-categories/lazy/materialCategory-list';
-import { MaterialCategoryEditComponent } from '@material-categories/lazy/materialCategory-edit';
+import { MaterialCategoryListPageComponent } from '@material-categories/lazy/material-сategory-list-page';
+import { MaterialCategoryEditPageComponent } from '@material-categories/lazy/material-category-edit-page';
 import { MaterialCategoryCoreModule } from '@material-categories/core';
 
 @NgModule({
@@ -22,8 +22,8 @@ import { MaterialCategoryCoreModule } from '@material-categories/core';
         MatInputModule
     ],
     declarations: [
-        MaterialCategoryListComponent,
-        MaterialCategoryEditComponent
+        MaterialCategoryListPageComponent,
+        MaterialCategoryEditPageComponent
     ]
 })
 export class MaterialCategoryModule {

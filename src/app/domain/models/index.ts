@@ -8,7 +8,6 @@ export * from './faq-item.model';
 export * from './user-online.model';
 export * from './material-category.model';
 export * from './material-type.enum';
-export * from './material-category-filter.model';
 export * from './material.model';
 export * from './material-filters.model';
 export * from './match-event.model';

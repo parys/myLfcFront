@@ -12,7 +12,7 @@ import { ConfirmationMessage } from '@notices/shared';
 import { NotifierService } from '@notices/services';
 import { ObserverComponent } from '@domain/base';
 
-import { Material, MaterialType, MaterialCategoryFilter } from '@domain/models';
+import { Material, MaterialType } from '@domain/models';
 import { EDIT_ROUTE, MESSAGE } from '@constants/index';
 import { MaterialEditService } from '../materials-edit.service';
 import { MaterialsState } from '@materials/lazy/store';
@@ -57,8 +57,6 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
         this.id = material?.id ?? 0;
         this.initForm(material);
 
-        const categoryFilter = new MaterialCategoryFilter();
-        categoryFilter.materialType = this.type;
         this.store.dispatch(new MaterialCategoryActions.GetMaterialCategoriesList(this.type))
     }
 

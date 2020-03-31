@@ -35,7 +35,7 @@ declare function ssn(): any;
     defaults: {
         materials: [],
         material: null,
-        request: new GetMaterialsListQuery.Request({ currentPage: 1, pageSize: 15, sortDirection: 'desc', sortOn: 'lastModified' }),
+        request: new GetMaterialsListQuery.Request({ currentPage: 1, pageSize: 15, sortDirection: 'desc', sortOn: 'id' }),
         others: []
     },
 })
