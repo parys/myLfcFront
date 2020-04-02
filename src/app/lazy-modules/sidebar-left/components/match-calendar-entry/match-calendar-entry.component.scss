@@ -1,8 +1,4 @@
 ﻿:host {
-    img {
-        display: block;
-        width: 45px;
-    }
 
     .clubName, .info {
         font-size: 1.2em;
@@ -21,4 +17,8 @@
     .stadium {
         font-size: 15px;
     }
+}
+
+.logo {
+    height: 36px;
 }

@@ -200,6 +200,27 @@ ol {
          url('./fonts/10427.woff') format('woff');
 }
 
+/* The emerging W3C standard
+   that is currently Firefox-only */
+   * {
+    scrollbar-width: thin;
+    scrollbar-color: maroon #e5e5e5;
+  }
+  
+  /* Works on Chrome/Edge/Safari */
+  *::-webkit-scrollbar {
+    width: 9px;
+  }
+  *::-webkit-scrollbar-track {
+    background: #e5e5e5;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: maroon;
+    border-radius: 20px;
+    border: 2px solid lightgray;
+  }
+  
+
 /* override theme material */
 .mat-ink-bar {
     background-color: maroon;
@@ -219,8 +240,10 @@ a:hover {
 
 blockquote {
     background-color: rgba(128, 0, 0, .1);
-    border-color: maroon;
+    border-left: 4px solid maroon;
     font-size: 14px;
+    padding: 12px 8px;
+    margin: 8px;
 }
 
 h3 {

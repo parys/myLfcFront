@@ -12,7 +12,7 @@ import { ConfirmationMessage } from '@notices/shared';
 import { NotifierService } from '@notices/services';
 import { ObserverComponent } from '@domain/base';
 
-import { Material, MaterialType } from '@domain/models';
+import { MaterialType } from '@domain/models/material-type.enum';
 import { EDIT_ROUTE, MESSAGE } from '@constants/index';
 import { MaterialEditService } from '../materials-edit.service';
 import { MaterialsState } from '@materials/lazy/store';
@@ -29,7 +29,7 @@ import { GetMaterialCategoriesListQuery } from '@network/shared/material-categor
 export class MaterialEditComponent extends ObserverComponent implements OnInit {
     private id: number;
     public editForm: FormGroup;
-    public item: Material;
+    public item: GetMaterialDetailQuery.Response;
     public type: MaterialType;
     public additional = 'additional';
 
@@ -53,40 +53,34 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        const material = this.store.selectSnapshot(MaterialsState.material);
-        this.id = material?.id ?? 0;
-        this.initForm(material);
+        this.item = this.store.selectSnapshot(MaterialsState.material) || new GetMaterialDetailQuery.Response();
+        const userId = this.store.selectSnapshot(AuthState.userId);
+        this.id = this.item ?.id ?? 0;
+        this.item .userId = userId;
+        this.initForm(this.item);
 
         this.store.dispatch(new MaterialCategoryActions.GetMaterialCategoriesList(this.type))
     }
 
     public onSubmit(): void {
-        const newsItem: Material = this.parseForm();
-        if (this.id > 0) {
-            this.service.update(this.id, newsItem)
-                .subscribe(data => {
-                    if (!this.editForm.get('stayOnPage').value) {
-                        this.router.navigate([`/${MaterialType[this.type].toLowerCase()}`, this.id]);
-                    }
-                    this.snackBar.open('Материал обновлен');
-                },
-                    e => {
-                        this.snackBar.open('Материал НЕ обновлен');
-                    });
-        } else {
-            this.service.create(newsItem, this.type)
-                .subscribe(data => {
-                    if (!this.editForm.get('stayOnPage').value) {
-                        this.router.navigate([`/${MaterialType[this.type].toLowerCase()}`, data.id]);
-                    }
+        const newsItem = this.editForm.value;
+        newsItem.type = this.type;
+        this.service.createOrUpdate(newsItem, this.id)
+            .subscribe(data => {
+                if (!this.editForm.get('stayOnPage').value) {
+                    this.router.navigate([`/${MaterialType[this.type].toLowerCase()}`, this.id]);
+                }
+                if (!this.id) {
                     this.location.go(this.router.createUrlTree([MaterialType[this.type].toLowerCase(), data.id, EDIT_ROUTE]).toString());
                     this.id = data.id;
                     this.snackBar.open('Материал создан');
-                },
-                    e => {
-                        this.snackBar.open('Материал НЕ создан');
-                    });
-        }
+                } else {
+                    this.snackBar.open('Материал обновлен');
+                }
+            },
+                e => {
+                    this.snackBar.open('Материал НЕ обновлен');
+                });
         this.editForm.markAsPristine();
     }
 
@@ -125,13 +119,7 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
         }
     }
 
-    private parseForm(): Material {
-        const item: Material = this.editForm.value;
-        return item;
-    }
-
     private initForm(material: GetMaterialDetailQuery.Response): void {
-        this.item = material || new GetMaterialDetailQuery.Response();
         this.editForm = this.formBuilder.group({
             categoryId: [Validators.required],
             title: ['', Validators.required],
@@ -150,6 +138,6 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
             type: [],
             id: []
         });
-        this.editForm.patchValue(this.item);
+        this.editForm.patchValue(material);
     }
 }

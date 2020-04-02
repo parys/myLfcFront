@@ -14,6 +14,7 @@ import { materialRoutes } from '@materials/lazy/material.routes';
 import { MaterialCoreModule } from '@materials/core/material-core.module';
 import { MaterialDetailComponent } from '@materials/lazy/pages/material-detail';
 import { MaterialResolver } from './resolvers';
+import { MaterialService } from './material.service';
 
 @NgModule({
     imports: [

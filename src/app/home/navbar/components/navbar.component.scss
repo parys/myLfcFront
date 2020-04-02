@@ -3,15 +3,21 @@
     width: 272px;
 }
 
+.logo {
+    max-height: 71px;
+    width: 272px;
+}
+
+
 @media(max-width: 1050px) {
     .logo-link {
         height: 33px;
         width: 114px;
     }
-}
-
-.logo {
-    width: inherit;
+    .logo {
+        max-height: 33px;
+        width: 114px;
+    }
 }
 
 @media(max-width: 1810px) {

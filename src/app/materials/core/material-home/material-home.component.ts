@@ -8,7 +8,7 @@ import { Material, PagedList } from '@domain/models';
 import { CustomTitleMetaService } from '@core/services';
 import { TITLE_RU } from '@constants/ru.constants';
 
-import { MaterialService } from '@materials/core/material.service';
+import { MaterialCoreService } from '@materials/core/material-core.service';
 
 const MAT_LATEST_KEY = makeStateKey<PagedList<Material>>('mat-latest');
 const MAT_PINNED_KEY = makeStateKey<PagedList<Material>>('mat-pinned');
@@ -28,7 +28,7 @@ export class MaterialHomeComponent implements OnInit, OnDestroy {
 
     constructor(private transferState: TransferState,
                 private router: Router,
-                private materialService: MaterialService,
+                private materialService: MaterialCoreService,
                 private cd: ChangeDetectorRef,
                 private titleService: CustomTitleMetaService) {
         this.navigationSubscription = this.router.events.subscribe((e: any) => {

@@ -13,7 +13,6 @@ import { StorageService } from '@base/storage';
 import { CustomTitleMetaService } from '@core/services';
 
 import { GetMaterialsListQuery, GetMaterialDetailQuery } from '@network/shared/materials';
-import { MaterialService } from '@materials/core';
 import { MaterialsStateModel } from './materials-state.model';
 import {
     SetMaterialsFilterOptions,
@@ -27,6 +26,7 @@ import {
     GetOtherMaterialsList
 } from './materials.actions';
 import { isPlatformBrowser } from '@angular/common';
+import { MaterialService } from '../material.service';
 
 declare function ssn(): any;
 
@@ -120,6 +120,8 @@ export class MaterialsState {
                                 ssn();
                             }
                         }
+                    } else {
+                        patchState({ material: null });
                     }
                 })
             );

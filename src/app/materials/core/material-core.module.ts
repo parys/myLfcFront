@@ -7,11 +7,12 @@ import { NgxsModule } from '@ngxs/store';
 import { PipesModule } from '@base/pipes';
 import { MobileLayoutModule } from '@layout/modules/mobile-layout/mobile-layout.module';
 
-import { MaterialService } from '@materials/core/material.service';
+import { MaterialCoreService } from '@materials/core/material-core.service';
 import { MaterialHomeComponent } from '@materials/core/material-home';
 import { MaterialItemComponent } from '@materials/core/material-item';
 import { MaterialToolsComponent } from './components/material-tools';
 import { MaterialsState } from '@materials/lazy/store';
+import { MaterialService } from '@materials/lazy/material.service';
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import { MaterialsState } from '@materials/lazy/store';
         MaterialToolsComponent
     ],
     providers: [
-        MaterialService
+        MaterialCoreService,
+        MaterialService // todo need for store
     ]
 })
 export class MaterialCoreModule { }

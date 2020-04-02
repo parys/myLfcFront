@@ -1,5 +1,5 @@
 ﻿<ng-container *ngIf="{ isEditor: isEditor$ | async, categories: categories$ | async } as data">
-        <form class="form-horizontal" name="editForm" role="form" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <form *ngIf="editForm" class="form-horizontal" name="editForm" role="form" [formGroup]="editForm" (ngSubmit)="onSubmit()">
             <mat-form-field class="full-width">
                 <mat-select placeholder="Категория" formControlName="categoryId">
                     <mat-option *ngFor="let category of data.categories" [value]="category.id" [textContent]="category.name">
@@ -11,11 +11,11 @@
             </mat-form-field>
             <div class="full-width">
                 <label class="control-label"> Описание:</label>
-                <bbeditor name="brief" [type]="1" [value]="item.brief" [height]="70" formControlName="brief"></bbeditor>
+                <bbeditor name="brief" [type]="1" [value]="item?.brief" [height]="70" formControlName="brief"></bbeditor>
             </div>
             <div class="full-width">
                 <label class="control-label"> Текст:</label>
-                <bbeditor name="message" [type]="2" [value]="item.message" [height]="400" formControlName="message">
+                <bbeditor name="message" [type]="2" [value]="item?.message" [height]="400" formControlName="message">
                 </bbeditor>
             </div>
             <div class="full-width">

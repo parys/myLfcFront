@@ -9,11 +9,11 @@ import { Material, MaterialFilters, MaterialType, PagedList } from '@domain/mode
 import { CustomTitleMetaService } from '@core/services';
 import { TITLE_RU, NEWSS_RU, BLOGS_RU } from '@constants/ru.constants';
 
-import { MaterialService } from '@materials/core/material.service';
 import { PAGE } from '@constants/help.constants';
 import { AuthState } from '@auth/store';
 import { ObserverComponent } from '@domain/base';
 import { ActivateMaterial, DeleteMaterial } from '@materials/lazy/store';
+import { MaterialService } from '@materials/lazy/material.service';
 
 @Component({
     selector: 'material-list',
