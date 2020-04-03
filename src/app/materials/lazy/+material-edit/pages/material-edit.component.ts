@@ -73,6 +73,7 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
                 if (!this.id) {
                     this.location.go(this.router.createUrlTree([MaterialType[this.type].toLowerCase(), data.id, EDIT_ROUTE]).toString());
                     this.id = data.id;
+                    this.editForm.patchValue({id: this.id });
                     this.snackBar.open('Материал создан');
                 } else {
                     this.snackBar.open('Материал обновлен');
