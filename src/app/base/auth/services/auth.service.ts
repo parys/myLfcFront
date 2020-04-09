@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { tap, catchError, flatMap } from 'rxjs/operators';
 import { Observable, Subscription, of, interval, throwError } from 'rxjs';
+import {Cookies, CookieOptions} from '@cedx/ngx-cookies';
 
 import { StorageService } from '@base/storage';
 import { SignalRService } from '@base/signalr';
@@ -15,11 +16,17 @@ import { SetTokens, SetUser, Logout } from '@auth/store';
 
 @Injectable()
 export class AuthService {
-
+    private coockieOptions = new CookieOptions({
+        secure: environment.production,
+        expires: new Date(new Date().setMonth(new Date().getMonth() + 1)),
+        maxAge: 2678400,
+        path: '/'
+    })
     private refreshSubscription$: Subscription;
     public tokens: IAuthTokenModel;
 
-    constructor(private http1: HttpClient,
+    constructor(private http: HttpClient,
+                private cookies: Cookies,
                 private storage: StorageService,
                 private signalRService: SignalRService,
                 private store: Store
@@ -41,7 +48,7 @@ export class AuthService {
     }
 
     public register(data: IRegisterModel): Observable<any> {
-        return this.http1.post(environment.apiUrl + 'api/v1/account/register', data).pipe(
+        return this.http.post(environment.apiUrl + 'api/v1/account/register', data).pipe(
             catchError(res => throwError(res.error)));
     }
 
@@ -55,8 +62,9 @@ export class AuthService {
 
     public logout(): void {
 
-        this.storage.removeAuthTokens();
-        this.store.dispatch(new Logout())
+      this.cookies.remove('auth-tokens');
+      this.storage.removeAuthTokens();
+      this.store.dispatch(new Logout())
         if (this.refreshSubscription$) {
             this.refreshSubscription$.unsubscribe();
 
@@ -65,7 +73,7 @@ export class AuthService {
     }
 
     public async refreshTokens(): Promise<IAuthTokenModel> {
-        return await this.getTokens({ refresh_token: this.storage.getRefreshToken() }, 'refresh_token').toPromise();
+        return await this.getTokens({ refresh_token: this.tokens.refresh_token }, 'refresh_token').toPromise();
     }
 
     private getTokens(data: IRefreshGrantModel | ILoginModel | any, grantType: string): Observable<IAuthTokenModel> {
@@ -78,17 +86,15 @@ export class AuthService {
         Object.keys(data)
             .forEach(key => params2 = params2.append(key, data[key]));
 
-        return this.http1.post<IAuthTokenModel>(environment.apiUrl + 'connect/token', params2.toString(), { headers }).pipe(
+        return this.http.post<IAuthTokenModel>(environment.apiUrl + 'connect/token', params2.toString(), { headers }).pipe(
             tap((tokens: IAuthTokenModel) => {
 
                 tokens.expiration_date = new Date(new Date().getTime() + tokens.expires_in * 1000).getTime().toString();
-
+                tokens.refresh_token = tokens.refresh_token ?? this.tokens?.refresh_token;
+                tokens.id_token = '';
                 const user = JSON.parse(atob(tokens.access_token.split('.')[1]));
 
-                this.storage.setAuthTokens(tokens);
-                if (tokens.refresh_token) {
-                    this.storage.setRefreshToken(tokens.refresh_token);
-                }
+                this.setTokens(tokens);
 
                 this.tokens = tokens;
                 this.store.dispatch(new SetTokens(tokens));
@@ -97,12 +103,12 @@ export class AuthService {
     }
 
     private async startupTokenRefresh(): Promise<any> {
-        const tokenFromStorage = this.storage.retrieveTokens();
-        if (!tokenFromStorage) {
+        this.tokens = this.cookies.getObject('auth-tokens') || this.storage.retrieveTokens();
+        if (!this.tokens) {
             this.signalRService.initializeHub();
             return of('');
         }
-        this.store.dispatch(new SetTokens(tokenFromStorage));
+        this.store.dispatch(new SetTokens(this.tokens));
         const data = this.storage.getUser();
         this.setUser(data);
 
@@ -131,5 +137,9 @@ export class AuthService {
         if (data) {
             this.store.dispatch(new SetUser(data));
         }
+    }
+
+    private setTokens(tokens: IAuthTokenModel): void {
+        this.cookies.setObject('auth-tokens', tokens, this.coockieOptions);
     }
 }

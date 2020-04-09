@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, retry } from 'rxjs/operators';
 
 import { isUnauthorizedError } from '@network/static';
 import { AuthService } from './services/auth.service';
@@ -30,7 +30,9 @@ export class AuthHeadersInterceptor implements HttpInterceptor {
                 (err: any) => {
                     if (isUnauthorizedError(err)) {
                        this.authService.refreshTokens();
+                       retry(1)
                     }
+                    this.loader.hide();
                 },
                 () => this.loader.hide()
             )

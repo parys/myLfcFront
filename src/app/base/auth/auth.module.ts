@@ -6,10 +6,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxsModule } from '@ngxs/store';
 
 import { HttpWrapperModule } from '@base/httpWrapper';
-import { StorageService } from '@base/storage';
 
 import { EnsureModuleLoadedOnceGuard } from '@domain/base/ensure-module-loaded-once.guard';
-import { LoaderService } from '@base/loader';
 
 import { AuthHeadersInterceptor } from './bearer.interceptor';
 import { AuthService } from '@auth/services';
@@ -20,11 +18,6 @@ export function getAccessToken(injector: Injector): Promise<any> {
     return new Promise<any>(async (resolve, reject) => {
 
         const authService = injector.get(AuthService);
-        // if (await authService.init()) {
-        //     return resolve(true);
-        // } else {
-        //     authService.logout();
-        // }
         try {
             await authService.init();
         }
