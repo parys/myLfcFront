@@ -1,4 +1,4 @@
-﻿import { Component, Output, EventEmitter, ChangeDetectionStrategy, PLATFORM_ID, Inject, HostListener } from '@angular/core';
+﻿import { Component, Output, EventEmitter, ChangeDetectionStrategy, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import { Select } from '@ngxs/store';
@@ -22,20 +22,17 @@ export class NavbarComponent {
 
     @Select(CoreState.mobile) mobile$: Observable<boolean>;
 
-    @HostListener('window:resize', ['$event'])
-    public sizeChange(event: any) {
+    constructor(
+        @Inject(PLATFORM_ID) private platformId: object) {
+            this.calculateSize();
+    }
+
+    private calculateSize(): void {
         if (isPlatformBrowser(this.platformId)) {
             const showOd = window.innerWidth > 1673;
             if (showOd !== this.showOd) {
                 this.showOd = showOd;
             }
-        }
-    }
-
-    constructor(
-        @Inject(PLATFORM_ID) private platformId: object) {
-        if (isPlatformBrowser(this.platformId)) {
-            this.sizeChange('');
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿<ng-container *ngIf="{ userId: userId$ | async, isNewsmaker: isNewsmaker$ | async, isAuthor: isAuthor$ | async,
  isEditor: isEditor$ | async } as data">
     <div *ngIf="item && (!item.pending || data.isNewsmaker || data.isAuthor && data.userId === item.userId)"
-        class="mat-item" style="height: 100%;">
-        <div class="material" [class.material-pending]="item.pending" style="height: 100%;">
-            <div class="header" style="flex-grow: 5">
+        class="mat-item">
+        <div class="material" [class.material-pending]="item.pending">
+            <div class="header">
                 <a [routerLink]="['/', item.typeName, item.id]">
-                    <h3 class="beauty-font" [textContent]="item.title"></h3>
+                    <h2 class="beauty-font" [textContent]="item.title"></h2>
                 </a>              
                 <span *ngIf="data.isEditor || data.userId === item.userId">
                 <material-tools [editLink]="'/' + item.typeName + '/' + item.id + '/edit'"
@@ -15,7 +15,7 @@
                  (delete)="onDelete(item.id)"></material-tools>                
             </span>
             </div>
-            <div class="mat-preview-list full-width" style="align-self: flex-end;">
+            <div class="mat-preview-list">
                 <img class="img-thumbnail" [alt]="item.title" loading="lazy" [src]="item.photoPreview" />
                 <div class="full-width material-info-panel">
                     <ul class="list-inline small small-offset padding5">

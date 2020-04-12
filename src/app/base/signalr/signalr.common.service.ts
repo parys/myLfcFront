@@ -11,6 +11,7 @@ import { ChatMessage, Comment, UsersOnline, Pm, Notification, MatchPerson, Match
 import { environment } from '@environments/environment';
 import { NewPm, ReadPms, NewNotification, ReadNotifications, GetUnreadNotificationsCount, GetUnreadPmsCount } from '@core/store/core.actions';
 import { Actions as MpActions } from '@match-persons/store/match-persons.actions';
+import { Cookies } from '@cedx/ngx-cookies';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
@@ -23,6 +24,7 @@ export class SignalRService {
     public matchEvent: Subject<MatchEvent> = new Subject<MatchEvent>();
 
     constructor(private storage: StorageService,
+                private cookies: Cookies,
                 private store: Store,
                 @Inject(PLATFORM_ID) private platformId: object) {
     }
@@ -33,7 +35,7 @@ export class SignalRService {
         }
         let hubUrl = 'anonym';
 
-        const token = this.storage.getAccessToken();
+        const token = this.cookies.getObject('auth-tokens')?.access_token || this.storage.getAccessToken();
         if (token) {
             hubUrl = 'auth';
         }

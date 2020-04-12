@@ -28,6 +28,7 @@ mat-icon {
     &.navbar-menu {
         display: flex;
         font-size: large;
+        align-items: center;
     }
 
     @media (max-width: 767px) {

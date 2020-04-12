@@ -28,6 +28,7 @@
     flex-direction: column;
     flex-wrap: unset;
     justify-content: space-between;
+    width: 100%;
 }
 
 @media (max-width: 1100px) {
@@ -60,7 +61,6 @@
     justify-content: space-between;
     min-height: 0;
     padding-left: 10px;
-    text-transform: uppercase;
     width: 100%;
 }
 
@@ -68,8 +68,8 @@
     color: #731010;
 }
 
-.header > a > h4 {
-    font-weight: bold;
+.header > a > h2 {
+    font-weight: normal;
 }
 
 .material-pending {
@@ -86,4 +86,5 @@
 
 .mat-item {
     padding: 0 2.5px;
+    height: 100%;
 }
