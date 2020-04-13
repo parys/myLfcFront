@@ -7,8 +7,6 @@ name: CI-easingthemes-test
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -25,10 +23,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - name: Install npm dependencies
-      run: npm install
-    - name: Run build task
-      run: npm run build:test --if-present
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@v2.1.1
       env:
