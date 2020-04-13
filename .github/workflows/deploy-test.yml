@@ -9,8 +9,7 @@ on:
  #   branches: [ master ]
 #  pull_request:
 #    branches: [ master ]
-  deployment:
-    branches: [ master ]
+  pull_request
     
     
 
