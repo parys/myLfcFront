@@ -17,12 +17,12 @@ jobs:
     - name: Run build task
       run: npm run build:test --if-present
     - name: Deploy to Server
-      uses: easingthemes/ssh-deploy@v2.1.1
+      uses: AEnterprise/rsync-deploy@v1.0
       env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: "-rltgoDzvO --delete"
-          SOURCE: "dist/test/"
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          REMOTE_PORT: ${{ secrets.REMOTE_PORT }} 
-          TARGET: ${{ secrets.REMOTE_TARGET_TEST }}
+          DEPLOY_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: ""
+          FOLDER: "dist/test/"
+          SERVER_IP: ${{ secrets.REMOTE_HOST }}
+          USERNAME: ${{ secrets.REMOTE_USER }}
+          SERVER_PORT: ${{ secrets.REMOTE_PORT }} 
+          SERVER_DESTINATION: ${{ secrets.SERVER_TEST_FOLDER }}
