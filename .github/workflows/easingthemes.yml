@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI-easingthemes-test
+name: CI-deploy-to-test-on-each-push
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -28,10 +28,10 @@ jobs:
     - name: Run build task
       run: npm run build:test --if-present
     - name: Deploy to Server
-      uses: easingthemes/ssh-deploy@v2.1.1
+      uses: easingthemes/ssh-deploy@v2.1.2
       env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-          ARGS: ""
+          ARGS: "-avzr --delete"
           SOURCE: "dist/test/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.SSH_DEPLOY_USER }}
