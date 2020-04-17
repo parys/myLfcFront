@@ -33,7 +33,6 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
           ARGS: "-avzr --delete --exclude=/browser/src/"
           SOURCE: "dist/test/"
-         # SOURCE: "/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.SSH_DEPLOY_USER }}
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }} 
