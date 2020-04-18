@@ -36,4 +36,4 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.SSH_DEPLOY_USER }}
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }} 
-          TARGET: ${{ secrets.FOR_TEST_SERVER_FOLDER }}
+          TARGET: ${{ secrets.SERVER_TEST_FOLDER }}
