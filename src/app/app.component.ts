@@ -41,8 +41,6 @@ export class AppComponent extends ObserverComponent implements OnInit {
     }
 
     public showAd = true;
-    @HostBinding('@.disabled')
-    public animationsDisabled = true;
 
     @ViewChild('sidenav') sidenav: MatSidenav;
 

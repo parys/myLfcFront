@@ -25,12 +25,12 @@ export class OdComponent implements AfterContentInit {
     }
 
     public ngAfterContentInit(): void {
+        if (isPlatformServer(this.platformId)) { return; }
         this.name = `yandex_rtb_${this.blockName}`;
         this.sub$ = this.zone.onStable.subscribe(() => this.load());
     }
 
     public load() {
-        if (isPlatformServer(this.platformId)) { return; }
         this.zone.runOutsideAngular(() => {
             loadYa();
             if (addAd(this.blockName)) {

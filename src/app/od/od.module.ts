@@ -12,9 +12,6 @@ import { OdComponent } from './od';
     ],
     exports: [
         OdComponent,
-    ],
-    providers: [
-   //     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
     ]
 })
 export class OdModule { }

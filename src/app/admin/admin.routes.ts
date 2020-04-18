@@ -8,7 +8,7 @@ export const adminRoutes: Routes = [
     {
         path: '',
         component: AdminHomeComponent,
-        data: { title: 'Admin home', roles: [RolesEnum[RolesEnum.AdminStart]] },
+        data: { title: 'Страничка админа', roles: [RolesEnum[RolesEnum.AdminStart]] },
         canActivate: [RoleGuard]
     }
 ];
