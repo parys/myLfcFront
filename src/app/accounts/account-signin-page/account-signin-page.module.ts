@@ -6,6 +6,7 @@ import { AccountSigninWidgetModule } from '@widgets/http/account-signin-widget';
 import { AccountSigninPageComponent } from './account-signin-page.component';
 import { accountSigninPageRoutes } from './account-signin-page.routes';
 import { BreadcrumbService } from '@base/breadcrumbs';
+import { ACCOUNT_ROUTE } from '@constants/routes.constants';
 
 @NgModule({
     imports: [
@@ -17,9 +18,9 @@ import { BreadcrumbService } from '@base/breadcrumbs';
     ]
 })
 export class AccountSigninPageModule {
-    public (breadcrumbService: BreadcrumbService
+    constructor(breadcrumbService: BreadcrumbService
     ) {
-        breadcrumbService.hideRoute('/account');
-        breadcrumbService.addFriendlyNameForRoute('/signin', 'Вход');
+        breadcrumbService.hideRouteRegex(`^/${ACCOUNT_ROUTE}$`);
+        breadcrumbService.addFriendlyNameForRoute(`/${ACCOUNT_ROUTE}/signin`, 'Вход');
     }
  }

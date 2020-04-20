@@ -5,12 +5,10 @@ import { NgxsModule } from '@ngxs/store';
 
 import { CoreState } from '@core/store';
 import { EnsureModuleLoadedOnceGuard } from '@domain/base/ensure-module-loaded-once.guard';
-import { MobileLayoutService } from '@layout/modules/mobile-layout/mobile-layout.service';
 import { CustomTitleMetaService } from './services';
 
 @NgModule({
     providers: [
-        MobileLayoutService,
         CustomTitleMetaService
     ],
     declarations: [],

@@ -4,7 +4,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 
 import { NavbarComponent } from './components/navbar.component';
-import { MobileLayoutModule } from '@layout/modules/mobile-layout/mobile-layout.module';
 import { OdModule } from '@od/od.module';
 import { MatButtonModule } from '@angular/material/button';
 import { DynamicContentOutletModule } from '@layout/dynamic-content-outlet/dynamic-content-outlet.module';
@@ -15,7 +14,6 @@ import { DynamicContentOutletModule } from '@layout/dynamic-content-outlet/dynam
         RouterModule,
         MatIconModule,
         MatButtonModule,
-        MobileLayoutModule,
         DynamicContentOutletModule,
         OdModule
     ],

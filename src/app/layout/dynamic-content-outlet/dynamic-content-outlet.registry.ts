@@ -19,4 +19,12 @@ export const DynamicContentOutletRegistry: RegistryItem[] = [
         componentName: 'NavbarMenuComponent',
         module: import('src/app/lazy-modules/navbar-menu/navbar-menu.module').then(x => x.NavbarMenuModule)
       },
+      {
+        componentName: 'CountersComponent',
+        module: import('src/app/lazy-modules/profile-counters/profile-counters.module').then(x => x.ProfileCountersModule)
+      },
+      {
+        componentName: 'MatchHeaderComponent',
+        module: import('src/app/lazy-modules/match-header/match-header.module').then(x => x.MatchHeaderModule)
+      },
 ];

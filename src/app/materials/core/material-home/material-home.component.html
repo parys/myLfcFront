@@ -1,4 +1,5 @@
-﻿<match-header></match-header>
+﻿<app-dynamic-content-outlet [componentName]="'MatchHeaderComponent'">
+</app-dynamic-content-outlet>
 <div class="flex-space-around">
     <div *ngFor="let item of pinned; trackBy: trackByFn" class="material-container">
         <material-item [item]="item"></material-item>

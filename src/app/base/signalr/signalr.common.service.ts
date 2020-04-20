@@ -9,7 +9,7 @@ import { StorageService } from '@base/storage';
 import { ChatMessage, Comment, UsersOnline, Pm, Notification, MatchPerson, MatchEvent } from '@domain/models';
 // import { MessagePackHubProtocol } from "@aspnet/signalr-protocol-msgpack";
 import { environment } from '@environments/environment';
-import { NewPm, ReadPms, NewNotification, ReadNotifications, GetUnreadNotificationsCount, GetUnreadPmsCount } from '@core/store/core.actions';
+import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions'; // TODO think about move to diffferent signalr service for only authed users
 import { Actions as MpActions } from '@match-persons/store/match-persons.actions';
 import { Cookies } from '@cedx/ngx-cookies';
 
@@ -76,8 +76,6 @@ export class SignalRService {
             this.newComment.next(data);
         });
         if (token) {
-
-            this.store.dispatch([new GetUnreadNotificationsCount(), new GetUnreadPmsCount()]);
             this.hubConnection.on('readPm',
                 (data: boolean) => {
                     this.store.dispatch(new ReadPms());

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { Observable } from 'rxjs';
 
 import { HttpWrapper } from '@base/httpWrapper';
@@ -7,12 +6,8 @@ import { MATCHES_ROUTE, NOTIFICATIONS_ROUTE, PMS_ROUTE } from '@constants/routes
 import { Match } from '@domain/models';
 
 @Injectable()
-export class MobileLayoutService {
+export class ProfileCountersService {
     constructor(private http: HttpWrapper) {
-    }
-
-    public getHeaderMatch(): Observable<Match> {
-        return this.http.get<Match>(MATCHES_ROUTE + '/header');
     }
 
     public getUnreadNotificationsCount(): Observable<number> {

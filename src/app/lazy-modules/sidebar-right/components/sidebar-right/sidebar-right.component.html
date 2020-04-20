@@ -8,8 +8,8 @@
                 <a [routerLink]="['/users', data.userId]" class="text-white flex-space-around flex-v-c">
                     <mat-icon>person</mat-icon>Профиль
                 </a>
-                <pm-counter></pm-counter>
-                <notification-counter></notification-counter>
+                <app-dynamic-content-outlet [componentName]="'CountersComponent'" class="counters">
+                </app-dynamic-content-outlet>
                 <a role="button" (click)="logout()" class="text-white">Выйти</a>
             </li>
         </ng-template>

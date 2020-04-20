@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { NgxsModule } from '@ngxs/store';
 
 import { PipesModule } from '@base/pipes';
-import { MobileLayoutModule } from '@layout/modules/mobile-layout/mobile-layout.module';
 
 import { MaterialCoreService } from '@materials/core/material-core.service';
 import { MaterialHomeComponent } from '@materials/core/material-home';
@@ -13,14 +12,15 @@ import { MaterialItemComponent } from '@materials/core/material-item';
 import { MaterialToolsComponent } from './components/material-tools';
 import { MaterialsState } from '@materials/lazy/store';
 import { MaterialService } from '@materials/lazy/material.service';
+import { DynamicContentOutletModule } from '@layout/dynamic-content-outlet/dynamic-content-outlet.module';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
-        MobileLayoutModule,
         PipesModule,
-        NgxsModule.forFeature([MaterialsState])
+        NgxsModule.forFeature([MaterialsState]),
+        DynamicContentOutletModule
     ],
     declarations: [
         MaterialHomeComponent,

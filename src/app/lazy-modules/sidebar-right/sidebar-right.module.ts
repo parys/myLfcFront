@@ -6,7 +6,6 @@ import { ChatModule } from '@chat/chat.module';
 import { AccountSigninWidgetModule } from '@widgets/http/account-signin-widget';
 
 import { RightSidebarMaterialModule } from './sidebar-right-material.module';
-import { MobileLayoutModule } from '@layout/modules/mobile-layout/mobile-layout.module';
 import {
     UserBirthdayComponent,
     UserOnlineCounterComponent,
@@ -15,6 +14,7 @@ import {
 } from './components/';
 import { PipesModule } from '@base/pipes';
 import { SidebarRightService } from './sidebar-right.service';
+import { DynamicContentOutletModule } from '@layout/dynamic-content-outlet/dynamic-content-outlet.module';
 
 @NgModule({
     imports: [
@@ -23,8 +23,8 @@ import { SidebarRightService } from './sidebar-right.service';
         RightSidebarMaterialModule,
         ChatModule,
         AccountSigninWidgetModule,
-        MobileLayoutModule,
-        PipesModule
+        PipesModule,
+        DynamicContentOutletModule
     ],
     declarations: [
         UserBirthdayComponent,

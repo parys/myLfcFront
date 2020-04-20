@@ -6,16 +6,6 @@ export class ChangeMobile {
     constructor(public readonly payload: boolean) { }
 }
 
-export class GetUnreadNotificationsCount {
-    static readonly type = '[Core] Set notifications count';
-    constructor() { }
-}
-
-export class GetUnreadPmsCount {
-    static readonly type = '[Core] Get unread pms count';
-    constructor() { }
-}
-
 export class NewPm {
     static readonly type = '[Core] New pm';
     constructor(public readonly payload: Pm) { }
@@ -34,9 +24,3 @@ export class ReadNotifications {
     static readonly type = '[Core] Read notifications';
     constructor(public readonly payload: number) { }
 }
-
-export class GetHeaderMatch {
-    static readonly type = '[Core] Get header match';
-    constructor() { }
-}
-

@@ -20,7 +20,6 @@ import { DynamicContentOutletModule } from '@layout/dynamic-content-outlet/dynam
 import { getAccessToken } from '@auth/auth.module';
 import { CoreModule } from '@core/core.module';
 import { NoticesModule } from '@notices/notices.module';
-import { MobileLayoutModule } from '@layout/modules/mobile-layout/mobile-layout.module';
 import { OdModule } from './od';
 import { NavbarModule } from './home/navbar/navbar.module';
 
@@ -62,7 +61,6 @@ export function runAppInitializerFactories(injector: Injector): () => Promise<an
         BreadcrumbModule.forRoot(),
         NoticesModule.forRoot(),
         DynamicContentOutletModule,
-        MobileLayoutModule,
         OdModule,
         NavbarModule
     ],
