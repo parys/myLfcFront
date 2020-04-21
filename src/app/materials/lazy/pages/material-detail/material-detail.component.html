@@ -1,14 +1,14 @@
 ﻿<ng-container *ngIf="{ isEditor: isEditor$ | async, userId: userId$ | async, material: material$ | async,
      others: others$ | async } as data">
     <div class="material-header">
-        <h3 class="full-width flex-space-between">
+        <h1 class="full-width flex-space-between">
             <span class="beauty-font" [textContent]="data.material.title"></span>
             <span *ngIf="data.isEditor || data.userId === data.material.userId">
                 <material-tools [editLink]="'./edit'" [editor]="data.isEditor || data.userId === data.material.userId"
                     [material]="data.material" (activate)="onActivate(data.material.id)"
                     (delete)="onDelete(data.material.id)"></material-tools>
             </span>
-        </h3>
+        </h1>
     </div>
     <div class="full-width">
         <div *ngIf="data.material.usePhotoInBody" class="full-width bottom10">

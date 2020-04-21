@@ -28,10 +28,8 @@
       "name": "fonts",
       "resources": {
         "urls": [
-          "https://fonts.googleapis.com/**",
-          "https://fonts.gstatic.com/**",
-          "/fontawesome-webfont.*",
-          "/10427.ttf"
+          "/notoserif-onlyusedglyphs-webfont.woff2",
+          "/MaterialIcons-Regular.woff2"
         ]
       }
     }

@@ -1,6 +1,6 @@
 ﻿<ng-container *ngIf="{ userId: userId$ | async, mobile: mobile$ | async } as data">
     <nav>
-        <button type="button" mat-button (click)="toggle.emit()" class="menu-btn">
+        <button type="button" mat-button (click)="toggle.emit()" class="menu-btn" aria-label="меню">
             <mat-icon>menu</mat-icon>
         </button>
         <a class="logo-link" role="button" [routerLink]="['/']">
