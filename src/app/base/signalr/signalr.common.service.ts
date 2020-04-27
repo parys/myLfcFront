@@ -2,12 +2,11 @@
 import { isPlatformServer } from '@angular/common';
 
 import { Subject } from 'rxjs';
-import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
+import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { Store } from '@ngxs/store';
 
 import { StorageService } from '@base/storage';
 import { ChatMessage, Comment, UsersOnline, Pm, Notification, MatchPerson, MatchEvent } from '@domain/models';
-// import { MessagePackHubProtocol } from "@aspnet/signalr-protocol-msgpack";
 import { environment } from '@environments/environment';
 import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions'; // TODO think about move to diffferent signalr service for only authed users
 import { Actions as MpActions } from '@match-persons/store/match-persons.actions';
@@ -50,7 +49,7 @@ export class SignalRService {
 
         this.hubConnection = new HubConnectionBuilder()
             .withUrl(`${environment.apiUrl}hubs/${hubUrl}`, options)
-          //  .withHubProtocol(new MessagePackHubProtocol())
+            .withAutomaticReconnect()
             .configureLogging(LogLevel.Error)
             .build();
         this.hubConnection.on('updateChat', (data: ChatMessage) => {
