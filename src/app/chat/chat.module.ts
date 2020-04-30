@@ -5,14 +5,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 
+import { NgxsModule } from '@ngxs/store';
+
 import { EditorModule } from '@editor/editor.module';
 import { PipesModule } from '@base/pipes';
+import { BreadcrumbService } from '@base/breadcrumbs';
 
 import { MiniChatComponent } from '@chat/miniChat';
 import { MaxiChatComponent } from '@chat/maxiChat';
 import { ChatWindowComponent } from '@chat/chat-window';
 import { chatRoutes } from '@chat/chat.routes';
 import { ChatMessageService } from '@chat/chat-message.service';
+import { ChatState } from '@chat/store';
 
 
 @NgModule({
@@ -24,7 +28,8 @@ import { ChatMessageService } from '@chat/chat-message.service';
         EditorModule,
         PipesModule,
         MatButtonModule,
-        MatTabsModule
+        MatTabsModule,
+        NgxsModule.forFeature([ChatState])
     ],
     declarations: [
         MiniChatComponent,
@@ -40,4 +45,10 @@ import { ChatMessageService } from '@chat/chat-message.service';
         ChatMessageService
     ]
 })
-export class ChatModule { }
+export class ChatModule {
+    constructor(
+        breadcrumbService: BreadcrumbService
+    ) {
+        breadcrumbService.addFriendlyNameForRoute('/chat', 'Чат');
+    }
+ }

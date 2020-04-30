@@ -1,6 +1,21 @@
-﻿<div class="block-minichat">
-    <div class="blocktitle text-center">
-        <b>Мини-чат</b>
+﻿<ng-container
+    *ngIf="{ isLogined: isLogined$ | async,
+         isModerator: isModerator$ | async,
+         userId: userId$ | async,
+         miniMessages: miniMessages$ | async } as data">
+    <div class="block-minichat">
+        <div class="blocktitle text-center">
+            <b>Мини-чат</b>
+        </div>
+        <chat-window
+            [type]="0"
+            [height]="300"
+            [isLogined]="data.isLogined"
+            [isModerator]="data.isModerator"
+            [userId]="data.userId"
+            [messages]="data.miniMessages"
+            (createMessage)="onCreateMessage($event)"
+            (updateMessage)="onUpdateMessage($event)"
+            (deleteMessage)="onDeleteMessage($event)"></chat-window>
     </div>
-    <chat-window [type]="0" [height]="300"></chat-window>
-</div>
+</ng-container>

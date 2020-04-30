@@ -1,5 +1,4 @@
 ﻿export * from './base-entity.model';
-export * from './chat-message.model';
 export * from './comment.model';
 export * from './commentFilter.model';
 export * from './commentVote.model';
@@ -15,7 +14,6 @@ export * from './match-event-type.model';
 export * from './pm.model';
 export * from './club.model';
 export * from './club-filters.model';
-export * from './chat-filters.model';
 export * from './helper-type.enum';
 export * from './image.model';
 export * from './injury.model';

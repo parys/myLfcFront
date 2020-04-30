@@ -6,17 +6,18 @@ import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signal
 import { Store } from '@ngxs/store';
 
 import { StorageService } from '@base/storage';
-import { ChatMessage, Comment, UsersOnline, Pm, Notification, MatchPerson, MatchEvent } from '@domain/models';
+import { Comment, UsersOnline, Pm, Notification, MatchPerson, MatchEvent } from '@domain/models';
 import { environment } from '@environments/environment';
 import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions'; // TODO think about move to diffferent signalr service for only authed users
 import { Actions as MpActions } from '@match-persons/store/match-persons.actions';
 import { Cookies } from '@cedx/ngx-cookies';
+import { ChatActions } from '@chat/store';
+import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages-list.query';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
     private hubConnection: HubConnection;
     private alreadyStarted = false;
-    public chatSubject: Subject<ChatMessage> = new Subject<ChatMessage>();
     public onlineSubject: Subject<UsersOnline> = new Subject<UsersOnline>();
     public lastCommentsSubject: Subject<Comment> = new Subject<Comment>();
     public newComment: Subject<Comment> = new Subject<Comment>();
@@ -52,10 +53,10 @@ export class SignalRService {
             .withAutomaticReconnect()
             .configureLogging(LogLevel.Error)
             .build();
-        this.hubConnection.on('updateChat', (data: ChatMessage) => {
-            this.chatSubject.next(data);
+        this.hubConnection.on('updateChat', (data: GetChatMessagesListQuery.ChatMessageListDto) => {
+            this.store.dispatch(new ChatActions.PutToChatMessage(data));
         });
-        this.hubConnection.on('updateOnline', (data: UsersOnline) => {
+        this.hubConnection.off('updateOnline', (data: UsersOnline) => {
             this.onlineSubject.next(data);
         });
         this.hubConnection.on('addComment', (data: Comment) => {

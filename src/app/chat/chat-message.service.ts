@@ -3,21 +3,35 @@
 import { Observable } from 'rxjs';
 
 import { HttpWrapper } from '@base/httpWrapper';
-import { ChatMessage } from '@domain/models';
 import { CHAT_MESSAGES_ROUTE } from '@constants/routes.constants';
-import { BaseRestService } from '@base/infrastructure';
 
-import { ChatFilters } from '@domain/models';
+import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages-list.query';
+import { CreateChatMessageCommand } from '@network/shared/chat/create-chat-message.command';
+import { UpdateChatMessageCommand } from '@network/shared/chat/update-chat-message.command';
+
 
 @Injectable()
-export class ChatMessageService extends BaseRestService<ChatMessage, ChatFilters> {
+export class ChatMessageService {
     private actionUrl: string = CHAT_MESSAGES_ROUTE + '/';
 
     constructor(public http: HttpWrapper) {
-        super(http, CHAT_MESSAGES_ROUTE + '/');
     }
 
-    public getLatest(lastId: number, typeId: number): Observable<ChatMessage[]> {
-        return this.http.get<ChatMessage[]>(this.actionUrl + `list/` + lastId + '/' + typeId);
+    public getAll(filters: GetChatMessagesListQuery.Request): Observable<GetChatMessagesListQuery.Response> {
+        return this.http.getWithParams<GetChatMessagesListQuery.Response>(this.actionUrl, filters);
+    }
+
+    public create(item: CreateChatMessageCommand.Request): Observable<CreateChatMessageCommand.Response> {
+        const stringify = JSON.stringify(item);
+        return this.http.post<CreateChatMessageCommand.Response>(this.actionUrl, stringify);
+    }
+
+    public update(id: number, item: UpdateChatMessageCommand.Request): Observable<UpdateChatMessageCommand.Response> {
+        const stringify = JSON.stringify(item);
+        return this.http.put<UpdateChatMessageCommand.Response>(this.actionUrl + id, stringify);
+    }
+
+    public delete(id: number): Observable<boolean> {
+        return this.http.delete<boolean>(this.actionUrl + id);
     }
 }

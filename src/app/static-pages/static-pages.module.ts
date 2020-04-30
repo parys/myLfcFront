@@ -31,7 +31,6 @@ export class StaticPagesModule {
     ) {
         breadcrumbService.addFriendlyNameForRoute('/about', 'О нас');
         breadcrumbService.addFriendlyNameForRoute('/aboutClub', 'О клубе');
-        breadcrumbService.addFriendlyNameForRoute('/chat', 'Чат');
         breadcrumbService.addFriendlyNameForRoute('/clubHistory', 'История клуба');
         breadcrumbService.addFriendlyNameForRoute('/cooperation', 'Сотрудничество');
         breadcrumbService.addFriendlyNameForRoute('/copyright', 'О перепечатке информации');
