@@ -4,7 +4,6 @@ export * from './commentFilter.model';
 export * from './commentVote.model';
 export * from './faq-category.model';
 export * from './faq-item.model';
-export * from './user-online.model';
 export * from './material-category.model';
 export * from './material-type.enum';
 export * from './material.model';

@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input } from '@angular/core';
+﻿import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input, AfterViewInit } from '@angular/core';
 
 import { GetUserBirthdaysQuery } from '@network/shared/right-sidebar/get-users-birthdays.query';;
 
@@ -8,14 +8,14 @@ import { GetUserBirthdaysQuery } from '@network/shared/right-sidebar/get-users-b
     styleUrls: ['./user-birthday.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserBirthdayComponent implements OnInit {
+export class UserBirthdayComponent implements AfterViewInit {
     @Input() public userBirthdays: GetUserBirthdaysQuery.UserBirthdayDto[];
     public currentUserIndex: number = null;
 
     constructor(private cd: ChangeDetectorRef) {
     }
 
-    public ngOnInit(): void {
+    public ngAfterViewInit(): void {
         this.setRandomIndex();
     }
 
@@ -38,6 +38,7 @@ export class UserBirthdayComponent implements OnInit {
     }
 
     private setRandomIndex(): void {
+        if(this.userBirthdays.length === 0) { return; }
         const rand: number = Math.random() * (this.userBirthdays.length + 1) - 0.5;
         const intNumber = Math.round(rand);
         this.currentUserIndex = intNumber === this.userBirthdays.length ? intNumber - 1 : intNumber;

@@ -1,14 +1,14 @@
 ﻿<mat-card class="full-width" *ngIf="currentUserIndex != null">
     <mat-card-header>
         <mat-card-title>
-            В этот день родился <a [routerLink]="['/users', items[currentUserIndex].id]"><b [textContent]="items[currentUserIndex].userName"></b></a>
+            В этот день родился <a [routerLink]="['/users', userBirthdays[currentUserIndex].id]"><b [textContent]="userBirthdays[currentUserIndex].userName"></b></a>
         </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <img loading="lazy" [src]="items[currentUserIndex].photo" class="photo"
-        [alt]="items[currentUserIndex].userName" [srcset]="items[currentUserIndex].photo | img:[100]" />
+        <img loading="lazy" [src]="userBirthdays[currentUserIndex].photo" class="photo"
+        [alt]="userBirthdays[currentUserIndex].userName" [srcset]="userBirthdays[currentUserIndex].photo | img:[100]" />
     </mat-card-content>
-    <div *ngIf="items.length > 1" class="flex-space-between">
+    <div *ngIf="userBirthdays.length > 1" class="flex-space-between">
         <button mat-button (click)="goToPrevious()"><mat-icon>arrow_left</mat-icon></button>
         <button mat-button (click)="goToNext()"><mat-icon>arrow_right</mat-icon></button>
         </div>

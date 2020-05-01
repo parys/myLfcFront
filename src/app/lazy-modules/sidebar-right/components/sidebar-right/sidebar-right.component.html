@@ -1,6 +1,7 @@
 ﻿<ng-container *ngIf="{ userId: userId$ | async,
      latestComments: latestComments$ | async,
-     userBirthdays: userBirthdays$ | async } as data">
+     userBirthdays: userBirthdays$ | async,
+     usersOnline: usersOnline$ | async } as data">
     <ul class="maroon-panel login-list-panel padding10">
         <li *ngIf="!data.userId;else logined">
             <account-signin-widget></account-signin-widget>
@@ -25,7 +26,7 @@
     <section class="top10">
         <mini-chat></mini-chat>
         <div class="online">
-            <user-online-counter></user-online-counter>
+            <user-online-counter [usersOnline]="data.usersOnline"></user-online-counter>
         </div>
         <a mat-raised-button class="full-width color-back-gold" [routerLink]="['/news', 18096]"><b>Галерея
                 личностей</b></a>

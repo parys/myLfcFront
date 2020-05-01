@@ -6,7 +6,7 @@ import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signal
 import { Store } from '@ngxs/store';
 
 import { StorageService } from '@base/storage';
-import { Comment, UsersOnline, Pm, Notification, MatchPerson, MatchEvent } from '@domain/models';
+import { Comment, Pm, Notification, MatchPerson, MatchEvent } from '@domain/models';
 import { environment } from '@environments/environment';
 import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions';
 import { Actions as MpActions } from '@match-persons/store/match-persons.actions';
@@ -15,12 +15,12 @@ import { ChatActions } from '@chat/store';
 import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages-list.query';
 import { RightSidebarActions } from '@lazy-modules/sidebar-right/store';
 import { GetLatestCommentListQuery } from '@network/shared/right-sidebar/get-latest-comments-list.query';
+import { UsersOnline } from '@network/shared/right-sidebar/user-online.model';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
     private hubConnection: HubConnection;
     private alreadyStarted = false;
-    public onlineSubject: Subject<UsersOnline> = new Subject<UsersOnline>();
     public newComment: Subject<Comment> = new Subject<Comment>();
     public matchEvent: Subject<MatchEvent> = new Subject<MatchEvent>();
 
@@ -57,8 +57,8 @@ export class SignalRService {
         this.hubConnection.on('updateChat', (data: GetChatMessagesListQuery.ChatMessageListDto) => {
             this.store.dispatch(new ChatActions.PutToChatMessage(data));
         });
-        this.hubConnection.off('updateOnline', (data: UsersOnline) => {
-            this.onlineSubject.next(data);
+        this.hubConnection.on('updateOnline', (data: UsersOnline) => {
+            this.store.dispatch(new RightSidebarActions.SetOnlineUsers(data));
         });
         this.hubConnection.on('addComment', (data: GetLatestCommentListQuery.LastCommentListDto) => {
             this.store.dispatch(new RightSidebarActions.PutToLatestComments(data))

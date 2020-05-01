@@ -21,7 +21,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.initUserEditForm();
-        this.sub = this.service.getSingle(0)
+        this.sub = this.service.getSingle2(0)
             .subscribe((data: User) => this.parse(data));
     }
 
@@ -37,7 +37,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
                 new Date(user.birthday.setHours(
                     user.birthday.getHours() + (-1) * user.birthday.getTimezoneOffset() / 60));
         }
-        this.service.createOrUpdate(this.userId, user)
+        this.service.update(this.userId, user)
             .subscribe((data: User) => {
                 if (data) {
                     this.snackBar.open('Профиль обновлен');

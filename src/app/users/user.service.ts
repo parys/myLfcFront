@@ -4,17 +4,21 @@ import { Observable } from 'rxjs';
 
 import { HttpWrapper } from '@base/httpWrapper';
 import { USERS_ROUTE } from '@constants/routes.constants';
-import { BaseRestService } from '@base/infrastructure';
 
-import { UserFilters, User, UserConfig } from '@domain/models';
+import { UserConfig } from '@domain/models/user-config.model';
+import { User } from '@domain/models/user.model';
 import { GetUsersListQuery, GetUserDetailQuery } from '@network/shared/users';
 
 @Injectable()
-export class UserService extends BaseRestService<User, UserFilters> {
+export class UserService {
     private actionUrl: string = USERS_ROUTE + '/';
 
     constructor(public http: HttpWrapper) {
-        super(http, USERS_ROUTE + '/');
+    }
+
+    public update(id: number, item: User): Observable<User> {
+        const stringify = JSON.stringify(item);
+        return this.http.put<User>(this.actionUrl + id, stringify);
     }
 
     public updateRoleGroup(id: number, roleGroupId: number): Observable<boolean> {
@@ -49,10 +53,10 @@ export class UserService extends BaseRestService<User, UserFilters> {
 
     // new approach
     public getAll2(request: GetUsersListQuery.Request): Observable<GetUsersListQuery.Response> {
-        return this.http.getWithParams<GetUsersListQuery.Response>(this.baseActionUrl, request);
+        return this.http.getWithParams<GetUsersListQuery.Response>(this.actionUrl, request);
     }
 
     public getSingle2(id: number): Observable<GetUserDetailQuery.Response> {
-        return this.http.get<GetUserDetailQuery.Response>(this.baseActionUrl + id);
+        return this.http.get<GetUserDetailQuery.Response>(this.actionUrl + id);
     }
 }

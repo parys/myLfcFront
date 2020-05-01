@@ -1,7 +1,7 @@
 ﻿import { PagedQueryBase } from '@base/infrastructure';
 
 export class UserFilters extends PagedQueryBase {
-    userName: string;
-    ip: string;
-    roleGroupId: number;
+    public userName: string;
+    public ip: string;
+    public roleGroupId: number;
 }

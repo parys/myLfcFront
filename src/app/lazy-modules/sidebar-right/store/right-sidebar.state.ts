@@ -16,7 +16,8 @@ import { GetLatestCommentListQuery } from '@network/shared/right-sidebar/get-lat
     name: 'rightSidebar',
     defaults: {
         latestComments: [],
-        userBirthdays: []
+        userBirthdays: [],
+        usersOnline: null
     },
 })
 @Injectable()
@@ -30,6 +31,11 @@ export class RightSidebarState {
     @Selector()
     static userBirthdays(state: RightSidebarStateModel) {
         return state.userBirthdays;
+    }
+
+    @Selector()
+    static usersOnline(state: RightSidebarStateModel) {
+        return state.usersOnline;
     }
 
     constructor(protected sidebarService: SidebarRightService
@@ -71,45 +77,18 @@ export class RightSidebarState {
                 }));
     }
 
+    @Action(RightSidebarActions.SetOnlineUsers)
+    onSetOnlineUsers({ patchState }: StateContext<RightSidebarStateModel>, { payload }: RightSidebarActions.SetOnlineUsers) {
+        patchState({ usersOnline: payload });
+    }
 
-    // @Action(RightSidebarActions.CreateChatMessage)
-    // onCreateMessage(ctx: StateContext<RightSidebarStateModel>, { payload }: RightSidebarActions.CreateChatMessage) {
-    //     return this.chatService.create(payload).pipe(
-    //         tap(response => {
-    //         })
-    //     )
-    // }
 
-    // @Action(RightSidebarActions.UpdateChatMessage)
-    // onUpdateMessage({ dispatch }: StateContext<RightSidebarStateModel>, { payload }: RightSidebarActions.UpdateChatMessage) {
-    //     return this.chatService.update(payload.id, payload).pipe(
-    //         tap(response => {
-    //             dispatch(new ShowNotice(NoticeMessage.success('Cообщение обновлено', '')))
-    //         })
-    //     )
-    // }
-
-    // @Action(RightSidebarActions.DeleteChatMessage)
-    // onDeleteMessage({ setState, dispatch }: StateContext<RightSidebarStateModel>, { payload }: RightSidebarActions.DeleteChatMessage) {
-    //     return this.chatService.delete(payload).pipe(
-    //         tap(result => {
-    //             if (result) {
-    //                 setState(
-    //                     patch({
-    //                         miniMessages: removeMany<GetChatMessagesListQuery.ChatMessageListDto>
-    //                             (item => item.id === payload)
-    //                     })
-    //                 );
-    //                 setState(
-    //                     patch({
-    //                         maxiMessages: removeMany<GetChatMessagesListQuery.ChatMessageListDto>
-    //                             (item => item.id === payload)
-    //                     })
-    //                 );
-    //             }
-
-    //             dispatch(new ShowNotice(NoticeMessage.success('Сообщение удалено', '')));
-    //         })
-    //     );
-    // }
+    @Action(RightSidebarActions.GetOnlineUsers)
+    onCreateMessage({ patchState }: StateContext<RightSidebarStateModel>) {
+        return this.sidebarService.getOnlineCount().pipe(
+            tap(response => {
+                patchState({ usersOnline: response });
+            })
+        )
+    }
 }

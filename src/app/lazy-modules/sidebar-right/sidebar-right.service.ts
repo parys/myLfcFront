@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 
 import { HttpWrapper } from '@base/httpWrapper';
 import { USERS_ROUTE, COMMENTS_ROUTE } from '@constants/routes.constants';
-import { UsersOnline } from '@domain/models';
 import { GetLatestCommentListQuery } from '@network/shared/right-sidebar/get-latest-comments-list.query';
 import { GetUserBirthdaysQuery } from '@network/shared/right-sidebar/get-users-birthdays.query';
+import { UsersOnline } from '@network/shared/right-sidebar/user-online.model';
 
 @Injectable()
 export class SidebarRightService {
