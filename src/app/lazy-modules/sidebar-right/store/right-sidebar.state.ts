@@ -6,8 +6,8 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { RightSidebarStateModel } from './right-sidebar.model';
 import { RightSidebarActions } from './right-sidebar.actions';
 
-import { patch, updateItem, insertItem } from '@ngxs/store/operators';
-import { appendToStartOrUpdate } from '@domain/operators/append-to-start-or-append';
+import { patch, updateItem } from '@ngxs/store/operators';
+
 import { SidebarRightService } from '../sidebar-right.service';
 import { GetLatestCommentListQuery } from '@network/shared/right-sidebar/get-latest-comments-list.query';
 
@@ -16,6 +16,7 @@ import { GetLatestCommentListQuery } from '@network/shared/right-sidebar/get-lat
     name: 'rightSidebar',
     defaults: {
         latestComments: [],
+        userBirthdays: []
     },
 })
 @Injectable()
@@ -24,6 +25,11 @@ export class RightSidebarState {
     @Selector()
     static latestComments(state: RightSidebarStateModel) {
         return state.latestComments;
+    }
+
+    @Selector()
+    static userBirthdays(state: RightSidebarStateModel) {
+        return state.userBirthdays;
     }
 
     constructor(protected sidebarService: SidebarRightService
@@ -55,6 +61,16 @@ export class RightSidebarState {
             patchState({ latestComments: [payload, ... latestComments] });
         }
     }
+
+    @Action(RightSidebarActions.GetUserBirthdays)
+    onGetUserBirthdays({ patchState }: StateContext<RightSidebarStateModel>) {
+        return this.sidebarService.getUsersBirthdays()
+            .pipe(
+                tap(response => {
+                    patchState({userBirthdays: response.results});
+                }));
+    }
+
 
     // @Action(RightSidebarActions.CreateChatMessage)
     // onCreateMessage(ctx: StateContext<RightSidebarStateModel>, { payload }: RightSidebarActions.CreateChatMessage) {

@@ -1,4 +1,6 @@
-﻿<ng-container *ngIf="{ userId: userId$ | async, latestComments: latestComments$ | async } as data">
+﻿<ng-container *ngIf="{ userId: userId$ | async,
+     latestComments: latestComments$ | async,
+     userBirthdays: userBirthdays$ | async } as data">
     <ul class="maroon-panel login-list-panel padding10">
         <li *ngIf="!data.userId;else logined">
             <account-signin-widget></account-signin-widget>
@@ -29,7 +31,7 @@
                 личностей</b></a>
     </section>
     <section class="full-width top10">
-        <user-birthday></user-birthday>
+        <user-birthday [userBirthdays]="data.userBirthdays"></user-birthday>
     </section>
     <comment-last [comments]="data.latestComments"></comment-last>
     <a mat-raised-button class="full-width color-back-gold" [routerLink]="['/job']"><b>Вакансии</b></a>

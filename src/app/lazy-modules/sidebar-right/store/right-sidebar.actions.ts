@@ -6,6 +6,10 @@ export namespace RightSidebarActions {
         static readonly type = '[RightSidebar] Get latest comments list';
     }
 
+    export class GetUserBirthdays {
+        static readonly type = '[RightSidebar] Get user birthdays';
+    }
+
     // export class CreateChatMessage {
     //     static readonly type = '[RightSidebar] Create chat message by id';
     //     constructor(public readonly payload: CreateChatMessageCommand.Request) { }
