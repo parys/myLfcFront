@@ -8,18 +8,19 @@ import { Store } from '@ngxs/store';
 import { StorageService } from '@base/storage';
 import { Comment, UsersOnline, Pm, Notification, MatchPerson, MatchEvent } from '@domain/models';
 import { environment } from '@environments/environment';
-import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions'; // TODO think about move to diffferent signalr service for only authed users
+import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions';
 import { Actions as MpActions } from '@match-persons/store/match-persons.actions';
 import { Cookies } from '@cedx/ngx-cookies';
 import { ChatActions } from '@chat/store';
 import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages-list.query';
+import { RightSidebarActions } from '@lazy-modules/sidebar-right/store';
+import { GetLatestCommentListQuery } from '@network/shared/right-sidebar/get-latest-comments-list.query';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
     private hubConnection: HubConnection;
     private alreadyStarted = false;
     public onlineSubject: Subject<UsersOnline> = new Subject<UsersOnline>();
-    public lastCommentsSubject: Subject<Comment> = new Subject<Comment>();
     public newComment: Subject<Comment> = new Subject<Comment>();
     public matchEvent: Subject<MatchEvent> = new Subject<MatchEvent>();
 
@@ -59,11 +60,11 @@ export class SignalRService {
         this.hubConnection.off('updateOnline', (data: UsersOnline) => {
             this.onlineSubject.next(data);
         });
-        this.hubConnection.on('addComment', (data: Comment) => {
-            this.lastCommentsSubject.next(data);
+        this.hubConnection.on('addComment', (data: GetLatestCommentListQuery.LastCommentListDto) => {
+            this.store.dispatch(new RightSidebarActions.PutToLatestComments(data))
         });
-        this.hubConnection.on('updateComment', (data: Comment) => {
-            this.lastCommentsSubject.next(data);
+        this.hubConnection.on('updateComment', (data: GetLatestCommentListQuery.LastCommentListDto) => { // todo combine with above method
+            this.store.dispatch(new RightSidebarActions.PutToLatestComments(data))
         });
         this.hubConnection.on('addMp', (data: MatchPerson) => {
             this.store.dispatch(new MpActions.PushMatchPerson(data));

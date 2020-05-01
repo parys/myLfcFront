@@ -42,7 +42,7 @@ export class ChatState {
     ) { }
 
     @Action(ChatActions.GetChatList)
-    onGetUsersList({ patchState }: StateContext<ChatStateModel>, { payload }: ChatActions.GetChatList) {
+    onGetChatList({ patchState }: StateContext<ChatStateModel>, { payload }: ChatActions.GetChatList) {
         return this.chatService.getAll(payload)
             .pipe(
                 tap(response => {

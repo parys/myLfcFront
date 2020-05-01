@@ -15,6 +15,8 @@ import {
 import { PipesModule } from '@base/pipes';
 import { SidebarRightService } from './sidebar-right.service';
 import { DynamicContentOutletModule } from '@layout/dynamic-content-outlet/dynamic-content-outlet.module';
+import { NgxsModule } from '@ngxs/store';
+import { RightSidebarState } from './store';
 
 @NgModule({
     imports: [
@@ -24,7 +26,8 @@ import { DynamicContentOutletModule } from '@layout/dynamic-content-outlet/dynam
         ChatModule,
         AccountSigninWidgetModule,
         PipesModule,
-        DynamicContentOutletModule
+        DynamicContentOutletModule,
+        NgxsModule.forFeature([RightSidebarState])
     ],
     declarations: [
         UserBirthdayComponent,
