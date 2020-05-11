@@ -58,7 +58,7 @@
     "codelyzer": "5.2.2",
     "source-map-explorer": "2.4.2",
     "tinymce": "4.9.9",
-    "ts-loader": "7.0.3",
+    "ts-loader": "7.0.4",
     "ts-node": "8.10.1",
     "tslint": "6.1.2",
     "typescript": "3.8.3",
