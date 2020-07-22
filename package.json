@@ -51,7 +51,7 @@
     "@nguniversal/builders": "9.1.1",
     "@ngxs/devtools-plugin": "3.6.2",
     "@ngxs/logger-plugin": "3.6.2",
-    "@schematics/angular": "9.1.12",
+    "@schematics/angular": "10.0.4",
     "@types/express": "4.17.7",
     "@types/node": "12.12.51",
     "@types/tinymce": "4.5.24",
