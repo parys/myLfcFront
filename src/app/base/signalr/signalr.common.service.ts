@@ -16,12 +16,12 @@ import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages
 import { RightSidebarActions } from '@lazy-modules/sidebar-right/store';
 import { GetLatestCommentListQuery } from '@network/shared/right-sidebar/get-latest-comments-list.query';
 import { UsersOnline } from '@network/shared/right-sidebar/user-online.model';
+import { CommentActions } from '@comments/shared/store';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
     private hubConnection: HubConnection;
     private alreadyStarted = false;
-    public newComment: Subject<Comment> = new Subject<Comment>();
     public matchEvent: Subject<MatchEvent> = new Subject<MatchEvent>();
 
     constructor(private storage: StorageService,
@@ -74,7 +74,7 @@ export class SignalRService {
         });
         this.hubConnection.on('newComment', (data: Comment) => {
             data.children = data.children || [];
-            this.newComment.next(data);
+            this.store.dispatch(new CommentActions.PutNewComment(data));
         });
         if (token) {
             this.hubConnection.on('readPm',

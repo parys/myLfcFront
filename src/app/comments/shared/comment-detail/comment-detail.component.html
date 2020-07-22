@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="full-width"
-                    *ngIf="data.userId !== item.authorId && canCommentary && !isAddingMode && data.isLogined">
+                    *ngIf="+data.userId !== +item.authorId && canCommentary && !isAddingMode && data.isLogined">
                     <a role="button" (click)="showAddCommentModal()">Ответить</a>
                 </div>
             </div>

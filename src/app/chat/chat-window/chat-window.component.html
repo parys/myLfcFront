@@ -4,7 +4,7 @@
                 <div class="full-width flex-space-between">
                     <a [routerLink]="['/users', message.authorId]" [textContent]="message.userName"></a>
                     <span class="">
-                        <a role="button" *ngIf="isModerator || userId === message.authorId" (click)="edit(i)"
+                        <a role="button" *ngIf="isModerator || +userId === +message.authorId" (click)="edit(i)"
                             class="material-icons" style="font-size: 100%">
                             edit
                         </a>
@@ -16,9 +16,10 @@
                     <span [textContent]="message.additionTime | customDate"></span>
                 </div>
                 <div class="full-width message" [innerHTML]="message.message | safe: 'html'"></div>
-                <div class="full-width">
-                    <a role="button" (click)="addReply(i)"><i *ngIf="isLogined && userId !== message.authorId"
-                            class="material-icons">reply</i></a>
+                <div class="full-width" *ngIf="isLogined && userId !== message.authorId">
+                    <a role="button" (click)="addReply(i)">
+                        <i class="material-icons">reply</i>
+                    </a>
                 </div>
             </div>
         </div>

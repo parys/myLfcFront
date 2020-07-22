@@ -6,7 +6,6 @@ declare type Selector<T = any> = (value?: T) => any;
 export function appendToStartOrUpdate<T>(item: T, compareBy: Selector<T>) {
 
     return (existing: Readonly<T[]>): T[] => {
-        let result: T[];
         if (!item) {
             return existing as T[];
         }
@@ -15,11 +14,10 @@ export function appendToStartOrUpdate<T>(item: T, compareBy: Selector<T>) {
             const existingIndex = existing.findIndex(compareBy);
             if (existingIndex >= 0) {
                 existing[existingIndex] = item;
-                result = existing;
             } else {
-                result = [item, ...existing];
+                existing.unshift(item);
             }
-            return result;
+            return existing;
         };
     }
 }

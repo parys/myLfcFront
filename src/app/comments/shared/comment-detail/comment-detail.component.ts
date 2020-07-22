@@ -1,14 +1,14 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+
 import { Comment, CommentVote } from '@domain/models';
 import { CommentService } from '@comments/comment.service';
 import { EditorComponent } from '@editor/index';
 import { ObserverComponent } from '@domain/base';
-import { SignalRService } from '@base/signalr';
-import { Select } from '@ngxs/store';
 import { AuthState } from '@auth/store';
-import { Observable } from 'rxjs';
 import { NotifierService } from '@notices/services';
 import { ConfirmationMessage } from '@notices/shared';
 
@@ -44,28 +44,27 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
     constructor(private materialCommentService: CommentService,
                 private notifier: NotifierService,
                 private cd: ChangeDetectorRef,
-                private formBuilder: FormBuilder,
-                private signalRService: SignalRService) {
+                private formBuilder: FormBuilder) {
         super();
     }
 
     public ngOnInit(): void {
         this.initForm();
 
-        const sub$ = this.signalRService.newComment.subscribe((data: Comment) => {
-            if (data.matchId === this.matchId || data.materialId === this.materialId) {
-                if (data.parentId === this.item.id) {
-                    const index = this.item.children.findIndex(x => x.id === data.id);
-                    if (index !== -1) {
-                        this.item.children[index] = data;
-                    } else {
-                        this.item.children.push(data);
-                    }
-                    this.cd.markForCheck();
-                }
-            }
-        });
-        this.subscriptions.push(sub$);
+        // const sub$ = this.signalRService.newComment.subscribe((data: Comment) => {
+        //     if (data.matchId === this.matchId || data.materialId === this.materialId) {
+        //         if (data.parentId === this.item.id) {
+        //             const index = this.item.children.findIndex(x => x.id === data.id);
+        //             if (index !== -1) {
+        //                 this.item.children[index] = data;
+        //             } else {
+        //                 this.item.children.push(data);
+        //             }
+        //             this.cd.markForCheck();
+        //         }
+        //     }
+        // });
+        //this.subscriptions.push(sub$);
     }
 
     public verify(): void {

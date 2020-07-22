@@ -12,6 +12,8 @@ import { CommentService } from '@comments/comment.service';
 import { CommentDetailComponent } from '@comments/shared/comment-detail';
 import { CommentSectionComponent } from '@comments/shared/comment-section';
 import { OdModule } from '@od/od.module';
+import { NgxsModule } from '@ngxs/store';
+import { CommentsState } from './store';
 
 @NgModule({
     imports: [
@@ -23,7 +25,8 @@ import { OdModule } from '@od/od.module';
         ReactiveFormsModule,
         MatIconModule,
         MatButtonModule,
-        OdModule
+        OdModule,
+        NgxsModule.forFeature([CommentsState])
     ],
     declarations: [
         CommentDetailComponent,

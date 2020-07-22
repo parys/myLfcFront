@@ -12,14 +12,16 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Comment, CommentFilter, PagedList } from '@domain/models';
+import { Comment } from '@domain/models';
 import { SignalRService } from '@base/signalr';
 
 import { CommentService } from '@comments/comment.service';
 import { ObserverComponent } from '@domain/base';
 import { Observable } from 'rxjs';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { AuthState } from '@auth/store';
+import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-list-by-entity-id-query';
+import { CommentActions, CommentsState } from '../store';
 
 @Component({
     selector: 'comment-section',
@@ -30,22 +32,21 @@ import { AuthState } from '@auth/store';
 export class CommentSectionComponent extends ObserverComponent implements OnInit, OnChanges, AfterViewChecked {
     private prevHeight = 0;
     private isScrolled: boolean;
-    public items: Comment[] = [];
-    public page = 1;
-    public itemsPerPage = 50;
-    public totalItems = 0;
     public commentAddForm: FormGroup;
     @Input() public materialId: number;
     @Input() public matchId: number;
     @Input() public type: number;
     @Input() public canCommentary = false;
-    
+
 
     @Select(AuthState.isLogined) isLogined$: Observable<boolean>;
+
+    @Select(CommentsState.comments) comments$: Observable<GetCommentListByEntityIdQuery.CommentListDto[]>;
 
     constructor(private commentService: CommentService,
                 private cd: ChangeDetectorRef,
                 private route: ActivatedRoute,
+                private store: Store,
                 private renderer: Renderer2,
                 public element: ElementRef,
                 private router: Router,
@@ -55,32 +56,21 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
     }
 
     public ngOnInit(): void {
+        this.update();
         this.commentAddForm = this.formBuilder.group({
             message: ['', Validators.compose([
                 Validators.required, Validators.minLength(3)])]
         });
         this.type = this.type ? this.type : 3;
 
-        const sub$ = this.signalRService.newComment.subscribe((data: Comment) => {
-            if (data.matchId === this.matchId || data.materialId === this.materialId) {
-                if (data.parentId == null) {
-                    const index = this.items.findIndex(x => x.id === data.id);
-                    if (index !== -1) {
-                        this.items[index] = data;
-                    } else {
-                        this.items.push(data);
-                        this.totalItems += 1;
-                    }
-                    this.cd.markForCheck();
-                }
-            }
-        });
-        this.subscriptions.push(sub$);
-
         const sub2$ = this.commentAddForm.valueChanges.subscribe(() => {
             this.cd.markForCheck();
         });
         this.subscriptions.push(sub2$);
+    }
+
+    public ngOnChanges(): void {
+        this.isScrolled = false;
     }
 
     // todo research
@@ -140,45 +130,17 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
         }
     }
 
-    public ngOnChanges(): void {
-        this.update();
-        this.isScrolled = false;
-    }
-
-    public pageChanged(event: any): void {
-        this.page = event;
-        this.update();
-    }
-
     public update(): void {
-        const filters = new CommentFilter();
+        const filters = new GetCommentListByEntityIdQuery.Request();
         filters.materialId = this.materialId;
         filters.matchId = this.matchId;
-        if (this.materialId) {
-            const sub$ = this.commentService
-                .getAllByMaterial(filters)
-                .subscribe(data => this.parsePageable(data),
-                    null,
-                    () => {
-                        this.cd.markForCheck();
-                    });
-            this.subscriptions.push(sub$);
-        } else if (this.matchId) {
-            const sub$ = this.commentService
-                .getAllByMatch(filters)
-                .subscribe(data => this.parsePageable(data),
-                    null,
-                    () => {
-                        this.cd.markForCheck();
-                    });
-            this.subscriptions.push(sub$);
-        }
+        this.store.dispatch(new CommentActions.GetCommentsListByEntity(filters));
     }
 
 
     public trackByFn(index: number, item: Comment) {
         if (!item) { return null; }
-        return item.id;
+        return item.id && item.children;
     }
 
     public onSubmit(): void {
@@ -195,12 +157,5 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
                     this.cd.markForCheck();
                 });
         this.subscriptions.push(sub$);
-    }
-
-    private parsePageable(pageable: PagedList<Comment>): void {
-        this.items = pageable.results;
-        this.page = pageable.currentPage;
-        this.itemsPerPage = pageable.pageSize;
-        this.totalItems = pageable.rowCount;
     }
 }
