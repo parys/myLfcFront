@@ -130,7 +130,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
               "bundleDependencies": true,
               "fileReplacements": [
                 {
@@ -151,7 +150,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
               "bundleDependencies": true,
               "fileReplacements": [
                 {
