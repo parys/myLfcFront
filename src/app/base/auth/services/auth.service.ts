@@ -21,7 +21,7 @@ export class AuthService {
         expires: new Date(new Date().setMonth(new Date().getMonth() + 1)),
         maxAge: 2678400,
         path: '/'
-    })
+    });
     private refreshSubscription$: Subscription;
     public tokens: IAuthTokenModel;
 
@@ -61,10 +61,9 @@ export class AuthService {
     }
 
     public logout(): void {
-
-      this.cookies.remove('auth-tokens');
-      this.storage.removeAuthTokens();
-      this.store.dispatch(new Logout())
+        this.cookies.remove('auth-tokens');
+        this.storage.removeAuthTokens();
+        this.store.dispatch(new Logout());
         if (this.refreshSubscription$) {
             this.refreshSubscription$.unsubscribe();
 
@@ -99,6 +98,7 @@ export class AuthService {
                 this.tokens = tokens;
                 this.store.dispatch(new SetTokens(tokens));
                 this.setUserProfile(user);
+                this.scheduleRefresh();
             }));
     }
 
@@ -116,10 +116,7 @@ export class AuthService {
     }
 
     private scheduleRefresh(): void {
-        // this.refreshSubscription$ = this.tokens$.pipe(
-        //     first(),
         // refresh every half the total expiration time
-        //  flatMap((tokens: IAuthTokenModel) => 
         if (this.tokens) {
             this.refreshSubscription$ = interval(this.tokens.expires_in * 500).pipe(
                 flatMap(() => this.refreshTokens()))

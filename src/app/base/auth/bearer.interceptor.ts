@@ -30,7 +30,7 @@ export class AuthHeadersInterceptor implements HttpInterceptor {
                 (err: any) => {
                     if (isUnauthorizedError(err)) {
                        this.authService.refreshTokens();
-                       retry(1)
+                       retry(1);
                     }
                     this.loader.hide();
                 },
