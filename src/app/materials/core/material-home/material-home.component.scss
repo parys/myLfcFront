@@ -1,7 +1,9 @@
-﻿.material-container {
+﻿hen .material-container {    
     max-width:250px;
     margin-bottom: 5px;
     width: 100%;
+    content-visibility: auto;
+    contain-intrinsic-size: 360px; 
 }
 
 @media (min-width: 768px) and (max-width: 1056px), (max-width: 536px) {

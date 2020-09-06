@@ -8,6 +8,7 @@ import { AbstractControlComponent, ControlValueProvider } from '@domain/base/abs
 import { PagedList, Person, PersonFilters } from '@domain/models';
 import { DEBOUNCE_TIME } from '@constants/app.constants';
 import { PersonService } from '@persons/person.service';
+import { GetMatchPersonsListQuery } from '@network/shared/match-persons';
 
 
 @Component({
@@ -22,8 +23,8 @@ import { PersonService } from '@persons/person.service';
 export class SelectPersonFormFieldComponent extends AbstractControlComponent<number>
     implements OnInit, OnChanges, AfterViewInit, ControlValueAccessor {
 
-
     @Input() personName: string;
+    @Input() public selected: GetMatchPersonsListQuery.MatchPersonListDto;
     @Input() focus = false;
     @Input() type = null;
     @Input() matchId = null;
@@ -36,7 +37,7 @@ export class SelectPersonFormFieldComponent extends AbstractControlComponent<num
         super(cdRef);
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.persons$ = this.selectCtrl.valueChanges.pipe(
             debounceTime(DEBOUNCE_TIME),
             distinctUntilChanged(),
@@ -50,12 +51,15 @@ export class SelectPersonFormFieldComponent extends AbstractControlComponent<num
             switchMap((pagingPersons: PagedList<Person>): Observable<Person[]> => {
                 return of(pagingPersons.results);
             }));
-        this.selectCtrl.setValue(this.personName);
+        this.selectCtrl.setValue(this.selected?.personName ?? this.personName);
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes['personName']) {
-            this.selectCtrl.setValue(this.personName);
+        if (changes.personName) {
+            this.selectCtrl.setValue(changes.personName.currentValue);
+        }
+        if (changes.person) {
+            this.selectCtrl.setValue(changes.person.currentValue.personName);
         }
     }
 

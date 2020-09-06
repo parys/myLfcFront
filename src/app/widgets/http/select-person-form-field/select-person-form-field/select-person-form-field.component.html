@@ -1,6 +1,6 @@
 <mat-form-field class="full-width">
     <input matInput #selectInput placeholder="Игрок" [matAutocomplete]="person"
-     [value]="personName"
+     [value]="selected?.personName || personName"
      [formControl]="selectCtrl">
     <mat-autocomplete #person="matAutocomplete">
         <mat-option *ngFor="let person of persons$ | async" [value]="person.personName"

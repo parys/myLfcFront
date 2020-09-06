@@ -17,7 +17,8 @@ import { GetMatchPersonsListQuery, UpdateMatchPersonCommand } from '@network/sha
 export class MatchPersonEditPanelComponent implements OnInit, OnChanges {
 
     @Input() public matchId: number;
-    @Input() public editOptions: {selected: GetMatchPersonsListQuery.MatchPersonListDto,
+    @Input() public selected: GetMatchPersonsListQuery.MatchPersonListDto;
+    @Input() public editOptions: {
         isEdit: boolean,
         mpType: number,
         currentCount: number,
@@ -26,7 +27,6 @@ export class MatchPersonEditPanelComponent implements OnInit, OnChanges {
     @Input() public isHome: boolean;
     @Output() public create = new EventEmitter<UpdateMatchPersonCommand.Request>();
     public editMatchPersonForm: FormGroup;
-    public name: string;
     public isCreation: boolean;
 
     @Select(MatchPersonsState.matchPersonTypes) types$: Observable<MatchPersonType[]>;
@@ -41,7 +41,7 @@ export class MatchPersonEditPanelComponent implements OnInit, OnChanges {
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.editOptions) {
             this.initForm();
-          }
+        }
     }
 
     public onSubmit(): void {
@@ -50,7 +50,6 @@ export class MatchPersonEditPanelComponent implements OnInit, OnChanges {
 
     public setPerson(person: Person): void {
         this.editMatchPersonForm.controls.personId.patchValue(person.id);
-        this.name = person.personName;
         this.onSubmit();
     }
 
@@ -61,12 +60,11 @@ export class MatchPersonEditPanelComponent implements OnInit, OnChanges {
     }
 
     private initForm(): void {
-        const selected = this.editOptions && this.editOptions.selected;
-        this.name = selected ? this.editOptions.selected.personName : '';
+        const selected = this.selected;
 
         this.editMatchPersonForm = this.formBuilder.group({
-            personId: [selected ? this.editOptions.selected.personId : '', Validators.required],
-            personType: [selected ? this.editOptions.selected.personType : this.editOptions.mpType, Validators.required],
+            personId: [selected ? this.selected.personId : '', Validators.required],
+            personType: [selected ? this.selected.personType : this.editOptions.mpType, Validators.required],
             useType: [true],
             isHome: [this.isHome]
         });

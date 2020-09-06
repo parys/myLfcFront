@@ -1,8 +1,12 @@
 ﻿import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { Store, Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+
 import { MatchEventService } from '@match-events/matchEvent.service';
 import { MatchEvent, MatchEventType } from '@domain/models';
+import { MatchEventActions, MatchEventsState } from '@match-events/store';
 
 @Component({
     selector: 'match-event-edit-panel',
@@ -16,19 +20,20 @@ export class MatchEventEditPanelComponent implements OnInit {
     @Input() public selectedEvent: MatchEvent;
     @Input() public isOur: boolean;
     @Output() public matchEvent = new EventEmitter<MatchEvent>();
+
+    @Select(MatchEventsState.matchEventTypes) types$: Observable<MatchEventType[]>;
+
     public editMatchEventForm: FormGroup;
 
-    public types: MatchEventType[];
-
     constructor(private matchEventService: MatchEventService,
-                private formBuilder: FormBuilder) {
+                private formBuilder: FormBuilder,
+                private store: Store) {
     }
 
     public ngOnInit(): void {
         this.initForm();
 
-        this.matchEventService.getTypes()
-            .subscribe(data => this.types = data);
+        this.store.dispatch(new MatchEventActions.GetMatchEventTypesList());
     }
 
     public onSubmit(): void {

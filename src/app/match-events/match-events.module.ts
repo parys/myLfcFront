@@ -8,6 +8,8 @@ import { MatchEventEditPanelComponent } from '@match-events/components/match-eve
 import { MatchEventMatchPanelComponent } from '@match-events/components/match-event-panel-component';
 import { MatchEventsMaterialModule } from '@match-events/match-events-material.module';
 import { MatchEventService } from '@match-events/matchEvent.service';
+import { NgxsModule } from '@ngxs/store';
+import { MatchEventsState } from './store';
 
 @NgModule({
     imports: [
@@ -15,7 +17,8 @@ import { MatchEventService } from '@match-events/matchEvent.service';
         FormsModule,
         ReactiveFormsModule,
         MatchEventsMaterialModule,
-        SelectPersonFormFieldModule
+        SelectPersonFormFieldModule,
+        NgxsModule.forFeature([MatchEventsState])
     ],
     declarations: [
         MatchEventEditPanelComponent,

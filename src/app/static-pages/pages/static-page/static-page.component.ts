@@ -28,7 +28,6 @@ export class StaticPageComponent extends ObserverComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        console.warn(this.typeId);
         this.typeId = this.typeId || this.route.snapshot.data.type || this.route.parent.snapshot.data.type;
         if (!this.typeId) {
             return;

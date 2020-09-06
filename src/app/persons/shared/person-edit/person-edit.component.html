@@ -29,7 +29,7 @@
         </mat-form-field>
         <div class="full-width top20 flex-v-c flex-space-around flex" *ngIf="editPersonForm.get('firstName').value && editPersonForm.get('lastName').value">
             <img class="avatar" *ngIf="photo" [src]="photo" alt="" />
-            <crop-image-field formControlName="photo" (cropped)="croppedImage($event)"></crop-image-field>
+            <crop-image-field (cropped)="croppedImage($event)"></crop-image-field>
         </div>
         <mat-form-field class="full-width">
             <input matInput [matDatepicker]="datePicker" placeholder="Выберите дату рождения" formControlName="birthday">

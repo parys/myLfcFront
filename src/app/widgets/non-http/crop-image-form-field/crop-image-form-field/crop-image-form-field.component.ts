@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
     selector: 'crop-image-field',
@@ -6,10 +7,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./crop-image-form-field.component.scss']
 })
 export class CropImageFormFieldComponent {
-    @Input()
-    public controlName: string;
-    @Output()
-    public cropped: EventEmitter<string> = new EventEmitter<string>();
+    @Output() cropped: EventEmitter<string> = new EventEmitter<string>();
     public imageChangedEvent: any = '';
     public croppedImage: any;
 
@@ -25,5 +23,6 @@ export class CropImageFormFieldComponent {
 
     public crop(): void {
         this.cropped.emit(this.croppedImage.base64);
+        this.imageChangedEvent = '';
     }
 }

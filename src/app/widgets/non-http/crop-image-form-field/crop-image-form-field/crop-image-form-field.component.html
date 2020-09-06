@@ -1,10 +1,10 @@
 ﻿<div class="full-width">
-    <label [for]="controlName" class="mat-raised-button">Загрузить</label>
+    <label for="personImage" class="mat-raised-button">Загрузить</label>
     <input type="file"
            class="hidden"
            accept="image/*"
            (change)="onUploadImage($event)"
-           [id]="controlName" />
+           id="personImage" />
     <image-cropper [imageChangedEvent]="imageChangedEvent"
                    [maintainAspectRatio]="true"
                    [resizeToWidth]="150"

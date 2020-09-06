@@ -111,7 +111,7 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
             country: [null],
             birthday: [null],
             number: [null],
-            photo: [null],
+            photo: [''],
             type: ['', Validators.required]
         });
     }

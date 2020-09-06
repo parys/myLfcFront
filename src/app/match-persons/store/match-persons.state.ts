@@ -14,7 +14,8 @@ import { MatchPersonService } from '@match-persons/match-person.service';
     defaults: {
         matchPersonTypes: [],
         matchPersons: null,
-        editOptions: null
+        editOptions: null,
+        selected: null,
     },
 })
 @Injectable()
@@ -33,6 +34,11 @@ export class MatchPersonsState {
     @Selector()
     static editOptions(state: MatchPersonsStateModel) {
         return state.editOptions;
+    }
+
+    @Selector()
+    static selected(state: MatchPersonsStateModel) {
+        return state.selected;
     }
 
     constructor(private store: Store, protected matchPersonNetwork: MatchPersonService) { }
@@ -69,8 +75,7 @@ export class MatchPersonsState {
                 if (this.checkExit(editOptions.neededCount, editOptions.currentCount)) {
                     patchState({ editOptions: null});
                 } else {
-                    editOptions.selected = null;
-                    patchState({ editOptions: {...editOptions}});
+                    patchState({ editOptions: {...editOptions }, selected: null});
                 }
         }));
     }
@@ -97,13 +102,13 @@ export class MatchPersonsState {
     @Action(Actions.SetEditOptions)
     onSetEditOptions({ patchState }: StateContext<MatchPersonsStateModel>, { payload }: Actions.SetEditOptions) {
         this.store.dispatch(new Actions.GetMatchPersonTypesList());
-        patchState({ editOptions: {selected: null, ...payload} });
+        patchState({ editOptions: payload, selected: null });
     }
 
     @Action(Actions.SetSelectedPerson)
     onSetSelectedPerson({ patchState }: StateContext<MatchPersonsStateModel>, { payload }: Actions.SetSelectedPerson) {
         this.store.dispatch(new Actions.GetMatchPersonTypesList());
-        patchState({ editOptions: {selected: payload, mpType: null, currentCount: 0, neededCount: 0, personTypeId: null } });
+        patchState({ editOptions: { mpType: null, currentCount: 0, neededCount: 0, personTypeId: null }, selected: payload });
     }
 
     @Action(Actions.CancelEdit)

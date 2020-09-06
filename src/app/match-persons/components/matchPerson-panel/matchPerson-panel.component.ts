@@ -24,12 +24,14 @@ export class MatchPersonPanelComponent extends ObserverComponent implements OnIn
 
     @Select(MatchPersonsState.matchPersons) matchPersons$: Observable<Record<number, GetMatchPersonsListQuery.MatchPersonListDto[]>>;
 
-    @Select(MatchPersonsState.editOptions) editOptions$: Observable<{selected: GetMatchPersonsListQuery.MatchPersonListDto,
+    @Select(MatchPersonsState.editOptions) editOptions$: Observable<{
         isEdit: boolean,
         mpType: number,
         currentCount: number,
         neededCount: number,
         personTypeId: number}>;
+
+    @Select(MatchPersonsState.selected) selected$: Observable<GetMatchPersonsListQuery.MatchPersonListDto>;
 
     constructor(private store: Store) {
         super();
