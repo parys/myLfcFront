@@ -32,10 +32,12 @@
                         аккаунта</button>
                 </div>
                 <span>
-                    <mat-icon *ngIf="data.userId === data.user.id" role="button" [routerLink]="['./settings']"
+                    <ng-container *ngIf="data.userId === data.user.id">
+                    <mat-icon role="button" [routerLink]="['./settings']"
                         matTooltip="Уведомления" class="color-back-gold">notifications</mat-icon>
-                    <mat-icon *ngIf="data.userId === data.user.id" role="button" matTooltip="Изменить профиль"
+                    <mat-icon role="button" matTooltip="Изменить профиль"
                         [routerLink]="['./edit']">settings</mat-icon>
+                    </ng-container>
                 </span>
             </div>
 

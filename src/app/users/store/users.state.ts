@@ -75,7 +75,7 @@ export class UsersState {
     }
 
     constructor(protected network: RoleGroupService, protected usersNetwork: UserService,
-        private titleService: CustomTitleMetaService,) { }
+                private titleService: CustomTitleMetaService) { }
 
     @Action(ChangeSort)
     @Action(ChangePage)
