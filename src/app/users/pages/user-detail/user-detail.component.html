@@ -19,7 +19,7 @@
             <div class="flex-space-between">
                 <div *ngIf="data.userId === data.user.id || data.isModerator">
                     <label role="button" for="update-avatar-input" *ngIf="data.userId === data.user.id"
-                        matTooltip="Обновить фото" class=""><i class="material-icons">add_photo_alternate</i></label>
+                        matTooltip="Обновить фото" class=""><i class="material-icons">add_a_photo</i></label>
                     <input type="file" class="hidden" accept="image/*" (change)="onChangeAvatar($event)"
                         id="update-avatar-input" />
                     <button mat-raised-button color="primary" (click)="resetAvatar(data.user.id)">
@@ -33,10 +33,10 @@
                 </div>
                 <span>
                     <ng-container *ngIf="data.userId === data.user.id">
-                    <mat-icon role="button" [routerLink]="['./settings']"
-                        matTooltip="Уведомления" class="color-back-gold">notifications</mat-icon>
-                    <mat-icon role="button" matTooltip="Изменить профиль"
-                        [routerLink]="['./edit']">settings</mat-icon>
+                        <mat-icon role="button" [routerLink]="['./settings']" matTooltip="Уведомления"
+                            class="color-back-gold">notifications</mat-icon>
+                        <mat-icon role="button" matTooltip="Изменить профиль" [routerLink]="['./edit']">settings
+                        </mat-icon>
                     </ng-container>
                 </span>
             </div>
@@ -45,7 +45,7 @@
 
         <div class="form-horizontal top10" role="form">
             <div class="flex-space-around flex-v-c">
-                <div  *ngIf="data.isModerator && data.userId !== data.user.id">
+                <div *ngIf="data.isModerator && data.userId !== data.user.id">
                     <form *ngIf="!data.user.lockoutEnd" class="form-inline" role="form" [formGroup]="banForm"
                         (ngSubmit)="onSubmitBan(data.user.id)">
                         <mat-form-field>
@@ -57,9 +57,11 @@
                     </form>
                     <div class="full-width" *ngIf="data.user.lockoutEnd">
                         <mat-form-field>
-                            <input matInput placeholder="Заблокирован до" [value]="data.user.lockoutEnd | customDate:true">
+                            <input matInput placeholder="Заблокирован до"
+                                [value]="data.user.lockoutEnd | customDate:true">
                         </mat-form-field>
-                        <button mat-raised-button color="primary" *ngIf="data.isMainModerator" (click)="unban(data.user.id)">Снять
+                        <button mat-raised-button color="primary" *ngIf="data.isMainModerator"
+                            (click)="unban(data.user.id)">Снять
                             бан</button>
                     </div>
                 </div>
@@ -67,12 +69,12 @@
                     <mat-form-field>
                         <input matInput placeholder="Группа" readonly [value]="data.user.roleGroupName">
                     </mat-form-field>
-                    <div *ngIf="(data.isAdminAssistant && data.userId !== data.user.id)">
+                    <div *ngIf="data.isAdminAssistant && data.userId !== data.user.id">
                         <button mat-raised-button color="warn" (click)="onEditRoleGroup()">Изменить</button>
                     </div>
                 </div>
             </div>
-            <mat-form-field class="full-width" *ngIf="(data.userId === data.user.id || data.isAdminAssistant)">
+            <mat-form-field class="full-width" *ngIf="data.userId === data.user.id || data.isAdminAssistant">
                 <input matInput placeholder="Почта" readonly [value]="data.user.email">
                 <div *ngIf="!data.user.emailConfirmed" class="text-danger">Почта не подтверждена</div>
             </mat-form-field>
@@ -80,7 +82,8 @@
                 <input matInput placeholder="Ip" readonly [value]="data.user.ip">
             </mat-form-field>
             <mat-form-field class="full-width">
-                <input matInput placeholder="Последний вход" readonly [value]="data.user.lastModifiedOn | customDate:true">
+                <input matInput placeholder="Последний вход" readonly
+                    [value]="data.user.lastModifiedOn | customDate:true">
             </mat-form-field>
             <mat-form-field class="full-width">
                 <input matInput placeholder="Дата регистрации" readonly
@@ -102,17 +105,23 @@
                         [queryParams]="{page: 1, userName: data.user.userName, userId: data.user.id}">Новости(<span
                             [textContent]="data.user.newsCount"></span>)</a>
                 </span>
-                <span> | </span>
-                <span *ngIf="data.user.blogsCount > 0">
-                    <a [routerLink]="['/blogs']"
-                        [queryParams]="{page: 1, userName: data.user.userName, userId: data.user.id}">Блоги(<span
-                            [textContent]="data.user.blogsCount"></span>)</a>
-                </span>
-                <span> | </span>
-                <span *ngIf="data.user.commentsCount > 0">
-                    <a [routerLink]="['/comments']" [queryParams]="{page: 1, userId: data.user.id}">Комментарии(<span
-                            [textContent]="data.user.commentsCount"></span>)</a>
-                </span>
+                <ng-container *ngIf="data.user.blogsCount > 0">
+                    <span> | </span>
+                    <span>
+                        <a [routerLink]="['/blogs']"
+                            [queryParams]="{page: 1, userName: data.user.userName, userId: data.user.id}">Блоги(<span
+                                [textContent]="data.user.blogsCount"></span>)</a>
+                    </span>
+                </ng-container>
+
+                <ng-container *ngIf="data.user.commentsCount > 0">
+                    <span> | </span>
+                    <span>
+                        <a [routerLink]="['/comments']"
+                            [queryParams]="{page: 1, userId: data.user.id}">Комментарии(<span
+                                [textContent]="data.user.commentsCount"></span>)</a>
+                    </span>
+                </ng-container>
             </div>
         </div>
     </div>

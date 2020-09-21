@@ -30,7 +30,7 @@ export class AuthState {
 
     @Selector()
     static userId(state: AuthStateModel) {
-        return state.user ? state.user.sub : null;
+        return state.user ? +state.user.sub : null;
     }
 
     @Selector()
