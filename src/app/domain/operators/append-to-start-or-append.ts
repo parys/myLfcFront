@@ -17,7 +17,7 @@ export function appendToStartOrUpdate<T>(item: T, compareBy: Selector<T>) {
             } else {
                 existing.unshift(item);
             }
-            return existing;
-        };
-    }
+            return [...existing];
+        }
+    };
 }

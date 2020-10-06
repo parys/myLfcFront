@@ -98,14 +98,14 @@ export class ChatState {
     @Action(ChatActions.PutToChatMessage)
     onPutToChatMessage({ setState }: StateContext<ChatStateModel>, { payload }: ChatActions.PutToChatMessage) {
         if (payload.type === ChatMessageType.Mini) {
-            setState(
+            return setState(
                 patch({
                     miniMessages: appendToStartOrUpdate<GetChatMessagesListQuery.ChatMessageListDto>
                         (payload, item => item.id === payload.id)
                 })
             );
         } else if (payload.type === ChatMessageType.Big) {
-            setState(
+            return setState(
                 patch({
                     maxiMessages: appendToStartOrUpdate<GetChatMessagesListQuery.ChatMessageListDto>
                         (payload, item => item.id === payload.id)
