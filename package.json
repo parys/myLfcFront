@@ -45,13 +45,13 @@
     "zone.js": "0.11.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.1001.5",
-    "@angular-devkit/schematics": "10.1.5",
-    "@angular/cli": "10.1.5",
+    "@angular-devkit/build-angular": "0.1001.6",
+    "@angular-devkit/schematics": "10.1.6",
+    "@angular/cli": "10.1.6",
     "@nguniversal/builders": "10.1.0",
     "@ngxs/devtools-plugin": "3.7.0",
     "@ngxs/logger-plugin": "3.7.0",
-    "@schematics/angular": "10.1.5",
+    "@schematics/angular": "10.1.6",
     "@types/express": "4.17.8",
     "@types/node": "12.12.64",
     "@types/tinymce": "4.6.0",
