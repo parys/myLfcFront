@@ -20,7 +20,7 @@ export class MatchResolver implements Resolve<any> {
         const payload = new GetMatchDetailQuery.Request({ id: route.params.id });
         return this.store.dispatch([
             new GetMatchById(payload),
-            new CommentActions.GetCommentsListByEntity( new GetCommentListByEntityIdQuery.Request({materialId: route.params.id}))]);
+            new CommentActions.GetCommentsListByEntity( new GetCommentListByEntityIdQuery.Request({matchId: route.params.id}))]);
     }
 
 }
