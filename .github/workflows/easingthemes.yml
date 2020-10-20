@@ -28,7 +28,7 @@ jobs:
     - name: Run build task
       run: npm run build:test --if-present
     - name: Deploy to Server
-      uses: easingthemes/ssh-deploy@v2.1.2
+      uses: easingthemes/ssh-deploy@v2.1.5
       env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
           ARGS: "-avzr --delete --exclude=/browser/src/"
