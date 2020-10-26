@@ -51,7 +51,6 @@ export class SignalRService {
 
         this.hubConnection = new HubConnectionBuilder()
             .withUrl(`${environment.apiUrl}hubs/${hubUrl}`, options)
-            .withAutomaticReconnect()
             .configureLogging(LogLevel.Error)
             .build();
         this.hubConnection.on('updateChat', (data: GetChatMessagesListQuery.ChatMessageListDto) => {
