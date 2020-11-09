@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { tap } from 'rxjs/operators';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
+import { cloneDeep } from 'lodash';
 
 import {
     CommentActions
@@ -42,7 +43,7 @@ export class CommentsState {
     }
 
     @Action(CommentActions.PutNewComment)
-    onPutNewComment({ patchState, getState }: StateContext<CommentsStateModel>, { payload }: CommentActions.PutNewComment) {
+    onPutNewComment({ patchState, getState, setState }: StateContext<CommentsStateModel>, { payload }: CommentActions.PutNewComment) {
         const { comments } = getState();
         const materialId = this.store.selectSnapshot(MaterialsState.material)?.id;
         const matchId = this.store.selectSnapshot(MatchesState.match)?.id;
@@ -61,11 +62,11 @@ export class CommentsState {
         } else {
             this.updateComment(comments, payload);
         }
-        patchState({ comments: [...comments] });
+        patchState({ comments: cloneDeep(comments) });
     }
 
     private updateComment(comments: GetCommentListByEntityIdQuery.CommentListDto[],
-        payload: GetCommentListByEntityIdQuery.CommentListDto): GetCommentListByEntityIdQuery.CommentListDto {
+            payload: GetCommentListByEntityIdQuery.CommentListDto): GetCommentListByEntityIdQuery.CommentListDto {
         let commentFound: GetCommentListByEntityIdQuery.CommentListDto;
         for (let index = 0; index < comments.length; index++) {
             if (comments[index].id === payload.parentId) {

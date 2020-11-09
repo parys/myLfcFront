@@ -29,8 +29,8 @@
     "@angular/platform-server": "10.2.2",
     "@angular/router": "10.2.2",
     "@angular/service-worker": "10.2.2",
-    "@microsoft/signalr": "5.0.0-preview.3.20215.14",
     "@cedx/ngx-cookies": "3.1.0",
+    "@microsoft/signalr": "5.0.0-preview.3.20215.14",
     "@nguniversal/common": "10.1.0",
     "@nguniversal/express-engine": "10.1.0",
     "@nguniversal/module-map-ngfactory-loader": "8.2.6",
@@ -40,7 +40,7 @@
     "express": "4.17.1",
     "ngx-image-cropper": "2.1.2",
     "ngx-pagination": "4.1.0",
-    "node-sass": "5.0.0",
+    "node-sass": "4.14.1",
     "rxjs": "6.6.3",
     "zone.js": "0.11.3"
   },
