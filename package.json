@@ -32,7 +32,7 @@
     "@cedx/ngx-cookies": "3.1.0",
     "@microsoft/signalr": "5.0.0-preview.3.20215.14",
     "@nguniversal/common": "10.1.0",
-    "@nguniversal/express-engine": "10.1.0",
+    "@nguniversal/express-engine": "11.0.1",
     "@nguniversal/module-map-ngfactory-loader": "8.2.6",
     "@ngxs/store": "3.7.1",
     "angular2-recaptcha": "1.1.0",
