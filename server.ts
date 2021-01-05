@@ -23,7 +23,7 @@ import { environment } from './src/environments/environment';
 
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
-import {MODULE_MAP, ngExpressEngine, provideModuleMap, AppServerModule} from './src/main.server';
+import { ngExpressEngine, AppServerModule} from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
 
@@ -34,13 +34,7 @@ export function app() {
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine('html', ngExpressEngine({
-    bootstrap: AppServerModule,
-    providers: [    {
-      provide: MODULE_MAP,
-      useValue: 'lazy',
-    },
-
-    ]
+    bootstrap: AppServerModule    
   }));
 
   server.set('view engine', 'html');
