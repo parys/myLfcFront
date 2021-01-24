@@ -25,8 +25,8 @@ jobs:
         node-version: '14.x'
     - name: Install npm dependencies
       run: npm install
-    - name: Run build task
-      run: npm run build:test --if-present
+   # - name: Run build task
+   #   run: npm run build:test --if-present
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@v2.1.5
       env:
