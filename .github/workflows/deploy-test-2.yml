@@ -28,16 +28,14 @@ jobs:
  #   - name: Run build task
  #     run: npm run build:test --if-present
     - name: Deploy to Server
-      uses: kostya-ten/ssh-server-deploy@v4
+      uses: hengkx/ssh-deploy@v1.0.1
       with:
-        host: ${{ secrets.REMOTE_HOST }}
-        port: ${{ secrets.REMOTE_PORT }}
-        username: ${{ secrets.SSH_DEPLOY_USER }}
-        password: ${{ secrets.SSH_DEPLOY_PASS }}
-        scp_source: '/'
-        scp_target: SERVER_TEST_FOLDER
-        before_script: |
-          df -h
-        after_script: |
+        HOST: ${{ secrets.REMOTE_HOST }}
+        PORT: ${{ secrets.REMOTE_PORT }}
+        USERNAME: ${{ secrets.SSH_DEPLOY_USER }}
+        PASSWORD: ${{ secrets.SSH_DEPLOY_PASS }}
+        SOURCE: '/'
+        TARGET: SERVER_TEST_FOLDER
+        AFTER_COMMAND: |
           whoami
 
