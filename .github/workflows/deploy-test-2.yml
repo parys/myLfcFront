@@ -34,7 +34,7 @@ jobs:
         port: ${{ secrets.REMOTE_PORT }}
         username: ${{ secrets.SSH_DEPLOY_USER }}
         password: ${{ secrets.SSH_DEPLOY_PASS }}
-        scp_source: "dist/test/"
+        scp_source: /dist/test/
         scp_target: SERVER_TEST_FOLDER
         before_script: |
           df -h
