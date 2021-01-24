@@ -29,15 +29,15 @@ jobs:
    #   run: npm run build:test --if-present
     - name: Deploy to Server
       uses: kostya-ten/ssh-server-deploy@v4
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          port: ${{ secrets.REMOTE_PORT }}
-          username: ${{ secrets.SSH_DEPLOY_USER }}
-          password: ${{ secrets.SSH_DEPLOY_PASS }}
-          scp_source: "dist/test/"
-          scp_target: SERVER_TEST_FOLDER
-          before_script: |
-            df -h
-          after_script: |
-            whoami
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        port: ${{ secrets.REMOTE_PORT }}
+        username: ${{ secrets.SSH_DEPLOY_USER }}
+        password: ${{ secrets.SSH_DEPLOY_PASS }}
+        scp_source: "dist/test/"
+        scp_target: SERVER_TEST_FOLDER
+        before_script: |
+          df -h
+        after_script: |
+          whoami
 
