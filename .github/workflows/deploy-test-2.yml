@@ -25,8 +25,8 @@ jobs:
         node-version: '14.x'
     - name: Install npm dependencies
       run: npm install
-    - name: Run build task
-      run: npm run build:test --if-present
+ #   - name: Run build task
+ #     run: npm run build:test --if-present
     - name: Deploy to Server
       uses: kostya-ten/ssh-server-deploy@v4
       with:
@@ -34,7 +34,7 @@ jobs:
         port: ${{ secrets.REMOTE_PORT }}
         username: ${{ secrets.SSH_DEPLOY_USER }}
         password: ${{ secrets.SSH_DEPLOY_PASS }}
-        scp_source: /dist/test/
+        scp_source: /
         scp_target: SERVER_TEST_FOLDER
         before_script: |
           df -h
