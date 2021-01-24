@@ -2,6 +2,7 @@
 
     .clubName, .info {
         font-size: 1.2em;
+        text-align: center;
     }
 
     @media (min-width: 768px) and (max-width: 1250px) {
@@ -21,4 +22,12 @@
 
 .logo {
     height: 36px;
+}
+
+.club-info {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 30%;
 }
