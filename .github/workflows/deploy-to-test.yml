@@ -23,16 +23,16 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '14.x'
-   ## - name: Install npm dependencies
-   #   run: npm install
-   # - name: Run build task
-   #   run: npm run build:test --if-present
+    - name: Install npm dependencies
+      run: npm install
+    - name: Run build task
+      run: npm run build:test --if-present
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@v2.1.5
       env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
           ARGS: "-avzr --delete --exclude=/browser/src/"
-          SOURCE: "package.json"
+          SOURCE: "dist/test/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.SSH_DEPLOY_USER }}
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }} 
