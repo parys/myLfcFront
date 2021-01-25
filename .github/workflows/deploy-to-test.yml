@@ -23,7 +23,7 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '14.x'
-   # - name: Install npm dependencies
+   ## - name: Install npm dependencies
    #   run: npm install
    # - name: Run build task
    #   run: npm run build:test --if-present
@@ -36,4 +36,4 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.SSH_DEPLOY_USER }}
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }} 
-          TARGET: ${{ secrets.SERVER_TEST_FOLDER }}
+          TARGET: '/home/ftpuzer/sites/test-ui/' #${{ secrets.SERVER_TEST_FOLDER }}
