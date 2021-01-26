@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { tap } from 'rxjs/operators';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 
 import {
     CommentActions
