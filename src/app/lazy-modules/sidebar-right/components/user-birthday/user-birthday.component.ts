@@ -10,7 +10,7 @@ import { GetUserBirthdaysQuery } from '@network/shared/right-sidebar/get-users-b
 })
 export class UserBirthdayComponent implements AfterViewInit {
     @Input() public userBirthdays: GetUserBirthdaysQuery.UserBirthdayDto[];
-    public currentUserIndex: number = null;
+    public currentUserIndex: number = 0;
 
     constructor(private cd: ChangeDetectorRef) {
     }

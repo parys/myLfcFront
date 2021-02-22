@@ -24,7 +24,7 @@
     public reportUrl: string;
     public photoUrl: string;
     public videoUrl: string;
-    public previewId?: number;
-    public reportId?: number;
+    public previewId: string;
+    public reportId: string;
     public commentCount: number;
 }

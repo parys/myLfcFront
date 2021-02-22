@@ -66,7 +66,7 @@
     "webpack-cli": "4.5.0"
   },
   "main": "package.json",
-  "author": "Andrei Kapitanchik",
+  "author": "Andrei Kapitanchyk",
   "license": "ISC",
   "description": ""
 }

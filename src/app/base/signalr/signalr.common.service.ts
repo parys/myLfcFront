@@ -21,13 +21,13 @@ import { CommentActions } from '@comments/shared/store';
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
     private hubConnection: HubConnection;
-    private alreadyStarted = false;
     public matchEvent: Subject<MatchEvent> = new Subject<MatchEvent>();
 
     constructor(private storage: StorageService,
                 private cookies: Cookies,
                 private store: Store,
                 @Inject(PLATFORM_ID) private platformId: object) {
+                    console.warn("NEW SIGNALR");
     }
 
     public initializeHub(): void {
@@ -44,14 +44,9 @@ export class SignalRService {
             accessTokenFactory() { return token; },
         };
 
-        if (this.alreadyStarted) {
-            this.alreadyStarted = false;
-            this.hubConnection.stop();
-        }
-
         this.hubConnection = new HubConnectionBuilder()
             .withUrl(`${environment.apiUrl}hubs/${hubUrl}`, options)
-            .configureLogging(LogLevel.Error)
+            .configureLogging(LogLevel.Information)
             .build();
         this.hubConnection.on('updateChat', (data: GetChatMessagesListQuery.ChatMessageListDto) => {
             this.store.dispatch(new ChatActions.PutToChatMessage(data));
@@ -94,12 +89,13 @@ export class SignalRService {
                 });
         }
 
+        this.hubConnection.stop();
         this.hubConnection.start()
             .then(() => {
-                this.alreadyStarted = true;
+                console.warn('started');
             })
             .catch((err: Error) => {
-               // console.error(err);
+                console.error("signalr-ee", err);
             });
     }
 }

@@ -15,7 +15,9 @@ export class CustomTitleMetaService {
     }
 
     public removeCount(newCount: number): void {
-        this.count -= newCount;
+        if (this.count > 0) {
+            this.count -= newCount;
+        }
         this.updateTitle();
     }
 
