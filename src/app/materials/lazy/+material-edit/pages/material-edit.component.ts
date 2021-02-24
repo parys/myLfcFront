@@ -68,7 +68,7 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
         this.service.createOrUpdate(newsItem, this.id)
             .subscribe(data => {
                 if (!this.editForm.get('stayOnPage').value) {
-                    this.router.navigate([`/${MaterialType[this.type].toLowerCase()}`, this.id]);
+                    this.router.navigate([`/${MaterialType[this.type].toLowerCase()}`, data.id]);
                 }
                 if (!this.id) {
                     this.location.go(this.router.createUrlTree([MaterialType[this.type].toLowerCase(), data.id, EDIT_ROUTE]).toString());

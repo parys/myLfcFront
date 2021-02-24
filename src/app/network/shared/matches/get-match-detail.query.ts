@@ -13,22 +13,31 @@ export namespace GetMatchDetailQuery {
 
     export class Response extends BaseEntity<Response> {
         public id: number;
-        public email: string;
-        public userName: string;
-        public emailConfirmed: boolean;
-        public gender: boolean;
-        public registrationDate: Date;
-        public lastModifiedOn: Date;
-        public birthday: Date;
-        public roleGroupName: string;
-        public fullName: string;
-        public roleGroupId: number;
-        public lockoutEnd: Date;
-        public photo: string;
-        public newsCount: number;
-        public blogsCount: number;
-        public commentsCount: number;
-        public ip: string;
-
+        public isHome: boolean;
+        public clubId: number;
+        public clubName: string;
+        public homeClubId: number;
+        public homeClubName: string;
+        public homeClubLogo: string;
+        public awayClubId: number;
+        public awayClubName: string;
+        public awayClubLogo: string;
+        public dateTime: Date;
+        public typeId: number;
+        public typeName: string;
+        public stadiumId: number;
+        public stadiumName: string;
+        public stadiumCity: string;
+        public seasonId: number;
+        public seasonName: string;
+        public scoreHome: string;
+        public scorePenaltyHome: number;
+        public scoreAway: string;
+        public scorePenaltyAway: number;
+        public reportUrl: string;
+        public photoUrl: string;
+        public videoUrl: string;
+        public previewId: string;
+        public reportId: string;
     }
 }

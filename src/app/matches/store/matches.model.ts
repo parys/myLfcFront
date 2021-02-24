@@ -6,4 +6,5 @@ export interface MatchesStateModel {
     match: GetMatchDetailQuery.Response;
     request: GetMatchesListQuery.Request;
     matchTypes: MatchType[];
+    timeRemaining: string;
 }

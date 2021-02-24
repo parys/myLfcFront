@@ -1,25 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
-import { tap } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { State, Action, StateContext, Selector } from '@ngxs/store';
+import { map, tap } from 'rxjs/operators';
+import { interval, of, Subscription } from 'rxjs';
+import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
 
 
 import { NoticeMessage } from '@notices/shared';
 import { ShowNotice } from '@notices/store';
 
 import { MatchesStateModel } from './matches.model';
-import {
-    GetMatchesList,
-    ChangeSort,
-    ChangePage,
-    GetMatchById,
-    SetMatchesFilterOptions,
-    GetMatchTypesList
-} from './matches.actions';
+import { MatchActions } from './matches.actions';
 
 import { GetMatchesListQuery, GetMatchDetailQuery } from '@network/shared/matches';
 import { MatchService } from '@matches/match.service';
+import { CustomTitleMetaService } from '@core/services';
+import { isPlatformBrowser } from '@angular/common';
 
 
 @State<MatchesStateModel>({
@@ -28,7 +23,8 @@ import { MatchService } from '@matches/match.service';
         matches: [],
         match: null,
         request: new GetMatchesListQuery.Request({ currentPage: 1, pageSize: 15, sortDirection: 'desc', sortOn: 'lastModified' }),
-        matchTypes: []
+        matchTypes: [],
+        timeRemaining: null,
     },
 })
 @Injectable()
@@ -54,18 +50,26 @@ export class MatchesState {
         return state.request;
     }
 
-    constructor(protected matchNetwork: MatchService) { }
-
-    @Action(ChangeSort)
-    @Action(ChangePage)
-    @Action(SetMatchesFilterOptions)
-    onChangeSort({ patchState, getState, dispatch }: StateContext<MatchesStateModel>, { payload }: ChangeSort) {
-        const { request } = getState();
-        patchState({ request: { ...request, ...payload } });
-        dispatch(new GetMatchesList());
+    @Selector()
+    static timeRemaining(state: MatchesStateModel) {
+        return state.timeRemaining;
     }
 
-    @Action(GetMatchesList)
+    constructor(protected matchNetwork: MatchService,
+        private store: Store,
+        @Inject(PLATFORM_ID) private platformId: object,
+        protected titleService: CustomTitleMetaService) { }
+
+    @Action(MatchActions.ChangeSort)
+    @Action(MatchActions.ChangePage)
+    @Action(MatchActions.SetMatchesFilterOptions)
+    onChangeSort({ patchState, getState, dispatch }: StateContext<MatchesStateModel>, { payload }: MatchActions.ChangeSort) {
+        const { request } = getState();
+        patchState({ request: { ...request, ...payload } });
+        dispatch(new MatchActions.GetMatchesList());
+    }
+
+    @Action(MatchActions.GetMatchesList)
     onGetMatchesList(ctx: StateContext<MatchesStateModel>) {
         const { request } = ctx.getState();
         return this.matchNetwork.getAll2(new GetMatchesListQuery.Request(request))
@@ -82,7 +86,7 @@ export class MatchesState {
     }
 
 
-    @Action(GetMatchTypesList)
+    @Action(MatchActions.GetMatchTypesList)
     onGetMatchTypesList({ patchState, getState }: StateContext<MatchesStateModel>) {
         const { matchTypes } = getState();
         if (matchTypes.length === 0) {
@@ -93,14 +97,56 @@ export class MatchesState {
         }
     }
 
-    @Action(GetMatchById)
-    onGetMatchById({ patchState }: StateContext<MatchesStateModel>, { payload }: GetMatchById) {
+    @Action(MatchActions.GetMatchById)
+    onGetMatchById({ patchState, dispatch }: StateContext<MatchesStateModel>, { payload }: MatchActions.GetMatchById) {
         return (payload.id ? this.matchNetwork.getSingle2(payload.id) : of(new GetMatchDetailQuery.Response()))
             .pipe(
                 tap(match => {
                     patchState({ match });
+                    const title = `${match.homeClubName} ${match.scoreHome
+                        ? match.scoreHome + '-' + match.scoreAway
+                        : '-'} ${match.awayClubName}`;
+                    this.titleService.setTitle(title);
+                    this.titleService.updateTypeMetaTag('sport');
+                    this.titleService.updateDescriptionMetaTag(`${title}. Результат матча Ливерпуля. Составы команд. События матча. Обсуждение матча.`);
+                    this.titleService.updateKeywordsMetaTag(
+                        `${title}, ${match.awayClubName}, ${match.homeClubName}, ${match.typeName}, ${match.stadiumName}, составы команд, события`
+                    );
+                    dispatch(new MatchActions.UpdateTimeRemaining(true));
                 })
             );
+    }
+
+    @Action(MatchActions.UpdateTimeRemaining)
+    onUpdateTimeRemaining({patchState, getState}: StateContext<MatchesStateModel>, { payload }: MatchActions.UpdateTimeRemaining ) {
+        
+        if (isPlatformBrowser(this.platformId)) {
+            const { match } = getState();
+
+            if (payload) {
+            MatchesState.COUNTDOWN$ = interval(1000).pipe(
+                map(() => this.updateTimeRemaining(match.dateTime)))
+                .subscribe(timeRemaining => patchState({ timeRemaining }));
+            } else {
+                patchState({ timeRemaining: null })
+                MatchesState.COUNTDOWN$?.unsubscribe();
+            }
+        }
+    }
+
+    private static COUNTDOWN$: Subscription;
+
+    private updateTimeRemaining(endtime: Date): string {
+        const t = Date.parse(endtime.toString()) - Date.parse(new Date().toString());
+        const seconds = Math.floor((t / 1000) % 60);
+        const minutes = Math.floor((t / 1000 / 60) % 60);
+        const hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        const days = Math.floor(t / (1000 * 60 * 60 * 24));
+        if (t < 0) {
+            this.store.dispatch(new MatchActions.UpdateTimeRemaining(false));
+            return 'Матч начался!';
+        }
+        return `${days}д:${hours}ч:${minutes}м:${seconds}с`;
     }
 
 }

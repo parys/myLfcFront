@@ -44,7 +44,7 @@ export class CustomTitleMetaService {
     }
 
     private updateTitle(): void {
-        if (this.count !== 0) {
+        if (this.count > 0) {
             this.titleService.setTitle(`(${this.count}) ${this.title}`);
         } else {
             this.titleService.setTitle(this.title);

@@ -10,10 +10,10 @@
     Renderer2
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { Comment } from '@domain/models';
-import { SignalRService } from '@base/signalr';
 
 import { CommentService } from '@comments/comment.service';
 import { ObserverComponent } from '@domain/base';
@@ -45,13 +45,12 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
 
     constructor(private commentService: CommentService,
                 private cd: ChangeDetectorRef,
-                private route: ActivatedRoute,
+                private location: Location,
                 private store: Store,
                 private renderer: Renderer2,
                 public element: ElementRef,
                 private router: Router,
-                private formBuilder: FormBuilder,
-                private signalRService: SignalRService) {
+                private formBuilder: FormBuilder) {
         super();
     }
 
@@ -125,6 +124,8 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
                 } else {
                     element.scrollIntoView();
                     this.isScrolled = true;
+                    const pathWithoutHash = this.location.path(false); 
+                    this.location.replaceState(pathWithoutHash);
                 }
             }
         }

@@ -6,6 +6,7 @@ import { EDITING_RU, MATCHES_RU, MATCH_RU, EDIT_ROUTE } from '@constants/index';
 import { MatchListComponent } from '@matches/pages/match-list';
 import { MatchDetailComponent } from '@matches/pages/match-detail';
 import { MatchEditComponent } from '@matches/pages/match-edit';
+import { MatchResolver } from './resolvers';
 
 export const matchRoutes: Routes = [
     {
@@ -22,11 +23,8 @@ export const matchRoutes: Routes = [
         children: [
             {
                 path: '',
-                component: MatchDetailComponent,
-                data: {
-                    title: MATCH_RU,
-                    ogType: 'sport'
-                }
+                component: MatchDetailComponent,               
+                resolve: [MatchResolver]
             },
             {
                 path: EDIT_ROUTE,

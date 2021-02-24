@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input, AfterViewInit } from '@angular/core';
+﻿import { Component, ChangeDetectionStrategy, ChangeDetectorRef, Input, AfterViewInit } from '@angular/core';
 
 import { GetUserBirthdaysQuery } from '@network/shared/right-sidebar/get-users-birthdays.query';;
 

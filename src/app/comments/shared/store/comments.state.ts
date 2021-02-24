@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { tap } from 'rxjs/operators';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
+import { insertItem, patch, updateItem } from '@ngxs/store/operators';
 import cloneDeep from 'lodash/cloneDeep';
 
-import {
-    CommentActions
-} from './comments.actions';
+import { CommentActions } from './comments.actions';
 
 import { CommentService } from '@comments/comment.service';
 import { CommentsStateModel } from './comments.model';
@@ -56,13 +55,14 @@ export class CommentsState {
             if (index !== -1) {
                 payload.children = comments[index].children;
                 comments[index] = payload;
+                setState(patch({ comments: updateItem(x => x.id === payload.id, payload)}));
             } else {
-                comments.push(payload);
+                setState(patch({ comments: insertItem(payload)}));
             }
         } else {
             this.updateComment(comments, payload);
+            patchState({ comments: cloneDeep(comments) });
         }
-        patchState({ comments: cloneDeep(comments) });
     }
 
     private updateComment(comments: GetCommentListByEntityIdQuery.CommentListDto[],
