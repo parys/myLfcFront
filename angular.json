@@ -42,12 +42,6 @@
               "src/fonts/iconfont/material-icons.css",
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
-            ],
-            "lazyModules": [
-              "src/app/editor/tiny-module/tiny.module",
-              "src/app/lazy-modules/sidebar-left/sidebar-left.module",
-              "src/app/lazy-modules/sidebar-right/sidebar-right.module",
-              "src/app/lazy-modules/navbar-menu/navbar-menu.module"
             ]
           },
           "configurations": {
@@ -136,12 +130,6 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ],
-              "lazyModules": [
-                "src/app/editor/tiny-module/tiny.module",
-                "src/app/lazy-modules/sidebar-left/sidebar-left.module",
-                "src/app/lazy-modules/sidebar-right/sidebar-right.module",
-                "src/app/lazy-modules/navbar-menu/navbar-menu.module"
               ]
             },
             "test": {
@@ -156,12 +144,6 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.test.ts"
                 }
-              ],
-              "lazyModules": [
-                "src/app/editor/tiny-module/tiny.module",
-                "src/app/lazy-modules/sidebar-left/sidebar-left.module",
-                "src/app/lazy-modules/sidebar-right/sidebar-right.module",
-                "src/app/lazy-modules/navbar-menu/navbar-menu.module"
               ]
             }
           }

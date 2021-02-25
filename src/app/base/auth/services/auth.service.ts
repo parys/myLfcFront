@@ -103,7 +103,7 @@ export class AuthService {
     }
 
     private async startupTokenRefresh(): Promise<any> {
-        this.tokens = this.cookies.getObject('auth-tokens') || this.storage.retrieveTokens();
+        this.tokens = this.cookies.getObject('auth-tokens');
         if (!this.tokens) {
             this.signalRService.initializeHub();
             return of('');

@@ -5,7 +5,6 @@ import { Subject } from 'rxjs';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { Store } from '@ngxs/store';
 
-import { StorageService } from '@base/storage';
 import { Comment, Pm, Notification, MatchPerson, MatchEvent } from '@domain/models';
 import { environment } from '@environments/environment';
 import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions';
@@ -23,8 +22,7 @@ export class SignalRService {
     private hubConnection: HubConnection;
     public matchEvent: Subject<MatchEvent> = new Subject<MatchEvent>();
 
-    constructor(private storage: StorageService,
-                private cookies: Cookies,
+    constructor(private cookies: Cookies,
                 private store: Store,
                 @Inject(PLATFORM_ID) private platformId: object) {
                     console.warn("NEW SIGNALR");
@@ -36,7 +34,7 @@ export class SignalRService {
         }
         let hubUrl = 'anonym';
 
-        const token = this.cookies.getObject('auth-tokens')?.access_token || this.storage.getAccessToken();
+        const token = this.cookies.getObject('auth-tokens')?.access_token;
         if (token) {
             hubUrl = 'auth';
         }
@@ -44,9 +42,10 @@ export class SignalRService {
             accessTokenFactory() { return token; },
         };
 
+        this.hubConnection?.stop();
         this.hubConnection = new HubConnectionBuilder()
             .withUrl(`${environment.apiUrl}hubs/${hubUrl}`, options)
-            .configureLogging(LogLevel.Information)
+            .configureLogging(LogLevel.Warning)
             .build();
         this.hubConnection.on('updateChat', (data: GetChatMessagesListQuery.ChatMessageListDto) => {
             this.store.dispatch(new ChatActions.PutToChatMessage(data));

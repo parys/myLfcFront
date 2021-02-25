@@ -1,7 +1,6 @@
 ﻿import { Injectable, Inject } from '@angular/core';
 
 import { LocalStorage } from './local-storage';
-import { IAuthTokenModel } from '@base/auth';
 import { USER_ID } from '@constants/help.constants';
 
 @Injectable()
@@ -10,58 +9,13 @@ export class StorageService {
         @Inject(LocalStorage) private localStorage: any) {
     }
 
-    public retrieveTokens(): IAuthTokenModel {
-        const tokensString = this.get('auth-tokens');
-        if (tokensString) {
-            const tokens: IAuthTokenModel = JSON.parse(tokensString);
-            if (tokens) {
-                tokens.refresh_token = this.getRefreshToken();
-                return tokens;
-            }
-        }
-        return null;
-    }
-
-    public getAccessToken(): string {
-        const tokens = this.retrieveTokens();
-        if (tokens) {
-            return tokens.access_token;
-        }
-        return null;
-    }
-
-    public getRoles(): string[] {
-        return this.getObject('roles');
-    }
-
     public getUser(): any {
         this.getObject('USER');
     }
 
     public removeAuthTokens(): void {
-        this.remove('roles');
         this.remove(USER_ID);
-        this.remove('auth-tokens');
-        this.remove('refresh-token');
         this.remove('USER');
-    }
-
-    public setAuthTokens(item: any): boolean {
-        this.set('auth-tokens', JSON.stringify(item));
-        return true;
-    }
-
-    public setRefreshToken(token: string): void {
-        this.set('refresh-token', token);
-    }
-
-    public getRefreshToken(): string {
-        return this.get('refresh-token');
-    }
-
-    public setRoles(roles: string[]): void {
-        if (!this.localStorage) { return; }
-        this.setObject('roles', roles);
     }
 
     public setUser(user: any): void {
