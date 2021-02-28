@@ -16,6 +16,7 @@ import { RightSidebarActions } from '@lazy-modules/sidebar-right/store';
 import { GetLatestCommentListQuery } from '@network/shared/right-sidebar/get-latest-comments-list.query';
 import { UsersOnline } from '@network/shared/right-sidebar/user-online.model';
 import { CommentActions } from '@comments/shared/store';
+import { AdminActions } from '@admin/store';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
@@ -86,6 +87,15 @@ export class SignalRService {
                 (data: number) => {
                     this.store.dispatch(new ReadNotifications(data));
                 });
+            this.hubConnection.on('updateMatCommCount',
+                (data: string) => {
+                    this.store.dispatch(new AdminActions.UpdateMaterialCommentsCount(data));
+                });
+            this.hubConnection.on('updateUserNumbers',
+                (data: string) => {
+                    this.store.dispatch(new AdminActions.UpdateUsersNumbersCount(data));
+                });
+
         }
 
         this.hubConnection.stop();

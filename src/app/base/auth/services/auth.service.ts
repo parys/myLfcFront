@@ -78,7 +78,7 @@ export class AuthService {
     private getTokens(data: IRefreshGrantModel | ILoginModel | any, grantType: string): Observable<IAuthTokenModel> {
         const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8;' });
 
-        Object.assign(data, { scope: 'openid offline_access' });
+        Object.assign(data, { scope: 'offline_access' });
 
         let params2 = new HttpParams({ fromString: '', encoder: new UriEncoder() });
         params2 = params2.set('grant_type', grantType);
