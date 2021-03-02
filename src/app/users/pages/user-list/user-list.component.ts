@@ -52,7 +52,7 @@ export class UserListComponent extends TableComponent<GetUsersListQuery.UserList
 
 
     public onPageChanged(event: any): void {
-        this.store.dispatch(new ChangePage({ currentPage: event.pageIndex, pageSize: event.pageSize}));
+        this.store.dispatch(new ChangePage({ currentPage: event.pageIndex + 1, pageSize: event.pageSize}));
     }
 
     public onWritePm(userId: number, userName: string): void {

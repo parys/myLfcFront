@@ -107,6 +107,7 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
                     Validators.required, Validators.maxLength(30)
                 ])
             ],
+            nickname: [null],
             position: [null],
             country: [null],
             birthday: [null],

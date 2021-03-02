@@ -5,6 +5,7 @@
     public firstRussianName: string;
     public lastName: string;
     public lastRussianName: string;
+    public nickname: string;
     public type: number;
     public typeName: string;
     public photo: string;

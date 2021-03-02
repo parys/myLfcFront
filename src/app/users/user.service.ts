@@ -34,7 +34,7 @@ export class UserService {
     }
 
     public resetAvatar(id: number): Observable<object> {
-        return this.http.put<object>(`${this.actionUrl}/${id}/resetAvatar`, '');
+        return this.http.put<object>(`${this.actionUrl}${id}/resetAvatar`, '');
     }
 
     public updateAvatar(file: File): Observable<object> {
