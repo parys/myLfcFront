@@ -8,6 +8,7 @@
         </a>
         <app-dynamic-content-outlet *ngIf="!data.mobile" [componentName]="'NavbarMenuComponent'">
         </app-dynamic-content-outlet>
+        
         <ng-container *ngIf="data.mobile">
             <ng-container *ngIf="!data.userId;else logined" class="profile-btns">
                 <a [routerLink]="['/account/signin']" mat-button>

@@ -8,7 +8,7 @@ import { ChangeMobile } from '@core/store/core.actions';
 @State<CoreStateModel>({
     name: 'core',
     defaults: {
-        mobile: null
+        mobile: true
     },
 })
 @Injectable()

@@ -4,7 +4,8 @@ import {
     ViewEncapsulation,
     ViewChild,
     ChangeDetectionStrategy,
-    HostBinding
+    PLATFORM_ID,
+    Inject
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
@@ -17,6 +18,7 @@ import { ChangeMobile, CoreState } from '@core/store';
 import { CustomTitleMetaService } from '@core/services';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { ObserverComponent } from '@domain/base';
+import { isPlatformServer } from '@angular/common';
 
 
 @Component({
@@ -34,6 +36,7 @@ export class AppComponent extends ObserverComponent implements OnInit {
                 private activatedRoute: ActivatedRoute,
                 private titleService: CustomTitleMetaService,
                 private store: Store,
+                @Inject(PLATFORM_ID) private platformId: object,
                 private breakpointObserver: BreakpointObserver
     ) {
         super();
@@ -79,6 +82,7 @@ export class AppComponent extends ObserverComponent implements OnInit {
     }
 
     private subscribeOnChangeLayout(): void {
+        if (isPlatformServer(this.platformId)) { return; }
         const subscription = this.breakpointObserver.observe(['screen and (max-width: 767px)'])
             .pipe(
                 map((x: BreakpointState) => x.matches),
