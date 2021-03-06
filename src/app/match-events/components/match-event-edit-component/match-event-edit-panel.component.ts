@@ -1,80 +1,41 @@
-﻿import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+﻿import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Store, Select } from '@ngxs/store';
-import { Observable } from 'rxjs';
-
-import { MatchEventService } from '@match-events/matchEvent.service';
 import { MatchEvent, MatchEventType } from '@domain/models';
-import { MatchEventActions, MatchEventsState } from '@match-events/store';
 
 @Component({
     selector: 'match-event-edit-panel',
     templateUrl: './match-event-edit-panel.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class MatchEventEditPanelComponent implements OnInit {
-    public id = 0;
-    @Input() public matchId: number;
-    @Input() public seasonId: number;
     @Input() public selectedEvent: MatchEvent;
-    @Input() public isOur: boolean;
-    @Output() public matchEvent = new EventEmitter<MatchEvent>();
-
-    @Select(MatchEventsState.matchEventTypes) types$: Observable<MatchEventType[]>;
+    @Input() public matchId: number;
+    @Input() public types: MatchEventType[];;
+    @Output() public updated = new EventEmitter<MatchEvent>();
 
     public editMatchEventForm: FormGroup;
 
-    constructor(private matchEventService: MatchEventService,
-                private formBuilder: FormBuilder,
-                private store: Store) {
+    constructor(private formBuilder: FormBuilder) {
     }
 
     public ngOnInit(): void {
         this.initForm();
-
-        this.store.dispatch(new MatchEventActions.GetMatchEventTypesList());
     }
 
     public onSubmit(): void {
-        const matchEvent: MatchEvent = this.parseForm();
-        if (this.id > 0) {
-            this.matchEventService.update(this.id, matchEvent)
-                .subscribe(data => this.emitNewEvent(matchEvent));
-        } else {
-            this.matchEventService.create(matchEvent)
-                .subscribe((data: number) => {
-                    matchEvent.id = data;
-                    this.emitNewEvent(matchEvent);
-                });
-        }
-    }
-
-    public selectPerson(id: number) {
-        this.editMatchEventForm.controls.personId.patchValue(id);
-    }
-
-    private emitNewEvent(event: MatchEvent): void {
-        event.personName = this.editMatchEventForm.get('personName').value;
-        this.matchEvent.emit(event);
-    }
-
-    private parseForm(): MatchEvent {
-        const item: MatchEvent = this.editMatchEventForm.value;
-        item.id = this.id;
-        item.matchId = this.matchId;
-        item.seasonId = this.seasonId;
-        return item;
+        this.updated.emit(this.editMatchEventForm.value);
     }
 
     private initForm(): void {
         this.editMatchEventForm = this.formBuilder.group({
+            id: [this.selectedEvent.id],
             personName: [this.selectedEvent ? this.selectedEvent.personName : ''],
             personId: [this.selectedEvent ? this.selectedEvent.personId : '', Validators.required],
             type: [this.selectedEvent ? this.selectedEvent.type : '', Validators.required],
             minute: [this.selectedEvent ? this.selectedEvent.minute : '', Validators.required],
-            isOur: [this.selectedEvent ? this.selectedEvent.isOur : this.isOur]
+            isOur: [this.selectedEvent ? this.selectedEvent.isOur : true]
         });
-        this.id = this.selectedEvent ? this.selectedEvent.id : 0;
     }
 }

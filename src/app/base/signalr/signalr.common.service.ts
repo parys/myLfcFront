@@ -1,14 +1,13 @@
 ﻿import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 
-import { Subject } from 'rxjs';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { Store } from '@ngxs/store';
 
 import { Comment, Pm, Notification, MatchPerson, MatchEvent } from '@domain/models';
 import { environment } from '@environments/environment';
 import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions';
-import { Actions as MpActions } from '@match-persons/store/match-persons.actions';
+import { MatchPersonActions } from '@match-persons/store/match-persons.actions';
 import { Cookies } from '@cedx/ngx-cookies';
 import { ChatActions } from '@chat/store';
 import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages-list.query';
@@ -17,11 +16,12 @@ import { GetLatestCommentListQuery } from '@network/shared/right-sidebar/get-lat
 import { UsersOnline } from '@network/shared/right-sidebar/user-online.model';
 import { CommentActions } from '@comments/shared/store';
 import { AdminActions } from '@admin/store';
+import { SignalrEntity } from './models';
+import { MatchEventActions } from '@match-events/store';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
     private hubConnection: HubConnection;
-    public matchEvent: Subject<MatchEvent> = new Subject<MatchEvent>();
 
     constructor(private cookies: Cookies,
                 private store: Store,
@@ -61,10 +61,10 @@ export class SignalRService {
             this.store.dispatch(new RightSidebarActions.PutToLatestComments(data))
         });
         this.hubConnection.on('addMp', (data: MatchPerson) => {
-            this.store.dispatch(new MpActions.PushMatchPerson(data));
+            this.store.dispatch(new MatchPersonActions.PushMatchPerson(data));
         });
-        this.hubConnection.on('addMe', (data: MatchEvent) => {
-            this.matchEvent.next(data);
+        this.hubConnection.on('updateMe', (data: SignalrEntity<MatchEvent>) => {
+            this.store.dispatch(new MatchEventActions.Update(data));
         });
         this.hubConnection.on('newComment', (data: Comment) => {
             data.children = data.children || [];

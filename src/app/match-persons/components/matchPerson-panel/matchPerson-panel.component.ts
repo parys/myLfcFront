@@ -6,7 +6,7 @@ import { ObserverComponent } from '@domain/base';
 import { Select, Store } from '@ngxs/store';
 import { AuthState } from '@auth/store';
 import { Observable } from 'rxjs';
-import { MatchPersonsState, Actions } from '@match-persons/store';
+import { MatchPersonsState, MatchPersonActions } from '@match-persons/store';
 import { GetMatchPersonsListQuery, UpdateMatchPersonCommand } from '@network/shared/match-persons';
 
 @Component({
@@ -38,11 +38,10 @@ export class MatchPersonPanelComponent extends ObserverComponent implements OnIn
     }
 
     public ngOnInit(): void {
-        this.store.dispatch(new Actions.GetMatchPersonsList(this.matchId));
     }
 
     public addMatchPerson(typeId: number = null, currentCount: number = 0, neededCount: number = 0, personTypeId: number = null): void {
-            const action = new Actions.SetEditOptions({
+            const action = new MatchPersonActions.SetEditOptions({
                 mpType: typeId,
                 currentCount,
                 neededCount,
@@ -52,19 +51,19 @@ export class MatchPersonPanelComponent extends ObserverComponent implements OnIn
     }
 
     public cancelMatchPersonEdit(): void {
-        this.store.dispatch(new Actions.CancelEdit());
+        this.store.dispatch(new MatchPersonActions.CancelEdit());
     }
 
     public onSelectPerson(person: MatchPerson): void {
-        this.store.dispatch(new Actions.SetSelectedPerson(person));
+        this.store.dispatch(new MatchPersonActions.SetSelectedPerson(person));
     }
 
     public onCreate(person: UpdateMatchPersonCommand.Request) {
-        this.store.dispatch(new Actions.UpdateMatchPerson(person));
+        this.store.dispatch(new MatchPersonActions.AddEdit(person));
     }
 
     public onDelete(person: MatchPerson) {
-        this.store.dispatch(new Actions.DeleteMatchPerson(person));
+        this.store.dispatch(new MatchPersonActions.Delete(person));
     }
 
     public trackByFn(_: number, item: MatchPerson) {

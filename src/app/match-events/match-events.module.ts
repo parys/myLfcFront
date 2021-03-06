@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectPersonFormFieldModule } from '@widgets/http/select-person-form-field';
 
 import { MatchEventEditPanelComponent } from '@match-events/components/match-event-edit-component';
-import { MatchEventMatchPanelComponent } from '@match-events/components/match-event-panel-component';
+import { MatchEventPanelComponent } from '@match-events/components/match-event-panel-component';
 import { MatchEventsMaterialModule } from '@match-events/match-events-material.module';
 import { MatchEventService } from '@match-events/matchEvent.service';
 import { NgxsModule } from '@ngxs/store';
@@ -22,11 +22,11 @@ import { MatchEventsState } from './store';
     ],
     declarations: [
         MatchEventEditPanelComponent,
-        MatchEventMatchPanelComponent
+        MatchEventPanelComponent
     ],
     exports: [
         MatchEventEditPanelComponent,
-        MatchEventMatchPanelComponent
+        MatchEventPanelComponent
     ],
     providers: [
         MatchEventService

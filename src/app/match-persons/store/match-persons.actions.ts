@@ -1,22 +1,22 @@
 import { UpdateMatchPersonCommand } from '@network/shared/match-persons';
 import { MatchPerson } from '@domain/models/match-person.model';
 
-export namespace Actions {
-    export class GetMatchPersonTypesList {
+export namespace MatchPersonActions {
+    export class GetTypesList {
         static readonly type = '[Match Persons] Get match person types list';
     }
 
-    export class GetMatchPersonsList {
+    export class GetList {
         static readonly type = '[Match Persons] Get match persons list';
         constructor(public payload: number) { }
     }
 
-    export class UpdateMatchPerson {
+    export class AddEdit {
         static readonly type = '[Match Persons] Update or create match person';
         constructor(public payload: UpdateMatchPersonCommand.Request) { }
     }
 
-    export class DeleteMatchPerson {
+    export class Delete {
         static readonly type = '[Match Persons] Delete match person';
         constructor(public payload: MatchPerson) { }
     }

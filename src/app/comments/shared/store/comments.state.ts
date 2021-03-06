@@ -43,13 +43,15 @@ export class CommentsState {
 
     @Action(CommentActions.PutNewComment)
     onPutNewComment({ patchState, getState, setState }: StateContext<CommentsStateModel>, { payload }: CommentActions.PutNewComment) {
-        const { comments } = getState();
+        
         const materialId = this.store.selectSnapshot(MaterialsState.material)?.id;
         const matchId = this.store.selectSnapshot(MatchesState.match)?.id;
 
         if (matchId !== payload.matchId && materialId !== payload.materialId) {
                  return;
         }
+        
+        const { comments } = getState();
         if (payload.parentId == null) {
             const index = comments.findIndex(x => x.id === payload.id);
             if (index !== -1) {
@@ -57,7 +59,7 @@ export class CommentsState {
                 comments[index] = payload;
                 setState(patch({ comments: updateItem(x => x.id === payload.id, payload)}));
             } else {
-                setState(patch({ comments: insertItem(payload)}));
+                setState(patch({ comments: insertItem(payload, comments.length)}));
             }
         } else {
             this.updateComment(comments, payload);
