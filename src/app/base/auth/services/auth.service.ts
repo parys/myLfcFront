@@ -66,9 +66,8 @@ export class AuthService {
         this.store.dispatch(new Logout());
         if (this.refreshSubscription$) {
             this.refreshSubscription$.unsubscribe();
-
-            this.signalRService.initializeHub();
         }
+        this.signalRService.initializeHub();
     }
 
     public async refreshTokens(): Promise<IAuthTokenModel> {
@@ -103,7 +102,10 @@ export class AuthService {
     }
 
     private async startupTokenRefresh(): Promise<any> {
-        this.tokens = this.cookies.getObject('auth-tokens');
+        const tokensFromStore = this.storage.getTokens();
+        const tokensFromCookie = this.cookies.getObject('auth-tokens');
+        console.warn(tokensFromStore, tokensFromCookie);
+        this.tokens = tokensFromStore ?? tokensFromCookie;
         if (!this.tokens) {
             this.signalRService.initializeHub();
             return of('');
@@ -138,5 +140,7 @@ export class AuthService {
 
     private setTokens(tokens: IAuthTokenModel): void {
         this.cookies.setObject('auth-tokens', tokens, this.coockieOptions);
+        debugger;
+        this.storage.setTokens(tokens);
     }
 }

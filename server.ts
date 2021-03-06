@@ -30,6 +30,7 @@ import { existsSync } from 'fs';
 export function app() {
   const server = express();
   const distFolder = join(process.cwd(), '../browser');
+//for local debug  const distFolder = join(process.cwd(), './dist/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
