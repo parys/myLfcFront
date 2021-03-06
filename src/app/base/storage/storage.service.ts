@@ -10,8 +10,18 @@ export class StorageService {
     }
 
     public getUser(): any {
-        this.getObject('USER');
+        return this.getObject('USER');
     }
+    
+    public getTokens(): any {
+        return this.getObject('TOKENS');
+    }
+
+    public setTokens(token: any): void {
+        if (!this.localStorage) { return; }
+        this.setObject('TOKENS', token);
+    }
+
 
     public removeAuthTokens(): void {
         this.remove(USER_ID);
