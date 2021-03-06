@@ -2,11 +2,15 @@ import { Injectable } from '@angular/core';
 
 import { tap } from 'rxjs/operators';
 import { State, Action, StateContext, Selector, Store } from '@ngxs/store';
+import cloneDeep from 'lodash/cloneDeep';
 
 import { MatchPersonsStateModel } from './match-persons.model';
 import { MatchPersonActions } from './match-persons.actions';
 
 import { MatchPersonService } from '@match-persons/match-person.service';
+import { SignalRActions } from '@base/signalr/signalr.actions';
+import { MatchesState } from '@matches/store';
+import { SignalREntityEnum } from '@base/signalr/models';
 
 
 @State<MatchPersonsStateModel>({
@@ -82,21 +86,44 @@ export class MatchPersonsState {
 
     @Action(MatchPersonActions.Delete)
     onDelete({patchState, getState }: StateContext<MatchPersonsStateModel>, { payload }: MatchPersonActions.Delete) {
-        const { matchPersons } = getState();
+        
         return this.matchPersonNetwork.delete(payload.matchId, payload.personId)
         .pipe(tap(response => {
-            matchPersons[payload.personType] = matchPersons[payload.personType].filter(x => x.personId !== payload.personId);
-            patchState({ matchPersons: {...matchPersons} });
+            // notify about delete
         }));
     }
 
-    @Action(MatchPersonActions.PushMatchPerson)
-    onPushMatchPerson({ patchState, getState }: StateContext<MatchPersonsStateModel>, { payload }: MatchPersonActions.PushMatchPerson) {
-        const { matchPersons } = getState();
-
-        matchPersons[payload.type].push(payload);
-
-        patchState({ matchPersons});
+    @Action(SignalRActions.UpdateMP)
+    onUpdateMP({ setState, getState, patchState }: StateContext<MatchPersonsStateModel>, { payload }: SignalRActions.UpdateMP) {
+        
+        const match = this.store.selectSnapshot(MatchesState.match);
+        if (match.id !== payload.entity.matchId) {
+            return;
+        }
+        let { matchPersons } = getState();
+        switch (payload.type) {
+            case SignalREntityEnum.Add: {
+                matchPersons[payload.entity.placeType].push(payload.entity);      
+                patchState({ matchPersons: cloneDeep(matchPersons) });
+                break;
+            }
+            case SignalREntityEnum.Update: {  
+                const index = matchPersons[payload.entity.placeType].findIndex(x => x.personId === payload.entity.personId);
+                if (index > -1) {
+                    matchPersons[payload.entity.placeType][index] = payload.entity;            
+                    patchState({ matchPersons: cloneDeep(matchPersons) });
+                }
+                break;
+            }
+            case SignalREntityEnum.Delete: {
+                const index = matchPersons[payload.entity.placeType].findIndex(x => x.personId === payload.entity.personId);
+                if (index > -1) {
+                    matchPersons[payload.entity.placeType].splice(index, 1);            
+                    patchState({ matchPersons: cloneDeep(matchPersons) });
+                }
+                break;
+            }
+        }
     }
 
     @Action(MatchPersonActions.SetEditOptions)

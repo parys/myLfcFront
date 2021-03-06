@@ -1,6 +1,6 @@
 ﻿import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
 
-import { SignalRService } from '@base/signalr/signalr.common.service';
+import { SignalRService } from '@base/signalr/signalr.service';
 import { StorageModule } from '@base/storage';
 import { EnsureModuleLoadedOnceGuard } from '@domain/base/ensure-module-loaded-once.guard';
 

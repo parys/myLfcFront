@@ -7,7 +7,6 @@ import { Store } from '@ngxs/store';
 import { Comment, Pm, Notification, MatchPerson, MatchEvent } from '@domain/models';
 import { environment } from '@environments/environment';
 import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions';
-import { MatchPersonActions } from '@match-persons/store/match-persons.actions';
 import { Cookies } from '@cedx/ngx-cookies';
 import { ChatActions } from '@chat/store';
 import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages-list.query';
@@ -17,13 +16,13 @@ import { UsersOnline } from '@network/shared/right-sidebar/user-online.model';
 import { CommentActions } from '@comments/shared/store';
 import { AdminActions } from '@admin/store';
 import { SignalrEntity } from './models';
-import { MatchEventActions } from '@match-events/store';
+import { SignalRActions } from './signalr.actions';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
     private hubConnection: HubConnection;
 
-    constructor(private cookies: Cookies,
+    constructor(private cookies: Cookies,        
                 private store: Store,
                 @Inject(PLATFORM_ID) private platformId: object) {
                     console.warn("NEW SIGNALR");
@@ -60,11 +59,11 @@ export class SignalRService {
         this.hubConnection.on('updateComment', (data: GetLatestCommentListQuery.LastCommentListDto) => { // todo combine with above method
             this.store.dispatch(new RightSidebarActions.PutToLatestComments(data))
         });
-        this.hubConnection.on('addMp', (data: MatchPerson) => {
-            this.store.dispatch(new MatchPersonActions.PushMatchPerson(data));
+        this.hubConnection.on('updateMp', (data: SignalrEntity<MatchPerson>) => {
+            this.store.dispatch(new SignalRActions.UpdateMP(data));
         });
         this.hubConnection.on('updateMe', (data: SignalrEntity<MatchEvent>) => {
-            this.store.dispatch(new MatchEventActions.Update(data));
+            this.store.dispatch(new SignalRActions.UpdateME(data));
         });
         this.hubConnection.on('newComment', (data: Comment) => {
             data.children = data.children || [];
@@ -106,5 +105,13 @@ export class SignalRService {
             .catch((err: Error) => {
                 console.error("signalr-ee", err);
             });
+    }
+
+    public on(methodName: string, newMethod: (...args: any[]) => void): void {
+        if (!this.hubConnection) {
+            console.error('Try to register signalr without worked service');
+            return;
+        }
+        this.hubConnection.on(methodName, newMethod);
     }
 }

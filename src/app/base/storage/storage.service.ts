@@ -26,6 +26,7 @@ export class StorageService {
     public removeAuthTokens(): void {
         this.remove(USER_ID);
         this.remove('USER');
+        this.remove('TOKENS');
     }
 
     public setUser(user: any): void {

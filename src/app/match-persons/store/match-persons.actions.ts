@@ -21,11 +21,6 @@ export namespace MatchPersonActions {
         constructor(public payload: MatchPerson) { }
     }
 
-    export class PushMatchPerson {
-        static readonly type = '[Match Persons] Push  match person';
-        constructor(public payload: MatchPerson) { }
-    }
-
     export class SetEditOptions {
         static readonly type = '[Match Persons] Set edit options';
         constructor(public payload: { mpType: number, currentCount: number, neededCount: number, personTypeId: number }) { }

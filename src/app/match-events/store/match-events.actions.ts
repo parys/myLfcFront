@@ -26,11 +26,6 @@ export namespace MatchEventActions {
         constructor(public payload: MatchEvent) { }
     }
 
-    export class Update {
-        static readonly type = '[Match Events] Update by signalR';
-        constructor(public payload: SignalrEntity<MatchEvent>) {}
-    }
-
     export class StartEdit {
         static readonly type = '[Match Events] Start add or edit';
         constructor(public payload: MatchEvent) {}

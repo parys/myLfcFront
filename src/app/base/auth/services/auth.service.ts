@@ -140,7 +140,6 @@ export class AuthService {
 
     private setTokens(tokens: IAuthTokenModel): void {
         this.cookies.setObject('auth-tokens', tokens, this.coockieOptions);
-        debugger;
         this.storage.setTokens(tokens);
     }
 }
