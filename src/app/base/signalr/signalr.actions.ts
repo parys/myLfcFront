@@ -1,5 +1,6 @@
 import { MatchEvent } from "@domain/models/match-event.model";
 import { MatchPerson } from "@domain/models/match-person.model";
+import { GetMatchDetailQuery } from "@network/shared/matches";
 import { SignalrEntity } from "./models";
 
 export namespace SignalRActions {
@@ -12,5 +13,10 @@ export namespace SignalRActions {
     export class UpdateMP {
         static readonly type = '[Signal R] Update match person by signalR';
         constructor(public payload: SignalrEntity<MatchPerson>) {}
+    }
+
+    export class UpdateMatch {
+        static readonly type = '[Signal R] Update match';
+        constructor(public payload: SignalrEntity<GetMatchDetailQuery.Response>) {}
     }
 }

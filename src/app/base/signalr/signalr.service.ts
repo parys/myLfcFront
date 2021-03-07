@@ -4,7 +4,7 @@ import { isPlatformServer } from '@angular/common';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { Store } from '@ngxs/store';
 
-import { Comment, Pm, Notification, MatchPerson, MatchEvent } from '@domain/models';
+import { Comment, Pm, Notification, MatchPerson, MatchEvent, Match } from '@domain/models';
 import { environment } from '@environments/environment';
 import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions';
 import { Cookies } from '@cedx/ngx-cookies';
@@ -17,6 +17,7 @@ import { CommentActions } from '@comments/shared/store';
 import { AdminActions } from '@admin/store';
 import { SignalrEntity } from './models';
 import { SignalRActions } from './signalr.actions';
+import { GetMatchDetailQuery } from '@network/shared/matches/get-match-detail.query';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
@@ -64,6 +65,9 @@ export class SignalRService {
         });
         this.hubConnection.on('updateMe', (data: SignalrEntity<MatchEvent>) => {
             this.store.dispatch(new SignalRActions.UpdateME(data));
+        });
+        this.hubConnection.on('updateMatch', (data: SignalrEntity<GetMatchDetailQuery.Response>) => {
+            this.store.dispatch(new SignalRActions.UpdateMatch(data));
         });
         this.hubConnection.on('newComment', (data: Comment) => {
             data.children = data.children || [];

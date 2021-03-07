@@ -15,6 +15,7 @@ import { GetMatchesListQuery, GetMatchDetailQuery } from '@network/shared/matche
 import { MatchService } from '@matches/match.service';
 import { CustomTitleMetaService } from '@core/services';
 import { isPlatformBrowser } from '@angular/common';
+import { SignalRActions } from '@base/signalr/signalr.actions';
 
 
 @State<MatchesStateModel>({
@@ -103,15 +104,7 @@ export class MatchesState {
             .pipe(
                 tap(match => {
                     patchState({ match });
-                    const title = `${match.homeClubName} ${match.scoreHome
-                        ? match.scoreHome + '-' + match.scoreAway
-                        : '-'} ${match.awayClubName}`;
-                    this.titleService.setTitle(title);
-                    this.titleService.updateTypeMetaTag('sport');
-                    this.titleService.updateDescriptionMetaTag(`${title}. Результат матча Ливерпуля. Составы команд. События матча. Обсуждение матча.`);
-                    this.titleService.updateKeywordsMetaTag(
-                        `${title}, ${match.awayClubName}, ${match.homeClubName}, ${match.typeName}, ${match.stadiumName}, составы команд, события`
-                    );
+                    this.updateTitlesAndTags(match);
                     dispatch(new MatchActions.UpdateTimeRemaining(true));
                 })
             );
@@ -134,6 +127,16 @@ export class MatchesState {
         }
     }
 
+    @Action(SignalRActions.UpdateMatch)
+    onUpdateMatch({patchState, getState}: StateContext<MatchesStateModel>, { payload }: SignalRActions.UpdateMatch) {
+        const { match } = getState();
+        if (match.id !== payload.entity.id) {
+            return;
+        }
+        patchState({ match: payload.entity});
+        this.updateTitlesAndTags(payload.entity);
+    }
+
     private static COUNTDOWN$: Subscription;
 
     private updateTimeRemaining(endtime: Date): string {
@@ -147,6 +150,18 @@ export class MatchesState {
             return 'Матч начался!';
         }
         return `${days}д:${hours}ч:${minutes}м:${seconds}с`;
+    }
+
+    private updateTitlesAndTags(match: GetMatchDetailQuery.Response) {
+        const title = `${match.homeClubName} ${match.scoreHome
+            ? match.scoreHome + '-' + match.scoreAway
+            : '-'} ${match.awayClubName}`;
+        this.titleService.setTitle(title);
+        this.titleService.updateTypeMetaTag('sport');
+        this.titleService.updateDescriptionMetaTag(`${title}. Результат матча Ливерпуля. Составы команд. События матча. Обсуждение матча.`);
+        this.titleService.updateKeywordsMetaTag(
+            `${title}, ${match.awayClubName}, ${match.homeClubName}, ${match.typeName}, ${match.stadiumName}, составы команд, события`
+        );
     }
 
 }
