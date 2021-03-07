@@ -7,9 +7,4 @@ export namespace CommentActions {
         constructor(public payload: GetCommentListByEntityIdQuery.Request) { }
     }
 
-    export class PutNewComment {
-        static readonly type = '[Comments] Put new comment to list';
-        constructor( public payload: GetCommentListByEntityIdQuery.CommentListDto) { }
-    }
-
 }

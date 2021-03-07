@@ -4,20 +4,19 @@ import { isPlatformServer } from '@angular/common';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { Store } from '@ngxs/store';
 
-import { Comment, Pm, Notification, MatchPerson, MatchEvent, Match } from '@domain/models';
+import { Pm, Notification, MatchPerson, MatchEvent } from '@domain/models';
 import { environment } from '@environments/environment';
 import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions';
 import { Cookies } from '@cedx/ngx-cookies';
 import { ChatActions } from '@chat/store';
 import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages-list.query';
 import { RightSidebarActions } from '@lazy-modules/sidebar-right/store';
-import { GetLatestCommentListQuery } from '@network/shared/right-sidebar/get-latest-comments-list.query';
 import { UsersOnline } from '@network/shared/right-sidebar/user-online.model';
-import { CommentActions } from '@comments/shared/store';
 import { AdminActions } from '@admin/store';
 import { SignalrEntity } from './models';
 import { SignalRActions } from './signalr.actions';
 import { GetMatchDetailQuery } from '@network/shared/matches/get-match-detail.query';
+import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-list-by-entity-id-query';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
@@ -54,12 +53,6 @@ export class SignalRService {
         this.hubConnection.on('updateOnline', (data: UsersOnline) => {
             this.store.dispatch(new RightSidebarActions.SetOnlineUsers(data));
         });
-        this.hubConnection.on('addComment', (data: GetLatestCommentListQuery.LastCommentListDto) => {
-            this.store.dispatch(new RightSidebarActions.PutToLatestComments(data))
-        });
-        this.hubConnection.on('updateComment', (data: GetLatestCommentListQuery.LastCommentListDto) => { // todo combine with above method
-            this.store.dispatch(new RightSidebarActions.PutToLatestComments(data))
-        });
         this.hubConnection.on('updateMp', (data: SignalrEntity<MatchPerson>) => {
             this.store.dispatch(new SignalRActions.UpdateMP(data));
         });
@@ -69,9 +62,9 @@ export class SignalRService {
         this.hubConnection.on('updateMatch', (data: SignalrEntity<GetMatchDetailQuery.Response>) => {
             this.store.dispatch(new SignalRActions.UpdateMatch(data));
         });
-        this.hubConnection.on('newComment', (data: Comment) => {
-            data.children = data.children || [];
-            this.store.dispatch(new CommentActions.PutNewComment(data));
+        this.hubConnection.on('comment', (data: SignalrEntity<GetCommentListByEntityIdQuery.CommentListDto>) => {
+            data.entity.children = data.entity.children || [];
+            this.store.dispatch(new SignalRActions.UpdateComment(data));
         });
         if (token) {
             this.hubConnection.on('readPm',
@@ -98,7 +91,6 @@ export class SignalRService {
                 (data: string) => {
                     this.store.dispatch(new AdminActions.UpdateUsersNumbersCount(data));
                 });
-
         }
 
         this.hubConnection.stop();

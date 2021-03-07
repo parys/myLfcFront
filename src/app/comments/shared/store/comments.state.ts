@@ -12,6 +12,7 @@ import { CommentsStateModel } from './comments.model';
 import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-list-by-entity-id-query';
 import { MaterialsState } from '@materials/lazy/store';
 import { MatchesState } from '@matches/store';
+import { SignalRActions } from '@base/signalr/signalr.actions';
 
 
 @State<CommentsStateModel>({
@@ -41,28 +42,28 @@ export class CommentsState {
             );
     }
 
-    @Action(CommentActions.PutNewComment)
-    onPutNewComment({ patchState, getState, setState }: StateContext<CommentsStateModel>, { payload }: CommentActions.PutNewComment) {
+    @Action(SignalRActions.UpdateComment)
+    onUpdate({ patchState, getState, setState }: StateContext<CommentsStateModel>, { payload }: SignalRActions.UpdateComment) {
         
         const materialId = this.store.selectSnapshot(MaterialsState.material)?.id;
         const matchId = this.store.selectSnapshot(MatchesState.match)?.id;
 
-        if (matchId !== payload.matchId && materialId !== payload.materialId) {
+        if (matchId !== payload.entity.matchId && materialId !== payload.entity.materialId) {
                  return;
         }
         
         const { comments } = getState();
-        if (payload.parentId == null) {
-            const index = comments.findIndex(x => x.id === payload.id);
+        if (payload.entity.parentId == null) {
+            const index = comments.findIndex(x => x.id === payload.entity.id);
             if (index !== -1) {
-                payload.children = comments[index].children;
-                comments[index] = payload;
-                setState(patch({ comments: updateItem(x => x.id === payload.id, payload)}));
+                payload.entity.children = comments[index].children;
+                comments[index] = payload.entity;
+                setState(patch({ comments: updateItem(x => x.id === payload.entity.id, payload.entity)}));
             } else {
-                setState(patch({ comments: insertItem(payload, comments.length)}));
+                setState(patch({ comments: insertItem(payload.entity, comments.length)}));
             }
         } else {
-            this.updateComment(comments, payload);
+            this.updateComment(comments, payload.entity);
             patchState({ comments: cloneDeep(comments) });
         }
     }

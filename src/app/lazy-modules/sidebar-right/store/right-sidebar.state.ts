@@ -6,10 +6,12 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { RightSidebarStateModel } from './right-sidebar.model';
 import { RightSidebarActions } from './right-sidebar.actions';
 
-import { patch, updateItem } from '@ngxs/store/operators';
+import { patch, removeItem, updateItem } from '@ngxs/store/operators';
 
 import { SidebarRightService } from '../sidebar-right.service';
 import { GetLatestCommentListQuery } from '@network/shared/right-sidebar/get-latest-comments-list.query';
+import { SignalRActions } from '@base/signalr/signalr.actions';
+import { SignalREntityEnum } from '@base/signalr/models';
 
 
 @State<RightSidebarStateModel>({
@@ -50,21 +52,34 @@ export class RightSidebarState {
                 }));
     }
 
-    @Action(RightSidebarActions.PutToLatestComments)
-    onPutToLatestComments({ setState, patchState, getState }: StateContext<RightSidebarStateModel>,
-         { payload }: RightSidebarActions.PutToLatestComments) {
+    @Action(SignalRActions.UpdateComment)
+    onUpdateComment({ setState, patchState, getState }: StateContext<RightSidebarStateModel>,
+         { payload }: SignalRActions.UpdateComment) {
         const { latestComments } = getState();
-        const index = latestComments.findIndex(x => x.id === payload.id);
-        if (index > -1) {
-            setState(
-                patch({
-                    latestComments: updateItem<GetLatestCommentListQuery.LastCommentListDto>
-                        (item => item.id === payload.id, payload)
-                })
-            );
-        } else {
-            latestComments.pop();
-            patchState({ latestComments: [payload, ... latestComments] });
+        switch (payload.type) {
+            case (SignalREntityEnum.Add): {
+                latestComments.pop();
+                patchState({ latestComments: [payload.entity, ... latestComments] });
+                break;
+            }
+            case (SignalREntityEnum.Update): {
+                setState(
+                    patch({
+                        latestComments: updateItem<GetLatestCommentListQuery.LastCommentListDto>
+                            (item => item.id === payload.entity.id, payload.entity)
+                    })
+                );
+                break;
+            }
+            case (SignalREntityEnum.Delete): {
+                setState(
+                    patch({
+                        latestComments: removeItem<GetLatestCommentListQuery.LastCommentListDto>
+                            (item => item.id === payload.entity.id)
+                    })
+                );
+                break;
+            }
         }
     }
 

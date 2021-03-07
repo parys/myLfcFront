@@ -20,9 +20,4 @@ export namespace RightSidebarActions {
         static readonly type = '[RightSidebar] Get online users';
     }
 
-    export class PutToLatestComments {
-        static readonly type = '[RightSidebar] Put new comment to latest';
-        constructor(public readonly payload: GetLatestCommentListQuery.LastCommentListDto) { }
-    }
-
 }

@@ -1,5 +1,6 @@
 import { MatchEvent } from "@domain/models/match-event.model";
 import { MatchPerson } from "@domain/models/match-person.model";
+import { GetCommentListByEntityIdQuery } from "@network/comments/get-comment-list-by-entity-id-query";
 import { GetMatchDetailQuery } from "@network/shared/matches";
 import { SignalrEntity } from "./models";
 
@@ -16,7 +17,12 @@ export namespace SignalRActions {
     }
 
     export class UpdateMatch {
-        static readonly type = '[Signal R] Update match';
+        static readonly type = '[Signal R] Update match by signalR';
         constructor(public payload: SignalrEntity<GetMatchDetailQuery.Response>) {}
+    }
+
+    export class UpdateComment {
+        static readonly type = '[Signal R] Update comment by signarR';
+        constructor(public payload: SignalrEntity<GetCommentListByEntityIdQuery.CommentListDto>) {}
     }
 }
