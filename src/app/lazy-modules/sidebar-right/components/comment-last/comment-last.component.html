@@ -6,7 +6,7 @@
            class="color-gold"></a>: <a [routerLink]="['/', item.typeName, item.materialId || item.matchId]"
                                        [class.text-yellow]="i % 2 === 0"
                                        [class.text-darkgold]="i % 2 === 1"
-                                       [textContent]="item.message"
+                                       [textContent]="item.clippedMessage"
                                        fragment="com{{item.id}}"></a>
     </div>
 </section>
