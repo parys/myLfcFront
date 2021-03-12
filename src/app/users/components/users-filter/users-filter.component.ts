@@ -4,8 +4,7 @@ import { merge, fromEvent } from 'rxjs';
 import { KEYUP } from '@constants/help.constants';
 import { DEBOUNCE_TIME } from '@constants/app.constants';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
-import { UserFilters } from '@domain/models';
-
+import { UserFilters } from '@users/models/user-filters.model';
 
 @Component({
     selector: 'users-filter',

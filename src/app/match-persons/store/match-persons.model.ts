@@ -1,4 +1,4 @@
-import { MatchPersonType } from '@domain/models/match-person-type.model';
+import { MatchPersonType } from '@match-persons/models/match-person-type.model';
 import { GetMatchPersonsListQuery } from '@network/shared/match-persons';
 
 export interface MatchPersonsStateModel {

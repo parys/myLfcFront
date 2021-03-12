@@ -1,13 +1,12 @@
 import { Component, Input, Output, ChangeDetectionStrategy, EventEmitter } from '@angular/core';
 
-import { MatchPerson } from '@domain/models';
-
 import { ObserverComponent } from '@domain/base';
 import { Select } from '@ngxs/store';
 import { AuthState } from '@auth/store';
 import { Observable } from 'rxjs';
 import { ConfirmationMessage } from '@notices/shared';
 import { NotifierService } from '@notices/services';
+import { MatchPerson } from '@match-persons/models/match-person.model';
 
 @Component({
     selector: 'match-person-info',

@@ -31,8 +31,8 @@ import {
 
 import { MaterialHomeComponent } from '@materials/index';
 import { TITLE_RU } from '@constants/ru.constants';
-import { HelperType } from '@domain/models';
 import { RoleGuard, RolesEnum } from '@base/auth';
+import { HelperType } from '@domain/enums/helper-type.enum';
 
 
 const staticPageRoutes: Routes = [

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { HttpWrapper } from '@base/httpWrapper';
 import { HELPERS_ROUTE } from '@constants/routes.constants';
-import { StaticPage } from '@domain/models';
+import { StaticPage } from '@static-pages-editor/models/static-page.model';
 
 @Injectable()
 export class StaticPagesEditorService {

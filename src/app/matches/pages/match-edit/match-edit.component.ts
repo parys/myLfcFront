@@ -6,10 +6,12 @@ import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { MatchService } from '@matches/match.service';
-import { Match, MatchType, Stadium, StadiumFilters, PagedList } from '@domain/models';
+import { Match, MatchType, PagedList } from '@domain/models';
 import { StadiumService } from '@stadiums/core';
 import { MATCHES_ROUTE } from '@constants/routes.constants';
 import { DEBOUNCE_TIME } from '@constants/app.constants';
+import { Stadium } from '@stadiums/models/stadium.model';
+import { StadiumFilters } from '@stadiums/models/stadium-filters.model';
 
 @Component({
     selector: 'match-edit',

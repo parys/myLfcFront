@@ -2,13 +2,14 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 
 import { Observable } from 'rxjs';
 
-import { UserFilters, RoleGroup } from '@domain/models';
 import { Select, Store } from '@ngxs/store';
 import { AuthState } from '@auth/store';
 import { GetRoleGroups, GetUsersList, ChangeSort, SetPmReceiverId, ChangePage, SetUsersFilterOptions } from '@users/store';
 import { UsersState } from '@users/store/users.state';
 import { GetUsersListQuery } from '@network/shared/users';
 import { KeyMapper, TableComponent } from '@domain/tables/components';
+import { UserFilters } from '@users/models/user-filters.model';
+import { RoleGroup } from '@role-groups/models/role-group.model';
 
 
 @Component({

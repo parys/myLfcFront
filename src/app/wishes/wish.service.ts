@@ -3,9 +3,12 @@
 import { Observable } from 'rxjs';
 
 import { HttpWrapper } from '@base/httpWrapper';
-import { Wish, WishState, WishType, WishFilter } from '@domain/models';
 import { WISHES_ROUTE } from '@constants/routes.constants';
 import { BaseRestService } from '@base/infrastructure';
+import { WishFilter } from './models/wish-filter.model';
+import { Wish } from './models/wish.model';
+import { WishType } from './models/wish-type.model';
+import { WishState } from './models/wish-state.model';
 
 @Injectable()
 export class WishService extends BaseRestService<Wish, WishFilter> {

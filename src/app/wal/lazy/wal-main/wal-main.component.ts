@@ -1,6 +1,7 @@
 ﻿import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { HelperType } from '@domain/enums/helper-type.enum';
 
-import { Country, HelperType } from '@domain/models';
+import { Country } from '@domain/models';
 
 @Component({
     selector: 'wal-main',

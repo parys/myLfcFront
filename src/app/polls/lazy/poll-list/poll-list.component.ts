@@ -1,9 +1,11 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { Poll, PollFilters, PagedList } from '@domain/models';
+import { PagedList } from '@domain/models';
 import { PollService } from '@polls/core/poll.service';
 import { Select } from '@ngxs/store';
 import { AuthState } from '@auth/store';
 import { Observable } from 'rxjs';
+import { Poll } from '@polls/models/poll.model';
+import { PollFilters } from '@polls/models/poll-filters.model';
 
 @Component({
     selector: 'poll-list',

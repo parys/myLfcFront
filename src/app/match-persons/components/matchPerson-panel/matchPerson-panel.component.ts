@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { MatchPerson } from '@domain/models';
 import { MatchPersonTypeEnum } from '@domain/enums/match-person-type.enum';
 
 import { ObserverComponent } from '@domain/base';
@@ -8,6 +7,7 @@ import { AuthState } from '@auth/store';
 import { Observable } from 'rxjs';
 import { MatchPersonsState, MatchPersonActions } from '@match-persons/store';
 import { GetMatchPersonsListQuery, UpdateMatchPersonCommand } from '@network/shared/match-persons';
+import { MatchPerson } from '@match-persons/models/match-person.model';
 
 @Component({
     selector: 'match-person-panel',

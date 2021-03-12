@@ -2,7 +2,6 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { AuthService } from '@base/auth';
-import { RoleGroup} from '@domain/models';
 
 import { UserService } from '@users/user.service';
 import { ObserverComponent } from '@domain/base';
@@ -13,6 +12,7 @@ import { UsersState } from '@users/store';
 import { GetUserDetailQuery } from '@network/shared/users';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangeRoleGroupDialogData, ChangeRoleGroupDialogComponent } from '@users/components/change-role-group-dialog/change-role-group-dialog.component';
+import { RoleGroup } from '@role-groups/models/role-group.model';
 
 @Component({
     selector: 'user-detail',

@@ -3,9 +3,9 @@
 import { Observable } from 'rxjs';
 
 import { HttpWrapper } from '@base/httpWrapper';
-import { MatchPersonType } from '@domain/models';
 import { MATCH_PERSONS_ROUTE, MATCHES_ROUTE } from '@constants/routes.constants';
 import { GetMatchPersonsListQuery, UpdateMatchPersonCommand } from '@network/shared/match-persons';
+import { MatchPersonType } from './models/match-person-type.model';
 
 @Injectable()
 export class MatchPersonService {

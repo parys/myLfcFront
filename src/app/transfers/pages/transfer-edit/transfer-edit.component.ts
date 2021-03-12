@@ -2,13 +2,12 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Subscription, Observable, of } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Subscription, Observable } from 'rxjs';
 
-import { Transfer, Season, SeasonFilters, PagedList } from '@domain/models';
 import { TRANSFERS_ROUTE } from '@constants/routes.constants';
-import { DEBOUNCE_TIME } from '@constants/app.constants';
 import { TransferService } from '@transfers/transfer.service';
+import { Transfer } from '@transfers/models/transfer.model';
+import { Season } from '@seasons/models/season.model';
 
 @Component({
     selector: 'transfer-edit',

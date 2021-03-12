@@ -9,12 +9,14 @@ import { Subscription, merge, of, Observable } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 
 import { TransferService } from '@transfers/transfer.service';
-import { Transfer, TransferFilters, PagedList } from '@domain/models';
+import { PagedList } from '@domain/models';
 import { TRANSFERS_ROUTE } from '@constants/routes.constants';
 import { PAGE } from '@constants/help.constants';
 import { ConfirmationMessage } from '@notices/shared';
 import { NotifierService } from '@notices/services';
 import { ObserverComponent } from '@domain/base';
+import { Transfer } from '@transfers/models/transfer.model';
+import { TransferFilters } from '@transfers/models/transfer-filters.model';
 
 @Component({
     selector: 'transfer-list',

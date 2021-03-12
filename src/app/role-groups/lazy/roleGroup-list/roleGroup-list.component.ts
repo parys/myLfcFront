@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { RoleGroup } from '@domain/models';
-import { RoleGroupService } from '../../core/roleGroup.service';
+import { RoleGroup } from '@role-groups/models/role-group.model';
+import { RoleGroupService } from '@role-groups/core/roleGroup.service';
 
 @Component({
     selector: 'roleGroup-list',

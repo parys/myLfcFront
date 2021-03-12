@@ -5,9 +5,12 @@ import { Observable, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { ClubService } from '@clubs/club.service';
-import { Club, Stadium , StadiumFilters, PagedList} from '@domain/models';
+import { PagedList} from '@domain/models';
 import { StadiumService } from '@stadiums/core';
 import { CLUBS_ROUTE, DEBOUNCE_TIME } from '@constants/index';
+import { Stadium } from '@stadiums/models/stadium.model';
+import { StadiumFilters } from '@stadiums/models/stadium-filters.model';
+import { Club } from '@clubs/models/club.model';
 
 @Component({
     selector: 'club-edit',

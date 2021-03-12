@@ -16,6 +16,7 @@ import { removeMany } from '@domain/operators/remove-from-many';
 import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages-list.query';
 import { patch, updateItem } from '@ngxs/store/operators';
 import { appendToStartOrUpdate } from '@domain/operators/append-to-start-or-append';
+import { SignalRActions } from '@base/signalr/signalr.actions';
 
 
 @State<ChatStateModel>({
@@ -95,8 +96,8 @@ export class ChatState {
         );
     }
 
-    @Action(ChatActions.PutToChatMessage)
-    onPutToChatMessage({ setState }: StateContext<ChatStateModel>, { payload }: ChatActions.PutToChatMessage) {
+    @Action(SignalRActions.UpdateChat)
+    onUpdateChat({ setState }: StateContext<ChatStateModel>, { payload }: SignalRActions.UpdateChat) {
         if (payload.type === ChatMessageType.Mini) {
             return setState(
                 patch({

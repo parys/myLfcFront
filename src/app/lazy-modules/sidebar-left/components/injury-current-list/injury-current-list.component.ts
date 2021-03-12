@@ -3,11 +3,10 @@ import { TransferState, makeStateKey } from '@angular/platform-browser';
 
 import { Subscription, Observable } from 'rxjs';
 
-import { Injury } from '@domain/models';
-
 import { SidebarLeftService } from '@lazy-modules/sidebar-left/sidebar-left.service';
 import { Select } from '@ngxs/store';
 import { AuthState } from '@auth/store';
+import { Injury } from '@injuries/models/injury.model';
 
 const INJURY_CURRENT_KEY = makeStateKey<Injury[]>('injury-current');
 

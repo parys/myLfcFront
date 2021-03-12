@@ -1,5 +1,6 @@
-import { User, UserFilters } from '@domain/models';
 import { GetUserDetailQuery, ChangeUserRoleGroupCommand } from '@network/shared/users';
+import { UserFilters } from '@users/models/user-filters.model';
+import { User } from '@users/models/user.model';
 
 export class SetUser {
     static readonly type = '[Users] Set logged user';

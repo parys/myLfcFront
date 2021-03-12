@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { PollService } from '@polls/core';
-import { PollChart, Poll } from '@domain/models';
+import { Poll } from '@polls/models/poll.model';
+import { PollChart } from '@polls/models/poll-chart.model';
 
 @Component({
     selector: 'poll-detail',

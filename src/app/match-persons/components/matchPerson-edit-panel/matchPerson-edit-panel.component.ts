@@ -1,12 +1,13 @@
 ﻿import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Person, MatchPersonType } from '@domain/models';
+import { Person } from '@domain/models';
 
 import { MatchPersonsState } from '@match-persons/store';
 import { Observable } from 'rxjs';
 import { Select } from '@ngxs/store';
 import { GetMatchPersonsListQuery, UpdateMatchPersonCommand } from '@network/shared/match-persons';
+import { MatchPersonType } from '@match-persons/models/match-person-type.model';
 
 @Component({
     selector: 'match-person-edit-panel',

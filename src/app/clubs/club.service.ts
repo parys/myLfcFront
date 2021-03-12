@@ -3,9 +3,10 @@
 import { Observable } from 'rxjs';
 
 import { HttpWrapper } from '@base/httpWrapper';
-import { Club, ClubFilters } from '@domain/models';
 import { CLUBS_ROUTE } from '@constants/routes.constants';
 import { BaseRestService } from '@base/infrastructure';
+import { ClubFilters } from './models/club-filters.model';
+import { Club } from './models/club.model';
 
 @Injectable()
 export class ClubService extends BaseRestService<Club, ClubFilters> {

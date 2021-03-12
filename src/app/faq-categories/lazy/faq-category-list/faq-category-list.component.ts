@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { FaqCategoryService } from '@faq-categories/lazy/faq-category.service';
-import { FaqCategory } from '@domain/models';
 import { Observable } from 'rxjs';
 import { AuthState } from '@auth/store';
 import { Select } from '@ngxs/store';
 import { ObserverComponent } from '@domain/base';
 import { NotifierService } from '@notices/services';
 import { ConfirmationMessage } from '@notices/shared';
+import { FaqCategory } from '@faq-categories/models/faq-category.model';
 
 
 @Component({

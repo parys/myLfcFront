@@ -1,5 +1,5 @@
 ﻿import { Component, Input } from '@angular/core';
-import { Image } from '@domain/models';
+import { Image } from '@images/models/image.model';
 
 @Component({
     selector: 'image-detail',

@@ -24,9 +24,4 @@ export namespace ChatActions {
         constructor(public readonly payload: number) { }
     }
 
-    export class PutToChatMessage {
-        static readonly type = '[Chat] Put new message to chat';
-        constructor(public readonly payload: GetChatMessagesListQuery.ChatMessageListDto) { }
-    }
-
 }

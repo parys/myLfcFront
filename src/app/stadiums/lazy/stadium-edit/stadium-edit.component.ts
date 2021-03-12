@@ -4,10 +4,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { Stadium } from '@domain/models';
 import { STADIUMS_ROUTE } from '@constants/routes.constants';
 
 import { StadiumService } from '@stadiums/core';
+import { Stadium } from '@stadiums/models/stadium.model';
 
 @Component({
     selector: 'stadium-edit',

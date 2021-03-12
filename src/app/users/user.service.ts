@@ -5,9 +5,9 @@ import { Observable } from 'rxjs';
 import { HttpWrapper } from '@base/httpWrapper';
 import { USERS_ROUTE } from '@constants/routes.constants';
 
-import { UserConfig } from '@domain/models/user-config.model';
-import { User } from '@domain/models/user.model';
+import { User } from '@users/models/user.model';
 import { GetUsersListQuery, GetUserDetailQuery } from '@network/shared/users';
+import { UserConfig } from './models/user-config.model';
 
 @Injectable()
 export class UserService {

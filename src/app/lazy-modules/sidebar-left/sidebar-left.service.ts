@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 
 import { HttpWrapper } from '@base/httpWrapper';
 import { MATCHES_ROUTE, PERSONS_ROUTE, INJURIES_ROUTE, HELPERS_ROUTE } from '@constants/routes.constants';
-import { MatchCalendar, Person, Injury } from '@domain/models';
+import { MatchCalendar, Person } from '@domain/models';
+import { Injury } from '@injuries/models/injury.model';
 
 @Injectable()
 export class SidebarLeftService {

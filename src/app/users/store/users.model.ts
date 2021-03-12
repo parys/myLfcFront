@@ -1,5 +1,5 @@
-import { RoleGroup } from '@domain/models';
 import { GetUsersListQuery, GetUserDetailQuery } from '@network/shared/users';
+import { RoleGroup } from '@role-groups/models/role-group.model';
 
 export interface UsersStateModel {
     users: GetUsersListQuery.UserListDto[];

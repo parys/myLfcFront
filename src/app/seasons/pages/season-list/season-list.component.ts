@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
-import { Season, PagedList } from '@domain/models';
+import { PagedList } from '@domain/models';
+import { Season } from '@seasons/models/season.model';
 
 import { SeasonService } from '@seasons/season.service';
 

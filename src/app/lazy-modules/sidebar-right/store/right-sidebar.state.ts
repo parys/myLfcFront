@@ -92,8 +92,8 @@ export class RightSidebarState {
                 }));
     }
 
-    @Action(RightSidebarActions.SetOnlineUsers)
-    onSetOnlineUsers({ patchState }: StateContext<RightSidebarStateModel>, { payload }: RightSidebarActions.SetOnlineUsers) {
+    @Action(SignalRActions.SetOnlineUsers)
+    onSetOnlineUsers({ patchState }: StateContext<RightSidebarStateModel>, { payload }: SignalRActions.SetOnlineUsers) {
         patchState({ usersOnline: payload });
     }
 

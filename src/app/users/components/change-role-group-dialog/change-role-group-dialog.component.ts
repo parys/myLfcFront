@@ -6,7 +6,7 @@ import { Store, Select } from '@ngxs/store';
 import { GetUserDetailQuery, ChangeUserRoleGroupCommand } from '@network/shared/users';
 import { UsersState, GetRoleGroups, ChangeUserRoleGroup } from '@users/store';
 import { Observable } from 'rxjs';
-import { RoleGroup } from '@domain/models';
+import { RoleGroup } from '@role-groups/models/role-group.model';
 
 // import { markFormAsTouched } from '@domain/static';
 

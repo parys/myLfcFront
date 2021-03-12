@@ -5,12 +5,12 @@ import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
 import { AuthState } from '@auth/store';
-import { FaqItem } from '@domain/models';
 
 import { FaqItemService } from '../faq-item.service';
 import { ConfirmationMessage } from '@notices/shared';
 import { NotifierService } from '@notices/services';
 import { ObserverComponent } from '@domain/base';
+import { FaqItem } from '@faq-items/models/faq-item.model';
 
 
 @Component({

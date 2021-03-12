@@ -5,11 +5,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Subscription, Observable } from 'rxjs';
 
-import { Wish, WishType, WishState } from '@domain/models';
 import { WishService } from '@wishes/wish.service';
 import { WISHES_ROUTE } from '@constants/index';
 import { Select } from '@ngxs/store';
 import { AuthState } from '@auth/store';
+import { WishType } from '@wishes/models/wish-type.model';
+import { WishState } from '@wishes/models/wish-state.model';
+import { Wish } from '@wishes/models/wish.model';
 
 @Component({
     selector: 'wish-edit',

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { FaqCategory, FaqItem } from '@domain/models';
-
 import { FaqService } from '@faq/faq.service';
 import { FaqCategoryService } from '@faq-categories/lazy/faq-category.service';
 import { AuthState } from '@auth/store';
@@ -11,6 +9,8 @@ import { Observable } from 'rxjs';
 import { ObserverComponent } from '@domain/base';
 import { NotifierService } from '@notices/services';
 import { ConfirmationMessage } from '@notices/shared';
+import { FaqCategory } from '@faq-categories/models/faq-category.model';
+import { FaqItem } from '@faq-items/models/faq-item.model';
 
 
 @Component({

@@ -5,8 +5,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, Subscription, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
-import { Pm, User, UserFilters, PagedList } from '@domain/models';
+import { Pm, PagedList } from '@domain/models';
 import { PmService } from '@pms/pm.service';
+import { User } from '@users/models/user.model';
+import { UserFilters } from '@users/models/user-filters.model';
 
 @Component({
     selector: 'pm-edit',

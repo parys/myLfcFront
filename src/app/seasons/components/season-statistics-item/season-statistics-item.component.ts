@@ -1,5 +1,5 @@
 ﻿import { Component, Input } from '@angular/core';
-import { Statistics } from '@domain/models';
+import { Statistics } from '@seasons/models/statistics.model';
 
 @Component({
     selector: 'season-statistics-item',

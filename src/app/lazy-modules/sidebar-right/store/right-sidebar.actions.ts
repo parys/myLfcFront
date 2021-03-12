@@ -11,11 +11,6 @@ export namespace RightSidebarActions {
         static readonly type = '[RightSidebar] Get user birthdays';
     }
 
-    export class SetOnlineUsers {
-        static readonly type = '[RightSidebar] Set online users list';
-        constructor(public readonly payload: UsersOnline) { }
-    }
-
     export class GetOnlineUsers {
         static readonly type = '[RightSidebar] Get online users';
     }

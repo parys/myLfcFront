@@ -3,11 +3,10 @@ import { TransferState, makeStateKey } from '@angular/platform-browser';
 
 import { Subscription, Observable } from 'rxjs';
 
-import { HelperType } from '@domain/models';
-
 import { Select } from '@ngxs/store';
 import { AuthState } from '@auth/store';
 import { SidebarLeftService } from '@lazy-modules/sidebar-left/sidebar-left.service';
+import { HelperType } from '@domain/enums/helper-type.enum';
 
 const CUP_TABLE_KEY = makeStateKey<string>('cup-table');
 

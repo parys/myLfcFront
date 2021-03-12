@@ -5,9 +5,11 @@ import { distinctUntilChanged, debounceTime, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 import { AbstractControlComponent, ControlValueProvider } from '@domain/base/abstract-control.component';
-import { PagedList, Club, ClubFilters } from '@domain/models';
+import { PagedList } from '@domain/models';
 import { DEBOUNCE_TIME } from '@constants/app.constants';
 import { ClubService } from '@clubs/club.service';
+import { Club } from '@clubs/models/club.model';
+import { ClubFilters } from '@clubs/models/club-filters.model';
 
 
 @Component({

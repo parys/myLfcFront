@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { merge, of, fromEvent, Observable, Subscription } from 'rxjs';
 import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
-import { Injury, InjuryFilters, PagedList } from '@domain/models';
+import { PagedList } from '@domain/models';
 import { InjuryService } from '@injuries/injury.service';
 import { DEBOUNCE_TIME } from '@constants/app.constants';
 import { PAGE, KEYUP } from '@constants/help.constants';
@@ -15,6 +15,8 @@ import { INJURIES_ROUTE } from '@constants/routes.constants';
 import { ConfirmationMessage } from '@notices/shared';
 import { NotifierService } from '@notices/services';
 import { ObserverComponent } from '@domain/base';
+import { Injury } from '@injuries/models/injury.model';
+import { InjuryFilters } from '@injuries/models/injury-filters.model';
 
 @Component({
     selector: 'injury-list',

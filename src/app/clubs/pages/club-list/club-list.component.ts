@@ -8,13 +8,15 @@ import { merge, of, Observable, fromEvent } from 'rxjs';
 import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { ClubService } from '@clubs/club.service';
-import { PagedList, Club, ClubFilters } from '@domain/models';
+import { PagedList } from '@domain/models';
 import { CLUBS_ROUTE } from '@constants/routes.constants';
 import { KEYUP, PAGE } from '@constants/help.constants';
 import { DEBOUNCE_TIME } from '@constants/app.constants';
 import { ObserverComponent } from '@domain/base';
 import { NotifierService } from '@notices/services';
 import { ConfirmationMessage } from '@notices/shared';
+import { Club } from '@clubs/models/club.model';
+import { ClubFilters } from '@clubs/models/club-filters.model';
 
 @Component({
     selector: 'club-list',

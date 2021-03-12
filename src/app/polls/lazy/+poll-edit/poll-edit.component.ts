@@ -5,8 +5,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Observable, Subscription } from 'rxjs';
 
-import { Poll, PollAnswer } from '@domain/models';
 import { PollService } from '../../core';
+import { Poll } from '@polls/models/poll.model';
+import { PollAnswer } from '@polls/models/poll-answer.model';
 
 @Component({
     selector: 'poll-edit',

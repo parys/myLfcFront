@@ -6,7 +6,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 
 import { StaticPagesEditorService } from '@static-pages-editor/static-pages-editor.service';
-import { HelperType, StaticPage } from '@domain/models';
+import { StaticPage } from '@static-pages-editor/models/static-page.model';
+import { HelperType } from '@domain/enums/helper-type.enum';
 
 // import "tinymce/plugins/fullscreen/plugin.min.js";
 // import "tinymce/plugins/code/plugin.min.js";

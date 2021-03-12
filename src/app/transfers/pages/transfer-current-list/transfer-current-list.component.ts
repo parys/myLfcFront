@@ -3,9 +3,9 @@
 import { Subscription, Observable } from 'rxjs';
 
 import { TransferService } from '@transfers/transfer.service';
-import { Transfer } from '@domain/models';
 import { Select } from '@ngxs/store';
 import { AuthState } from '@auth/store';
+import { Transfer } from '@transfers/models/transfer.model';
 
 @Component({
     selector: 'transfer-current-list',

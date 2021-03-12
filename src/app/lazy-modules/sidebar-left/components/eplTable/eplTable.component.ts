@@ -1,12 +1,12 @@
 ﻿import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
-import { HelperType } from '@domain/models';
 import { ObserverComponent } from '@domain/base';
 
 import { SidebarLeftService } from '@lazy-modules/sidebar-left/sidebar-left.service';
 import { Select } from '@ngxs/store';
 import { AuthState } from '@auth/store';
 import { Observable } from 'rxjs';
+import { HelperType } from '@domain/enums/helper-type.enum';
 
 @Component({
     selector: 'epl-table',

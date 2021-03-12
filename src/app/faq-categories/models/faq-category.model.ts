@@ -1,4 +1,4 @@
-﻿import { FaqItem } from './faq-item.model';
+﻿import { FaqItem } from "@faq-items/models/faq-item.model";
 
 export class FaqCategory {
 

@@ -5,10 +5,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Subscription } from 'rxjs';
 
-import { FaqCategory, FaqItem } from '@domain/models';
-
 import { FaqItemService } from '../faq-item.service';
 import { FaqCategoryService } from '@faq-categories/lazy/faq-category.service';
+import { FaqItem } from '@faq-items/models/faq-item.model';
+import { FaqCategory } from '@faq-categories/models/faq-category.model';
 
 @Component({
     selector: 'faq-item-edit',

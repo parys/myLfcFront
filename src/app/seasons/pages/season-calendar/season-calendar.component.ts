@@ -2,12 +2,13 @@ import { Component, OnInit, ViewChild, ChangeDetectionStrategy, ChangeDetectorRe
 import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
 
-import { Season, PagedList } from '@domain/models';
+import { PagedList } from '@domain/models';
 
 import { SeasonService } from '@seasons/season.service';
 import { Select } from '@ngxs/store';
 import { AuthState } from '@auth/store';
 import { Observable } from 'rxjs';
+import { Season } from '@seasons/models/season.model';
 
 @Component({
     selector: 'season-calendar',

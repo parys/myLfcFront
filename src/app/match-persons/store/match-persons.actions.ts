@@ -1,5 +1,5 @@
+import { MatchPerson } from '@match-persons/models/match-person.model';
 import { UpdateMatchPersonCommand } from '@network/shared/match-persons';
-import { MatchPerson } from '@domain/models/match-person.model';
 
 export namespace MatchPersonActions {
     export class GetTypesList {

@@ -7,12 +7,14 @@ import { MatSort } from '@angular/material/sort';
 import { merge, of, Observable } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 
-import { Stadium, StadiumFilters, PagedList } from '@domain/models';
+import { PagedList } from '@domain/models';
 import { StadiumService } from '@stadiums/core';
 import { PAGE, STADIUMS_ROUTE } from '@constants/index';
 import { ConfirmationMessage } from '@notices/shared';
 import { ObserverComponent } from '@domain/base';
 import { NotifierService } from '@notices/services';
+import { Stadium } from '@stadiums/models/stadium.model';
+import { StadiumFilters } from '@stadiums/models/stadium-filters.model';
 
 @Component({
     selector: 'stadium-list',

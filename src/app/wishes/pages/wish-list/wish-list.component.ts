@@ -6,7 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { merge, of, Observable } from 'rxjs';
 import { startWith, switchMap, map, catchError } from 'rxjs/operators';
 
-import { Wish, WishFilter, PagedList } from '@domain/models';
+import { PagedList } from '@domain/models';
 import { WishService } from '@wishes/wish.service';
 import { WISHES_ROUTE } from '@constants/routes.constants';
 import { PAGE } from '@constants/help.constants';
@@ -15,6 +15,8 @@ import { Select } from '@ngxs/store';
 import { ObserverComponent } from '@domain/base';
 import { ConfirmationMessage } from '@notices/shared';
 import { NotifierService } from '@notices/services';
+import { Wish } from '@wishes/models/wish.model';
+import { WishFilter } from '@wishes/models/wish-filter.model';
 
 @Component({
     selector: 'wish-list',

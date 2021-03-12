@@ -4,9 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { Image } from '@domain/models';
-
 import { ImageService } from '@images/core';
+import { Image } from '@images/models/image.model';
 
 @Component({
     selector: 'image-list',

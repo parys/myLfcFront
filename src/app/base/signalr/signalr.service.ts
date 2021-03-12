@@ -4,19 +4,18 @@ import { isPlatformServer } from '@angular/common';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { Store } from '@ngxs/store';
 
-import { Pm, Notification, MatchPerson, MatchEvent } from '@domain/models';
+import { Pm, Notification, MatchEvent } from '@domain/models';
 import { environment } from '@environments/environment';
 import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions';
 import { Cookies } from '@cedx/ngx-cookies';
-import { ChatActions } from '@chat/store';
 import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages-list.query';
-import { RightSidebarActions } from '@lazy-modules/sidebar-right/store';
 import { UsersOnline } from '@network/shared/right-sidebar/user-online.model';
 import { AdminActions } from '@admin/store';
 import { SignalrEntity } from './models';
 import { SignalRActions } from './signalr.actions';
 import { GetMatchDetailQuery } from '@network/shared/matches/get-match-detail.query';
 import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-list-by-entity-id-query';
+import { MatchPerson } from '@match-persons/models/match-person.model';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
@@ -48,10 +47,10 @@ export class SignalRService {
             .configureLogging(LogLevel.Warning)
             .build();
         this.hubConnection.on('updateChat', (data: GetChatMessagesListQuery.ChatMessageListDto) => {
-            this.store.dispatch(new ChatActions.PutToChatMessage(data));
+            this.store.dispatch(new SignalRActions.UpdateChat(data));
         });
         this.hubConnection.on('updateOnline', (data: UsersOnline) => {
-            this.store.dispatch(new RightSidebarActions.SetOnlineUsers(data));
+            this.store.dispatch(new SignalRActions.SetOnlineUsers(data));
         });
         this.hubConnection.on('updateMp', (data: SignalrEntity<MatchPerson>) => {
             this.store.dispatch(new SignalRActions.UpdateMP(data));

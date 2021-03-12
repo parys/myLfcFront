@@ -5,8 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { InjuryService } from '@injuries/injury.service';
-import { Injury } from '@domain/models';
 import { INJURIES_ROUTE } from '@constants/index';
+import { Injury } from '@injuries/models/injury.model';
 @Component({
     selector: 'injury-edit',
     templateUrl: './injury-edit.component.html'

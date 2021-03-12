@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
 
-import { PersonStatistics, Season, SeasonStatistics } from '@domain/models';
+import { PersonStatistics } from '@seasons/models/person-statistics.model';
+import { SeasonStatistics } from '@seasons/models/season-statistics.model';
+import { Season } from '@seasons/models/season.model';
 
 import { SeasonService } from '@seasons/season.service';
 

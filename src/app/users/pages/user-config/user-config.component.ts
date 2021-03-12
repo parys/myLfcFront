@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 
 import { UserService } from '@users/user.service';
-import { UserConfig } from '@domain/models';
+import { UserConfig } from '@users/models/user-config.model';
 
 @Component({
     selector: 'user-config',

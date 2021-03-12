@@ -3,7 +3,7 @@
 import { Observable } from 'rxjs';
 
 import { HttpWrapper } from '@base/httpWrapper';
-import { FaqCategory } from '@domain/models';
+import { FaqCategory } from '@faq-categories/models/faq-category.model';
 
 @Injectable()
 export class FaqService {

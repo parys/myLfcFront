@@ -2,7 +2,7 @@
 
 import { Observable } from 'rxjs';
 
-import { Image } from '@domain/models';
+import { Image } from '@images/models/image.model';
 import { HttpWrapper } from '@base/httpWrapper';
 import { IMAGES_ROUTE } from '@constants/routes.constants';
 

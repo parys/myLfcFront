@@ -3,8 +3,10 @@
 import { Observable } from 'rxjs';
 
 import { HttpWrapper } from '@base/httpWrapper';
-import { Pm, User, UserFilters, PagedList } from '@domain/models';
+import { Pm, PagedList } from '@domain/models';
 import { PMS_ROUTE, USERS_ROUTE } from '@constants/routes.constants';
+import { UserFilters } from '@users/models/user-filters.model';
+import { User } from '@users/models/user.model';
 
 @Injectable()
 export class PmService {
@@ -33,7 +35,7 @@ export class PmService {
         return this.http.delete<boolean>(this.actionUrl + id);
     }
 
-    public getUsers(filters: UserFilters): Observable<PagedList<User>> {
+    public getUsers(filters: UserFilters): Observable<PagedList<User>> { //copy paste, need to switch to select-user widget
         return this.http.getWithParams<PagedList<User>>(USERS_ROUTE, filters);
     }
 
