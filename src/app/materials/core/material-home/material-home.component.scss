@@ -23,3 +23,9 @@
         max-width: 33.33%;
     }
 }
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .material-container {
+        width: 100%;
+    }
+}
