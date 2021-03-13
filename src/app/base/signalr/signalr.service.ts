@@ -4,7 +4,7 @@ import { isPlatformServer } from '@angular/common';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { Store } from '@ngxs/store';
 
-import { Pm, Notification, MatchEvent } from '@domain/models';
+import { Pm, MatchEvent } from '@domain/models';
 import { environment } from '@environments/environment';
 import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions';
 import { Cookies } from '@cedx/ngx-cookies';
@@ -16,6 +16,7 @@ import { SignalRActions } from './signalr.actions';
 import { GetMatchDetailQuery } from '@network/shared/matches/get-match-detail.query';
 import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-list-by-entity-id-query';
 import { MatchPerson } from '@match-persons/models/match-person.model';
+import { Notification } from '@notifications/models/notification.model';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
