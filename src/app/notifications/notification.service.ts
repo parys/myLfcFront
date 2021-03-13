@@ -3,7 +3,7 @@
 import { Observable } from 'rxjs';
 
 import { HttpWrapper } from '@base/httpWrapper';
-import { Notification } from '@domain/models';
+import { Notification } from '@notifications/models/notification.model';
 import { NOTIFICATIONS_ROUTE } from '@constants/routes.constants';
 
 @Injectable()

@@ -13,7 +13,6 @@ export * from './match.model';
 export * from './match-calendar.model';
 export * from './match-type.model';
 export * from './match-filters.model';
-export * from './notification.model';
 export * from './person.model';
 export * from './person-filters.model';
 export * from './squad-list.model';

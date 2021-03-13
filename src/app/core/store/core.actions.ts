@@ -1,5 +1,5 @@
 import { Pm } from '@domain/models/pm.model';
-import { Notification } from '@domain/models/notification.model';
+import { Notification } from '@notifications/models/notification.model';
 
 export class ChangeMobile {
     static readonly type = '[Core] Change mobile view';
