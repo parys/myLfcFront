@@ -1,7 +1,7 @@
 ﻿<ng-container *ngIf="{ isEditor: isEditor$ | async, categories: categories$ | async } as data">
     <a *ngIf="data.isEditor" [routerLink]="[0, 'edit']">Создать категорию</a>
     <ul *ngFor="let category of data.categories;">
-        <li *ngIf="data.isEditor || category.itemsCount != 0">
+        <li *ngIf="data.isEditor || category.itemsCount > 0">
             <a [routerLink]="[+category.materialType === 1 ? '/news' : '/blogs']" [queryParams]="{page: 1, categoryId: category.id}">
                 <span [textContent]="category.name"></span> [<span [textContent]="category.itemsCount"></span>]
             </a>

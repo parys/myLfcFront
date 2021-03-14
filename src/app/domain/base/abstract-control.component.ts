@@ -26,7 +26,7 @@ export abstract class AbstractControlComponent<T = any> extends ObserverComponen
         return this._value;
     }
 
-    onChange: (value: T) => {};
+    onChange: Function;
 
     onTouched: () => {};
 
@@ -48,7 +48,7 @@ export abstract class AbstractControlComponent<T = any> extends ObserverComponen
         this.cdRef.detectChanges();
     }
 
-    public registerOnChange(fn: any): void {
+    public registerOnChange(fn: Function): void {
         this.onChange = fn;
     }
 
@@ -59,4 +59,9 @@ export abstract class AbstractControlComponent<T = any> extends ObserverComponen
     public setDisabledState(isDisabled: boolean): void {
         this.disabled = isDisabled;
     }
+
+    public registerOnDisabledChange(fn: (isDisabled: boolean) => void): void {
+
+    };
+    public _applyFormState;
 }

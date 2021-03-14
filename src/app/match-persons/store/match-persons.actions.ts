@@ -1,5 +1,5 @@
 import { MatchPerson } from '@match-persons/models/match-person.model';
-import { UpdateMatchPersonCommand } from '@network/shared/match-persons';
+import { GetMatchPersonsListQuery, UpdateMatchPersonCommand } from '@network/shared/match-persons';
 
 export namespace MatchPersonActions {
     export class GetTypesList {
@@ -18,7 +18,7 @@ export namespace MatchPersonActions {
 
     export class Delete {
         static readonly type = '[Match Persons] Delete match person';
-        constructor(public payload: MatchPerson) { }
+        constructor(public payload: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto) { }
     }
 
     export class SetEditOptions {
@@ -32,6 +32,6 @@ export namespace MatchPersonActions {
 
     export class SetSelectedPerson {
         static readonly type = '[Match Persons] Set selected  person';
-        constructor(public payload: MatchPerson) { }
+        constructor(public payload: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto) { }
     }
 }

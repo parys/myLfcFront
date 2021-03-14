@@ -43,7 +43,7 @@
         </table>
     </div>
 
-    <mat-paginator [showFirstLastButtons]="true" [pageSizeOptions]="[15, 25, 50]" [pageIndex]="data.request.currentPage - 1" [length]="data.request.rowCount"
+    <mat-paginator [showFirstLastButtons]="true" [pageSizeOptions]="[15, 25, 50]" [pageIndex]="data.request.currentPage - 1" [length]="data.request.pageSize"
      (page)="onPageChanged($event)"></mat-paginator>
 
 </ng-container>

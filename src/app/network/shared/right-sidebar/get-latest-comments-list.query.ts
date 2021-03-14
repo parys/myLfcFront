@@ -33,5 +33,7 @@ export namespace GetLatestCommentListQuery {
 
         public typeName: string;
 
+        public clippedMessage: string;
+
     }
 }

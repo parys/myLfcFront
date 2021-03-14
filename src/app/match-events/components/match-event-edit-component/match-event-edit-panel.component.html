@@ -3,7 +3,7 @@
 <form class="full-width" role="form" [formGroup]="editMatchEventForm" (ngSubmit)="onSubmit()">
     <mat-slide-toggle formControlName="isOur" color="warn">Наше событие</mat-slide-toggle>
     <select-person-form-field formControlName="personId"
-        [personName]="editMatchEventForm.controls['personName'].value" [matchId]="matchId" focus="true">
+        [personName]="editMatchEventForm.controls['personName'].value" [matchId]="matchId" [focus]="true">
     </select-person-form-field>
     <mat-form-field class="full-width">
         <mat-select placeholder="Тип" formControlName="type">

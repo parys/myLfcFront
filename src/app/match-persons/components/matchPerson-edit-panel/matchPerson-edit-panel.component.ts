@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 import { Person } from '@domain/models';
 
@@ -52,6 +52,10 @@ export class MatchPersonEditPanelComponent implements OnInit, OnChanges {
     public setPerson(person: Person): void {
         this.editMatchPersonForm.controls.personId.patchValue(person.id);
         this.onSubmit();
+    }
+
+    public getControl(): FormControl {
+        return this.editMatchPersonForm.controls['personId'] as FormControl;
     }
 
     private parseForm(): UpdateMatchPersonCommand.Request {

@@ -51,7 +51,7 @@
         </div>
     </div>
     <div class="pagination">
-        <pagination-controls (pageChange)="pageChanged($event)" directionLinks="true" autoHide="true"
+        <pagination-controls (pageChange)="pageChanged($event)" [directionLinks]="true" [autoHide]="true"
             previousLabel="Назад" nextLabel="Вперед" screenReaderPaginationLabel="Постраничный вид"
             screenReaderPageLabel="Страница" screenReaderCurrentLabel="Вы на странице"></pagination-controls>
     </div>

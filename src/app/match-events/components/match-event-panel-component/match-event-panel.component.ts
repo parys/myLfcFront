@@ -21,7 +21,7 @@ export class MatchEventPanelComponent extends ObserverComponent {
     MatchEventType = MatchEventTypeEnum;
 
     @Input() isHome: boolean;
-    @Input() matchId: boolean;
+    @Input() matchId: number;
 
     @Select(AuthState.isInformer) isInformer$: Observable<boolean>;
     @Select(MatchEventsState.events) events$: Observable<MatchEvent[]>;

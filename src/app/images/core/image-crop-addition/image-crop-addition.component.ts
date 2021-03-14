@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { ImageService } from '../image.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class ImageCropAdditionComponent {
     @Output()
     public loadedImage: EventEmitter<string> = new EventEmitter<string>();
     public imageChangedEvent: any = '';
-    public croppedImage: any = '';
+    public croppedImage: ImageCroppedEvent;
 
     constructor(private service: ImageService,
                 private snackBar: MatSnackBar
@@ -23,7 +24,7 @@ export class ImageCropAdditionComponent {
         this.imageChangedEvent = event;
     }
 
-    public imageCropped(image: string): void  {
+    public imageCropped(image: ImageCroppedEvent): void  {
         this.croppedImage = image;
     }
 

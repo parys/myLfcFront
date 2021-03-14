@@ -11,6 +11,7 @@ import { ObserverComponent } from '@domain/base';
 import { AuthState } from '@auth/store';
 import { NotifierService } from '@notices/services';
 import { ConfirmationMessage } from '@notices/shared';
+import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-list-by-entity-id-query';
 
 @Component({
     selector: 'comment-detail',
@@ -20,12 +21,12 @@ import { ConfirmationMessage } from '@notices/shared';
 })
 
 export class CommentDetailComponent extends ObserverComponent implements OnInit {
-    @Input() public item: Comment;
+    @Input() public item: Comment | GetCommentListByEntityIdQuery.CommentListDto;
     @Input() public deep: number;
     @Input() public canCommentary: boolean;
     @Input() public materialId: number;
     @Input() public matchId: number;
-    @Input() public parent: Comment;
+    @Input() public parent: Comment | GetCommentListByEntityIdQuery.CommentListDto;
     @Input() public type: number;
     @ViewChild('replyInput') private elementRef: EditorComponent;
 
@@ -152,7 +153,7 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
 
     public editComment(): void {
         this.commentForm.markAsPending();
-        const comment: Comment = this.getComment();
+        const comment: Comment | GetCommentListByEntityIdQuery.CommentListDto = this.getComment();
         const sub$ = this.materialCommentService.createOrUpdate(this.item.id, comment)
             .subscribe((data: Comment) => {
                 this.item = comment;
@@ -208,15 +209,15 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
         this.subscriptions.push(sub$);
     }
 
-    private getComment(): Comment {
-        const comment: Comment = this.item;
+    private getComment(): Comment | GetCommentListByEntityIdQuery.CommentListDto {
+        const comment: Comment | GetCommentListByEntityIdQuery.CommentListDto = this.item;
         comment.message = this.commentForm.controls['message'].value;
         comment.answer = this.commentForm.controls['answer'].value;
         return comment;
     }
 
-    private getNewComment(): Comment {
-        const comment: Comment = new Comment();
+    private getNewComment(): Comment | GetCommentListByEntityIdQuery.CommentListDto {
+        const comment: Comment | GetCommentListByEntityIdQuery.CommentListDto = new Comment();
         comment.message = this.commentForm.controls['message'].value;
         comment.materialId = this.materialId;
         comment.matchId = this.matchId;

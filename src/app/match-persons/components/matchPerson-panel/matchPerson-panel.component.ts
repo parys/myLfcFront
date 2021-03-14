@@ -54,7 +54,7 @@ export class MatchPersonPanelComponent extends ObserverComponent implements OnIn
         this.store.dispatch(new MatchPersonActions.CancelEdit());
     }
 
-    public onSelectPerson(person: MatchPerson): void {
+    public onSelectPerson(person: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto): void {
         this.store.dispatch(new MatchPersonActions.SetSelectedPerson(person));
     }
 
@@ -62,7 +62,7 @@ export class MatchPersonPanelComponent extends ObserverComponent implements OnIn
         this.store.dispatch(new MatchPersonActions.AddEdit(person));
     }
 
-    public onDelete(person: MatchPerson) {
+    public onDelete(person: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto) {
         this.store.dispatch(new MatchPersonActions.Delete(person));
     }
 

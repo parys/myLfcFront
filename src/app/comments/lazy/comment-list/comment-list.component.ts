@@ -16,6 +16,7 @@ import { AuthState } from '@auth/store';
 import { NotifierService } from '@notices/services';
 import { ObserverComponent } from '@domain/base';
 import { ConfirmationMessage } from '@notices/shared';
+import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-list-by-entity-id-query';
 
 @Component({
     selector: 'comment-list',
@@ -77,7 +78,7 @@ export class CommentListComponent extends ObserverComponent implements AfterView
                 });
     }
 
-    public update(): Observable<PagedList<Comment>> {
+    public update(): Observable<PagedList<Comment | GetCommentListByEntityIdQuery.CommentListDto>> {
         const filters = new CommentFilter();
         filters.onlyUnverified = this.onlyUnverified.checked || false;
         filters.userId = this.userId;

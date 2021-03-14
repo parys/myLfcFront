@@ -12,6 +12,7 @@ import { SidebarRightService } from '../sidebar-right.service';
 import { GetLatestCommentListQuery } from '@network/shared/right-sidebar/get-latest-comments-list.query';
 import { SignalRActions } from '@base/signalr/signalr.actions';
 import { SignalREntityEnum } from '@base/signalr/models';
+import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-list-by-entity-id-query';
 
 
 @State<RightSidebarStateModel>({
@@ -65,7 +66,7 @@ export class RightSidebarState {
             case (SignalREntityEnum.Update): {
                 setState(
                     patch({
-                        latestComments: updateItem<GetLatestCommentListQuery.LastCommentListDto>
+                        latestComments: updateItem<GetLatestCommentListQuery.LastCommentListDto | GetCommentListByEntityIdQuery.CommentListDto>
                             (item => item.id === payload.entity.id, payload.entity)
                     })
                 );
@@ -74,7 +75,7 @@ export class RightSidebarState {
             case (SignalREntityEnum.Delete): {
                 setState(
                     patch({
-                        latestComments: removeItem<GetLatestCommentListQuery.LastCommentListDto>
+                        latestComments: removeItem<GetLatestCommentListQuery.LastCommentListDto | GetCommentListByEntityIdQuery.CommentListDto>
                             (item => item.id === payload.entity.id)
                     })
                 );

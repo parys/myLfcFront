@@ -9,7 +9,7 @@ import { BaseRestService } from '@base/infrastructure';
 import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-list-by-entity-id-query';
 
 @Injectable()
-export class CommentService extends BaseRestService<Comment, CommentFilter> {
+export class CommentService extends BaseRestService<Comment | GetCommentListByEntityIdQuery.CommentListDto, CommentFilter> {
     private actionUrl: string = COMMENTS_ROUTE + '/';
 
     constructor(public http: HttpWrapper) {

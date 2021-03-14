@@ -24,6 +24,8 @@ export namespace GetMatchPersonsListQuery {
         public personType: number;
 
         public personName: string;
+
+        public matchId: number;
     }
 
 

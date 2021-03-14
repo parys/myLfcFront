@@ -16,6 +16,8 @@ export namespace GetMaterialCategoriesListQuery {
 
         public id: number;
         public name: string;
+        public itemsCount: number;
+        public materialType: MaterialType;
     }
 
 
