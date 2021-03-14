@@ -20,7 +20,7 @@ export class RecaptchaComponent {
         this.isBrowser = isPlatformBrowser(this.platformId);
     }
 
-    public handleCorrectCaptcha(event: string): void {
+    public handleCorrectCaptcha(event: any): void {
         if (event) {
             this.isHuman.emit(true);
         } else {

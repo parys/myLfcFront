@@ -4,7 +4,7 @@
             <input matInput placeholder="Заголовок" formControlName="title">
         </mat-form-field>
         <mat-form-field class="full-width">
-            <textarea matInput matTextareaAutosize rows="4" placeholder="Сообщение"
+            <textarea matInput [matTextareaAutosize]="true" rows="4" placeholder="Сообщение"
                 formControlName="message"></textarea>
         </mat-form-field>
         <mat-form-field class="full-width">
@@ -22,7 +22,9 @@
         <div class="full-width text-center">
             <button mat-raised-button color="warn" type="submit" [disabled]="!editWishForm.valid"
                 *ngIf="isHuman || data.isLogined; else anon">Отправить</button>
-            <recaptcha (isHuman)="isHuman = $event" #anon [hidden]="isHuman"></recaptcha>
+            <ng-template #anon>
+                <recaptcha (isHuman)="isHuman = $event" [hidden]="isHuman"></recaptcha>
+            </ng-template>
         </div>
     </form>
 </ng-container>

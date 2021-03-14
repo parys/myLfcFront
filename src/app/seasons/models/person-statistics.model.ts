@@ -6,11 +6,11 @@ export class PersonStatistics {
 
     public personName: string;
 
-    public goals: Statistics[];
+    public goals: Statistics;
 
-    public assists: Statistics[];
+    public assists: Statistics;
 
-    public yellows: Statistics[];
+    public yellows: Statistics;
 
-    public reds: Statistics[];
+    public reds: Statistics;
 }

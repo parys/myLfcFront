@@ -5,6 +5,7 @@ import { KEYUP } from '@constants/help.constants';
 import { DEBOUNCE_TIME } from '@constants/app.constants';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { UserFilters } from '@users/models/user-filters.model';
+import { RoleGroup } from '@role-groups/models/role-group.model';
 
 @Component({
     selector: 'users-filter',
@@ -16,7 +17,7 @@ export class UsersFilterComponent implements AfterViewInit {
 
     @Input() isAdminAssistant: boolean;
 
-    @Input() roleGroups: boolean;
+    @Input() roleGroups: RoleGroup[];
 
     @Output() filterChange: EventEmitter<UserFilters> = new EventEmitter<UserFilters>();
 
