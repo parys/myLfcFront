@@ -1,10 +1,15 @@
-﻿<ng-container *ngIf="{ mobile: mobile$ | async } as data">
+﻿<ng-container *ngIf="{ mobile: mobile$ | async, isNewsmaker: isNewsmaker$ | async } as data">
     <http-loader></http-loader>
     <navbar (toggle)="sidenav.open()"></navbar>
+    <ng-container *ngIf="data.isNewsmaker">
+        <app-dynamic-content-outlet [componentName]="'AdminTopPanelComponent'">
+        </app-dynamic-content-outlet>
+    </ng-container>
     <div class="breadcrumb-row">
         <breadcrumb></breadcrumb>
         <a mat-raised-button class="color-back-gold width25p" [routerLink]="['/wishes']"><b>Ваши идеи</b></a>
     </div>
+
     <mat-sidenav-container (backdropClick)="sidenav.close()">
         <mat-sidenav #sidenav mode="over" class="sidenav" (keydown.escape)="sidenav.close()" [fixedInViewport]="true"
             [fixedTopGap]="0" [fixedBottomGap]="0">

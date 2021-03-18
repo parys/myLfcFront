@@ -83,14 +83,6 @@ export class SignalRService {
                 (data: number) => {
                     this.store.dispatch(new ReadNotifications(data));
                 });
-            this.hubConnection.on('updateMatCommCount',
-                (data: string) => {
-                    this.store.dispatch(new AdminActions.UpdateMaterialCommentsCount(data));
-                });
-            this.hubConnection.on('updateUserNumbers',
-                (data: string) => {
-                    this.store.dispatch(new AdminActions.UpdateUsersNumbersCount(data));
-                });
         }
 
         this.hubConnection.stop();

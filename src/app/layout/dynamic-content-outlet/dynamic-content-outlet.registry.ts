@@ -27,4 +27,8 @@ export const DynamicContentOutletRegistry: RegistryItem[] = [
         componentName: 'MatchHeaderComponent',
         module: import('src/app/lazy-modules/match-header/match-header.module').then(x => x.MatchHeaderModule)
       },
+      {
+        componentName: 'AdminTopPanelComponent',
+        module: import('src/app/lazy-modules/admin-top-panel/admin-top-panel.module').then(x => x.AdminTopPanelModule)
+      },
 ];

@@ -23,13 +23,11 @@
                 </div>
             </div>
         </div>
-        <form *ngIf="isLogined" class="form-horizontal clearfix" role="form" [formGroup]="messageForm"
+        <form *ngIf="isLogined; else notLogined" class="form-horizontal clearfix" role="form" [formGroup]="messageForm"
             (ngSubmit)="onSubmit()">
-            <div>
-                <div class="full-width">
-                    <bbeditor [type]="3" [value]="messageForm.get('message').value" [height]="150"
-                        formControlName="message" #chatInput></bbeditor>
-                </div>
+            <div class="full-width">
+                <bbeditor [type]="3" [value]="messageForm.get('message').value" [height]="150"
+                    formControlName="message" #chatInput></bbeditor>
             </div>
             <div class="comment-action-buttons">
                 <button mat-raised-button color="warn" type="submit" [disabled]="!messageForm.valid"
@@ -41,7 +39,9 @@
                     (click)="cancelEdit()">Отмена</button>
             </div>
         </form>
-        <div *ngIf="!isLogined" class="text-white text-center">Для добавления сообщений необходимо войти.</div>
+        <ng-template #notLogined>
+            <div class="text-white text-center">Для добавления сообщений необходимо войти.</div>
+        </ng-template>
         <div class="full-width text-center flex-space-around top10">
             <a *ngIf="type === 0" mat-raised-button role="button" class="color-back-gold"
                 [routerLink]="['/chat']"><b>Флудилка</b></a>

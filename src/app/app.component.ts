@@ -19,6 +19,7 @@ import { CustomTitleMetaService } from '@core/services';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { ObserverComponent } from '@domain/base';
 import { isPlatformServer } from '@angular/common';
+import { AuthState } from '@auth/store/auth.state';
 
 
 @Component({
@@ -31,6 +32,11 @@ import { isPlatformServer } from '@angular/common';
 export class AppComponent extends ObserverComponent implements OnInit {
 
     @Select(CoreState.mobile) mobile$: Observable<boolean>;
+    @Select(AuthState.isNewsmaker) isNewsmaker$: Observable<boolean>;
+
+    @ViewChild('sidenav') sidenav: MatSidenav;
+
+    public showAd = true;
 
     constructor(private router: Router,
                 private activatedRoute: ActivatedRoute,
@@ -42,10 +48,6 @@ export class AppComponent extends ObserverComponent implements OnInit {
         super();
         this.subscribeOnChangeLayout();
     }
-
-    public showAd = true;
-
-    @ViewChild('sidenav') sidenav: MatSidenav;
 
     public ngOnInit(): void {
         this.initTitleSubscriber();

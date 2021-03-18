@@ -1,0 +1,9 @@
+﻿<ng-container *ngIf="{ isNewsmaker: isNewsmaker$ | async,
+    isInformer: isInformer$ | async
+ } as data">
+    <div class="panel">
+        <a *ngIf="data.isNewsmaker" [routerLink]="['/news', 0, 'edit']">+ новость</a>
+        <a [routerLink]="['/blogs', 0, 'edit']">+ блог</a>
+        <a [routerLink]="['/admin']">Админка</a>
+    </div>
+</ng-container>

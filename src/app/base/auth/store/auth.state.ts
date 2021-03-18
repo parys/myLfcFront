@@ -113,8 +113,7 @@ export class AuthState {
 
     @Action(Logout)
     onLogout({ patchState }: StateContext<AuthStateModel>) {
-        patchState({ tokens:  null  });
-        patchState({ user:  null  });
+        patchState({ tokens: null, user: null });
     }
 
 

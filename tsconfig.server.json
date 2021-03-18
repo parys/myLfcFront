@@ -10,7 +10,8 @@
       "src/app/editor/tiny-module/tiny.module.ts",
       "src/app/lazy-modules/sidebar-left/sidebar-left.module.ts",
       "src/app/lazy-modules/sidebar-right/sidebar-right.module.ts",
-      "src/app/lazy-modules/navbar-menu/navbar-menu.module.ts"    
+      "src/app/lazy-modules/navbar-menu/navbar-menu.module.ts",
+      "src/app/lazy-modules/admin-top-panel/admin-top-panel.module.ts"
   ],
   "angularCompilerOptions": {
     "entryModule": "./src/app/app.module.server#AppServerModule"
