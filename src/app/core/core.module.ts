@@ -14,7 +14,7 @@ import { CustomTitleMetaService } from './services';
     declarations: [],
     imports: [
         CommonModule,
-        NgxsModule.forFeature([CoreState])
+        NgxsModule.forFeature()
     ]
 })
 export class CoreModule extends EnsureModuleLoadedOnceGuard {

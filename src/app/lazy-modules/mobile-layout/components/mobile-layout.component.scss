@@ -1,0 +1,28 @@
+﻿
+.club-name {
+    font-size: 20px;
+}
+
+@media screen and (max-width: 879px) {
+    .club-name {
+        display: none;
+    }
+}
+
+.logo {
+    height: 72px;
+}
+
+.score-text {
+    font-size: 40px;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+    .score-text  {
+        font-size: 30px;
+    }
+}

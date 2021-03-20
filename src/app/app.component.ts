@@ -13,7 +13,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, map, distinctUntilChanged } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Store, Select } from '@ngxs/store';
-import { ChangeMobile, CoreState } from '@core/store';
+import { ChangeMobile, CoreActions, CoreState } from '@core/store';
 
 import { CustomTitleMetaService } from '@core/services';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
@@ -32,9 +32,7 @@ import { AuthState } from '@auth/store/auth.state';
 export class AppComponent extends ObserverComponent implements OnInit {
 
     @Select(CoreState.mobile) mobile$: Observable<boolean>;
-    @Select(AuthState.isNewsmaker) isNewsmaker$: Observable<boolean>;
-
-    @ViewChild('sidenav') sidenav: MatSidenav;
+    @Select(AuthState.isAuthor) isAuthor$: Observable<boolean>;
 
     public showAd = true;
 
@@ -53,6 +51,10 @@ export class AppComponent extends ObserverComponent implements OnInit {
         this.initTitleSubscriber();
     }
 
+    public onMenuToggle(): void {
+        this.store.dispatch(new CoreActions.ToggleMenu());
+    }
+
     public onAdClose(element: any): void {
         this.showAd = false;
         element.srcElement.parentElement.remove();
@@ -63,7 +65,7 @@ export class AppComponent extends ObserverComponent implements OnInit {
             filter((event: any) => event instanceof NavigationEnd),
             map(() => {
                 let child = this.activatedRoute.firstChild;
-                this.sidenav.close();
+      //todo          this.sidenav?.close();
                 while (child) {
                     if (child.firstChild) {
                         child = child.firstChild;

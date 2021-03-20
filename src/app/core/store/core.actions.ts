@@ -24,3 +24,12 @@ export class ReadNotifications {
     static readonly type = '[Core] Read notifications';
     constructor(public readonly payload: number) { }
 }
+
+export namespace CoreActions {
+    export class ToggleMenu {
+        static readonly type = '[Core] Toggle menu';
+    }
+    export class CloseMenu {
+        static readonly type = '[Core] Toggle menu';
+    }
+}

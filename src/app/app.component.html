@@ -1,7 +1,7 @@
-﻿<ng-container *ngIf="{ mobile: mobile$ | async, isNewsmaker: isNewsmaker$ | async } as data">
+﻿<ng-container *ngIf="{ mobile: mobile$ | async, isAuthor: isAuthor$ | async } as data">
     <http-loader></http-loader>
-    <navbar (toggle)="sidenav.open()"></navbar>
-    <ng-container *ngIf="data.isNewsmaker">
+    <navbar (toggle)="onMenuToggle()"></navbar>
+    <ng-container *ngIf="data.isAuthor">
         <app-dynamic-content-outlet [componentName]="'AdminTopPanelComponent'">
         </app-dynamic-content-outlet>
     </ng-container>
@@ -10,50 +10,41 @@
         <a mat-raised-button class="color-back-gold width25p" [routerLink]="['/wishes']"><b>Ваши идеи</b></a>
     </div>
 
-    <mat-sidenav-container (backdropClick)="sidenav.close()">
-        <mat-sidenav #sidenav mode="over" class="sidenav" (keydown.escape)="sidenav.close()" [fixedInViewport]="true"
-            [fixedTopGap]="0" [fixedBottomGap]="0">
-            
-            <app-dynamic-content-outlet [componentName]="'NavbarMenuComponent'" class="nav-menu beauty-font">
-            </app-dynamic-content-outlet>
-            <button type="button" mat-button (click)="sidenav.close()" class="full-width text-white">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-sidenav>
-        <mat-sidenav-content class="main">
-            <ng-container *ngIf="!data.mobile">
-                <div class="left-container" [style.order]="0">
-                    <app-dynamic-content-outlet [componentName]="'SidebarLeftComponent'">
-                    </app-dynamic-content-outlet>
-                </div>
-            </ng-container>
+    <div *ngIf="data.mobile;else desktop">     
+        <app-dynamic-content-outlet [componentName]="'MobileLayoutComponent'">
+        </app-dynamic-content-outlet>                
+    </div>
+    <ng-template #desktop>
+        <div class="main">
+            <div class="left-container" [style.order]="0">
+                <app-dynamic-content-outlet [componentName]="'SidebarLeftComponent'">
+                </app-dynamic-content-outlet>
+            </div>
             <div class="main-container" [style.order]="1">
                 <router-outlet></router-outlet>
             </div>
-            <ng-container *ngIf="!data.mobile">
-                <div class="right-container" [style.order]="2">
-                    <app-dynamic-content-outlet [componentName]="'SidebarRightComponent'">
-                    </app-dynamic-content-outlet>
-                </div>
-            </ng-container>
-            <footer [class.bottom]="showAd">
-                <a [routerLink]="['/about']">О нас</a>
-                <a [routerLink]="['/copyright']">О перепечатке информации</a>
-                <p>&copy; 2021 - MyLFC.ru</p>
-                <a style="word-wrap: break-word" [routerLink]="['/cooperation']">Сотрудничество</a>
-            </footer>
-            <div class="ad-container">
-                <div class="ad-close" (click)="onAdClose($event)">×</div>
-                <div *ngIf="data.mobile;else desktop">
-                    <od [blockName]="'R-A-255349-5'"></od>
-                </div>
-                <ng-template #desktop>
-                    <od [blockName]="'R-A-255349-3'"></od>
-                </ng-template>
-                Реклама позволяет нам становиться лучше.
+            <div class="right-container" [style.order]="2">
+                <app-dynamic-content-outlet [componentName]="'SidebarRightComponent'">
+                </app-dynamic-content-outlet>
             </div>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+        </div>
+    </ng-template>
+    <footer [class.bottom]="showAd">
+        <a [routerLink]="['/about']">О нас</a>
+        <a [routerLink]="['/copyright']">О перепечатке информации</a>
+        <p>&copy; 2021 - MyLFC.ru</p>
+        <a style="word-wrap: break-word" [routerLink]="['/cooperation']">Сотрудничество</a>
+    </footer>
+    <div class="ad-container">
+        <div class="ad-close" (click)="onAdClose($event)">×</div>
+        <div *ngIf="data.mobile;else desk">
+            <od [blockName]="'R-A-255349-5'"></od>
+        </div>
+        <ng-template #desk>
+            <od [blockName]="'R-A-255349-3'"></od>
+        </ng-template>
+        Реклама позволяет нам становиться лучше.
+    </div>
     
     <notifier></notifier>
 </ng-container>

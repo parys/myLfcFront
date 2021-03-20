@@ -22,6 +22,7 @@ import { CoreModule } from '@core/core.module';
 import { NoticesModule } from '@notices/notices.module';
 import { OdModule } from './od';
 import { NavbarModule } from './home/navbar/navbar.module';
+import { CoreState } from '@core/store';
 
 registerLocaleData(localeRU);
 
@@ -48,7 +49,7 @@ export function runAppInitializerFactories(injector: Injector): () => Promise<an
         CommonModule,
         BrowserModule.withServerTransition({ appId: 'mylfc' }),
         CoreModule.forRoot(),
-        NgxsModule.forRoot([]),
+        NgxsModule.forRoot([CoreState]),
         HttpClientModule,
         MaterialCoreModule,
         AppRoutingModule,

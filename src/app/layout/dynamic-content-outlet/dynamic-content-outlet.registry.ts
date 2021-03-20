@@ -31,4 +31,8 @@ export const DynamicContentOutletRegistry: RegistryItem[] = [
         componentName: 'AdminTopPanelComponent',
         module: import('src/app/lazy-modules/admin-top-panel/admin-top-panel.module').then(x => x.AdminTopPanelModule)
       },
+      {
+        componentName: 'MobileLayoutComponent',
+        module: import('src/app/lazy-modules/mobile-layout/mobile-layout.module').then(x => x.MobileLayoutModule)
+      },
 ];
