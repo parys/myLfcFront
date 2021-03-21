@@ -4,41 +4,44 @@
     isModerator: isModerator$ | async,
     isMainModerator: isMainModerator$ | async } as data">
     <div>
-        <h2>
-            <span [textContent]="data.user.userName"></span>
-            <span *ngIf="data.userId && data.userId !== data.user.id">
-                <a role="button" (click)="writePm(data.user.id)"><i class="material-icons">email</i></a>
+        <h2 class="flex-space-between">
+            <span>
+                <span [textContent]="data.user.userName"></span>
+                <span *ngIf="data.userId && data.userId !== data.user.id">
+                    <a role="button" (click)="writePm(data.user.id)"><i class="material-icons">email</i></a>
+                </span>
+            </span>
+            <span>
+                <ng-container *ngIf="data.userId === data.user.id">
+                    <mat-icon role="button" [routerLink]="['./settings']" matTooltip="Уведомления"
+                        class="color-back-gold">notifications</mat-icon>
+                    <mat-icon role="button" matTooltip="Изменить профиль" [routerLink]="['./edit']">settings
+                    </mat-icon>
+                </ng-container>
             </span>
         </h2>
         <pm-reply *ngIf="selectedUserId" [userId]="selectedUserId" (close)="closePmWindow($event);"
             [userName]="data.user.userName"></pm-reply>
         <div class="full-width flex-space-between">
-            <div class="width20p">
+            <div class="avatar-panel">
                 <img class="avatar" [src]="data.user.photo" [alt]="data.user.userName" />
-            </div>
-            <div class="flex-space-between">
-                <div *ngIf="data.userId === data.user.id || data.isModerator">
-                    <label role="button" for="update-avatar-input" *ngIf="data.userId === data.user.id"
-                        matTooltip="Обновить фото" class=""><i class="material-icons">add_a_photo</i></label>
-                    <input type="file" class="hidden" accept="image/*" (change)="onChangeAvatar($event)"
-                        id="update-avatar-input" />
-                    <button mat-raised-button color="primary" (click)="resetAvatar(data.user.id)">
-                        Удалить аватар
-                    </button>
-                    <button mat-raised-button color="warn" *ngIf="data.userId === data.user.id"
-                        [routerLink]="['/account/changePassword']">Изменить пароль</button>
-
-                    <button *ngIf="data.userId === data.user.id" mat-raised-button (click)="logout()">Выйти из
-                        аккаунта</button>
+                <div *ngIf="data.userId === data.user.id || data.isModerator" class="flex-space-between">
+                    <span>
+                        <label role="button" for="update-avatar-input" *ngIf="data.userId === data.user.id"
+                            matTooltip="Обновить фото" class=""><i class="material-icons">add_a_photo</i></label>
+                        <input type="file" class="hidden" accept="image/*" (change)="onChangeAvatar($event)"
+                            id="update-avatar-input" />
+                    </span>
+                    <mat-icon role="button" matTooltip="Удалить аватар" (click)="resetAvatar(data.user.id)">
+                         cancel
+                    </mat-icon>
                 </div>
-                <span>
-                    <ng-container *ngIf="data.userId === data.user.id">
-                        <mat-icon role="button" [routerLink]="['./settings']" matTooltip="Уведомления"
-                            class="color-back-gold">notifications</mat-icon>
-                        <mat-icon role="button" matTooltip="Изменить профиль" [routerLink]="['./edit']">settings
-                        </mat-icon>
-                    </ng-container>
-                </span>
+            </div>
+            <div *ngIf="data.userId === data.user.id" class="buttons">
+                <button mat-raised-button color="warn" *ngIf="data.userId === data.user.id"
+                    [routerLink]="['/account/changePassword']">Изменить пароль</button>
+
+                <button mat-raised-button (click)="logout()">Выйти из аккаунта</button>
             </div>
 
         </div>
@@ -53,7 +56,7 @@
                                 min="1" type="number">
                         </mat-form-field>
                         <button mat-raised-button color="warn" type="submit"
-                            [disabled]="!banForm.valid">Забанить</button>
+                            [disabled]="!banForm.valid">Бан</button>
                     </form>
                     <div class="full-width" *ngIf="data.user.lockoutEnd">
                         <mat-form-field>
@@ -65,14 +68,13 @@
                             бан</button>
                     </div>
                 </div>
-                <div>
-                    <mat-form-field>
-                        <input matInput placeholder="Группа" readonly [value]="data.user.roleGroupName">
-                    </mat-form-field>
-                    <div *ngIf="data.isAdminAssistant && data.userId !== data.user.id">
-                        <button mat-raised-button color="warn" (click)="onEditRoleGroup()">Изменить</button>
-                    </div>
-                </div>
+                <mat-form-field>
+                    <input matInput placeholder="Группа" readonly [value]="data.user.roleGroupName">
+                    <button *ngIf="data.isAdminAssistant && data.userId !== data.user.id" matSuffix mat-icon-button
+                        mat-raised-button color="warn" (click)="onEditRoleGroup()">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </mat-form-field>
             </div>
             <mat-form-field class="full-width" *ngIf="data.userId === data.user.id || data.isAdminAssistant">
                 <input matInput placeholder="Почта" readonly [value]="data.user.email">

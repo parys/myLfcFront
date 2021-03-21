@@ -17,6 +17,7 @@ import { RoleGroup } from '@role-groups/models/role-group.model';
 @Component({
     selector: 'user-detail',
     templateUrl: './user-detail.component.html',
+    styleUrls: ['./user-detail.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
