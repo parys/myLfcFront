@@ -1,26 +1,16 @@
-﻿<ng-container *ngIf="{ mobile: mobile$ | async, isNewsmaker: isNewsmaker$ | async } as data">
+﻿<ng-container *ngIf="{ mobile: mobile$ | async, isAuthor: isAuthor$ | async } as data">
     <http-loader></http-loader>
-    <navbar (toggle)="sidenav.open()"></navbar>
-    <ng-container *ngIf="data.isNewsmaker">
-        <app-dynamic-content-outlet [componentName]="'AdminTopPanelComponent'">
-        </app-dynamic-content-outlet>
-    </ng-container>
-    <div class="breadcrumb-row">
-        <breadcrumb></breadcrumb>
-        <a mat-raised-button class="color-back-gold width25p" [routerLink]="['/wishes']"><b>Ваши идеи</b></a>
-    </div>
-
     <mat-sidenav-container (backdropClick)="sidenav.close()">
-        <mat-sidenav #sidenav mode="over" class="sidenav" (keydown.escape)="sidenav.close()" [fixedInViewport]="true"
-            [fixedTopGap]="0" [fixedBottomGap]="0">
-            
-            <app-dynamic-content-outlet [componentName]="'NavbarMenuComponent'" class="nav-menu beauty-font">
-            </app-dynamic-content-outlet>
-            <button type="button" mat-button (click)="sidenav.close()" class="full-width text-white">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-sidenav>
         <mat-sidenav-content class="main">
+            <navbar (toggle)="sidenav.open()" class="full-width"></navbar>
+            <ng-container *ngIf="data.isAuthor">
+                <app-dynamic-content-outlet [componentName]="'AdminTopPanelComponent'" class="full-width">
+                </app-dynamic-content-outlet>
+            </ng-container>
+            <div class="breadcrumb-row">
+                <breadcrumb></breadcrumb>
+                <a mat-raised-button class="color-back-gold width25p" [routerLink]="['/wishes']"><b>Ваши идеи</b></a>
+            </div>
             <ng-container *ngIf="!data.mobile">
                 <div class="left-container" [style.order]="0">
                     <app-dynamic-content-outlet [componentName]="'SidebarLeftComponent'">
@@ -53,7 +43,17 @@
                 Реклама позволяет нам становиться лучше.
             </div>
         </mat-sidenav-content>
+
+        <mat-sidenav #sidenav mode="over" class="sidenav" (keydown.escape)="sidenav.close()" [fixedInViewport]="true"
+            [fixedTopGap]="0" [fixedBottomGap]="0">
+
+            <app-dynamic-content-outlet [componentName]="'NavbarMenuComponent'" class="nav-menu beauty-font">
+            </app-dynamic-content-outlet>
+            <button type="button" mat-button (click)="sidenav.close()" class="full-width text-white">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-sidenav>
     </mat-sidenav-container>
-    
+
     <notifier></notifier>
 </ng-container>

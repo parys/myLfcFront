@@ -32,7 +32,7 @@ import { AuthState } from '@auth/store/auth.state';
 export class AppComponent extends ObserverComponent implements OnInit {
 
     @Select(CoreState.mobile) mobile$: Observable<boolean>;
-    @Select(AuthState.isNewsmaker) isNewsmaker$: Observable<boolean>;
+    @Select(AuthState.isAuthor) isAuthor$: Observable<boolean>;
 
     @ViewChild('sidenav') sidenav: MatSidenav;
 

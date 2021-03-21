@@ -18,9 +18,15 @@ import { RolesEnum } from '@auth/models';
 export class AuthState {
 
     private static isInRole(state: AuthStateModel, role: string): boolean {
-        const roles = state.user && state.user.role ? state.user.role : [];
-        const updatedRoles = roles.map(x => x.toLowerCase);
-        return updatedRoles.includes(role.toLowerCase)
+        let roles = state.user && state.user.role ? state.user.role : [];
+        
+        // if 1 role so it's just string
+        if(!Array.isArray(roles)) {
+            roles = [roles];
+        }
+        
+        const updatedRoles = roles.map(x => x.toLowerCase());
+        return updatedRoles.includes(role.toLowerCase());
     }
 
     @Selector()
@@ -45,51 +51,51 @@ export class AuthState {
 
     @Selector()
     static isInformer(state: AuthStateModel) {
-        return AuthState.isInRole(state, RolesEnum.InfoStart.toString());
+        return AuthState.isInRole(state, RolesEnum.InfoStart);
     }
 
     @Selector()
     static isNewsmaker(state: AuthStateModel) {
-        return AuthState.isInRole(state, RolesEnum.NewsStart.toString());
+        return AuthState.isInRole(state, RolesEnum.NewsStart);
     }
 
     @Selector()
     static isAdmin(state: AuthStateModel) {
-        return AuthState.isInRole(state, RolesEnum.AdminFull.toString());
+        return AuthState.isInRole(state, RolesEnum.AdminFull);
     }
 
     @Selector()
     static isAdminAssistant(state: AuthStateModel) {
-        return AuthState.isInRole(state, RolesEnum.AdminStart.toString());
+        return AuthState.isInRole(state, RolesEnum.AdminStart);
     }
 
     @Selector()
     static isModerator(state: AuthStateModel) {
-        return AuthState.isInRole(state, RolesEnum.UserStart.toString());
+        return AuthState.isInRole(state, RolesEnum.UserStart);
     }
 
     @Selector()
     static isMainModerator(state: AuthStateModel) {
-        return AuthState.isInRole(state, RolesEnum.UserFull.toString());
+        return AuthState.isInRole(state, RolesEnum.UserFull);
     }
 
     @Selector()
     static isAuthor(state: AuthStateModel) {
-        return AuthState.isInRole(state, RolesEnum.BlogStart.toString());
+        return AuthState.isInRole(state, RolesEnum.BlogStart);
     }
 
     @Selector()
     static isEditor(state: AuthStateModel) {
-        return AuthState.isInRole(state, RolesEnum.BlogFull.toString()) || AuthState.isInRole(state, RolesEnum.NewsFull.toString());
+        return AuthState.isInRole(state, RolesEnum.BlogFull) || AuthState.isInRole(state, RolesEnum.NewsFull);
     }
 
     @Selector()
     static isSiteMember(state: AuthStateModel) {
-        return state.user !== null && (AuthState.isInRole(state, RolesEnum.NewsStart.toString())
-        || AuthState.isInRole(state, RolesEnum.UserStart.toString())
-        || AuthState.isInRole(state, RolesEnum.AdminStart.toString())
-        || AuthState.isInRole(state, RolesEnum.BlogStart.toString())
-        || AuthState.isInRole(state, RolesEnum.InfoStart.toString()));
+        return state.user !== null && (AuthState.isInRole(state, RolesEnum.NewsStart)
+        || AuthState.isInRole(state, RolesEnum.UserStart)
+        || AuthState.isInRole(state, RolesEnum.AdminStart)
+        || AuthState.isInRole(state, RolesEnum.BlogStart)
+        || AuthState.isInRole(state, RolesEnum.InfoStart));
     }
 
     static isSelf(userId: number) {
