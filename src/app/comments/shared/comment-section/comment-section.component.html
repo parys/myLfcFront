@@ -1,8 +1,10 @@
-﻿<ng-container *ngIf="{ isLogined: isLogined$ | async, comments: comments$ | async } as data">
+﻿<ng-container *ngIf="{ isLogined: isLogined$ | async,
+                    comments: comments$ | async, 
+                    commentsNumber: commentsNumber$ | async } as data">
     <od [blockName]="'R-A-255349-2'"></od>
 
     <div id="comments" class="flex-v-c">
-        Комментарии: <span [textContent]="data.comments.length"></span>&nbsp;
+        Комментарии: <span [textContent]="data.commentsNumber"></span>&nbsp;
         <a (click)="update()" role="button">
             <mat-icon>refresh</mat-icon>
         </a>

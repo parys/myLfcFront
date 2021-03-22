@@ -20,4 +20,9 @@ export class AdminService {
     public recalculateUsersNumbers(): Observable<any> {
         return this.http.put(this.actionUrl + 'recalculateUsersNumbers', {});
     }
+
+    public calculateCommentsNumber(): Observable<any> {
+        debugger;
+        return this.http.put(this.actionUrl + 'calculateCommentsNumber', {});
+    }
 }

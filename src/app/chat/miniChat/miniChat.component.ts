@@ -28,7 +28,7 @@ export class MiniChatComponent {
 
     constructor(private store: Store) {
         this.store.dispatch(new ChatActions.GetChatList({typeId: ChatMessageType.Mini,
-             currentPage: 1, pageSize: 50, sortOn: null, sortDirection: null, lastMessageId: 0}));
+             currentPage: 1, pageSize: 20, sortOn: null, sortDirection: null, lastMessageId: 0}));
     }
 
     public onCreateMessage(msg: CreateChatMessageCommand.Request): void {

@@ -33,4 +33,8 @@ export class AdminHomeComponent {
     public updateUsersNumbers(): void {
         this.store.dispatch(new AdminActions.RecalculateUsersNumbers());
     }
+
+    public calculateCommentsNumber(): void {
+        this.store.dispatch(new AdminActions.CalculateCommentsNumber());
+    }
 }

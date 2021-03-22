@@ -8,6 +8,10 @@ export namespace AdminActions {
         static readonly type = '[Admin] Recalculate users numbers';
     }
 
+    export class CalculateCommentsNumber {
+        static readonly type = '[Admin] Calculate comments numbers';
+    }
+
     export class UpdateMaterialCommentsCount {
         static readonly type = '[Admin] Update material comments count';
         public constructor(public readonly payload: string) {}

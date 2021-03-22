@@ -13,12 +13,14 @@ import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-lis
 import { MaterialsState } from '@materials/lazy/store';
 import { MatchesState } from '@matches/store';
 import { SignalRActions } from '@base/signalr/signalr.actions';
+import { SignalREntityEnum } from '@base/signalr/models';
 
 
 @State<CommentsStateModel>({
     name: 'comments',
     defaults: {
-        comments: []
+        comments: [],
+        commentsNumber: 0
     },
 })
 @Injectable()
@@ -29,6 +31,11 @@ export class CommentsState {
         return state.comments;
     }
 
+    @Selector()
+    static commentsNumber(state: CommentsStateModel) {
+        return state.commentsNumber;
+    }
+
     constructor(private commentsService: CommentService, private store: Store) { }
 
 
@@ -37,7 +44,7 @@ export class CommentsState {
         return this.commentsService.getAllByEntityId(payload)
             .pipe(
                 tap(response => {
-                    patchState({ comments: response.results || [] });
+                    patchState({ comments: response.results || [], commentsNumber: response.rowCount });
                 })
             );
     }
@@ -51,7 +58,11 @@ export class CommentsState {
         if (matchId !== payload.entity.matchId && materialId !== payload.entity.materialId) {
                  return;
         }
-        
+        if (payload.type != SignalREntityEnum.Update) {
+            let { commentsNumber } = getState();
+            let diff = payload.type === SignalREntityEnum.Add ? 1 : -1;
+            patchState({ commentsNumber: (commentsNumber + diff) });
+        } 
         const { comments } = getState();
         if (payload.entity.parentId == null) {
             const index = comments.findIndex(x => x.id === payload.entity.id);

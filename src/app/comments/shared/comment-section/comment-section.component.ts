@@ -42,6 +42,7 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
     @Select(AuthState.isLogined) isLogined$: Observable<boolean>;
 
     @Select(CommentsState.comments) comments$: Observable<GetCommentListByEntityIdQuery.CommentListDto[]>;
+    @Select(CommentsState.commentsNumber) commentsNumber$: Observable<number>;
 
     constructor(private commentService: CommentService,
                 private cd: ChangeDetectorRef,

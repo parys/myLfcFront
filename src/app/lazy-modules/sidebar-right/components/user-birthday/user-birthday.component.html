@@ -9,7 +9,7 @@
         [alt]="userBirthdays[currentUserIndex].userName" [srcset]="userBirthdays[currentUserIndex].photo | img:[100]" />
     </mat-card-content>
     <div *ngIf="userBirthdays.length > 1" class="flex-space-between">
-        <button mat-button (click)="goToPrevious()"><mat-icon>arrow_left</mat-icon></button>
-        <button mat-button (click)="goToNext()"><mat-icon>arrow_right</mat-icon></button>
+        <button mat-button (click)="goToPrevious()"><mat-icon>arrow_back</mat-icon></button>
+        <button mat-button (click)="goToNext()"><mat-icon>arrow_forward</mat-icon></button>
         </div>
 </mat-card>

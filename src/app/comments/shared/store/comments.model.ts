@@ -2,5 +2,6 @@ import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-lis
 
 export interface CommentsStateModel {
     comments: GetCommentListByEntityIdQuery.CommentListDto[];
+    commentsNumber: number;
 
 }

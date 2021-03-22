@@ -5,7 +5,7 @@ export class ImgPipe implements PipeTransform {
 
     public transform(value: string, widths: number[]): string {
         let result = '';
-        if (value.indexOf('http') >= 0) {
+        if (value?.indexOf('http') >= 0) {
             return value;
         }
         for (let index = 0; index < widths.length; index++) {

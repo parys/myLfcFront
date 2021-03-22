@@ -17,13 +17,21 @@
         <a [routerLink]="['/seasons']" mat-menu-item>Список сезонов</a>
     </span>
     
-    <div *ngIf="data.isAdminAssistant">
-        <button mat-raised-button color="primary" (click)="updateMaterialCommentCounts()">Обновить комментарии в материалах</button>
-        <span>{{materialsNumbers$ | async}}</span>
-    </div>
-    
-    <div *ngIf="data.isAdminAssistant">
-        <button mat-raised-button color="primary" (click)="updateUsersNumbers()">Обновить счетчики у пользователей</button>
-        <span>{{usersNumbers$ | async}}</span>
-    </div>
+    <ng-container *ngIf="data.isAdminAssistant">
+        <div>
+            <button mat-raised-button
+             color="primary" (click)="calculateCommentsNumber()">Обновить количество комментариев</button>
+        </div>
+        <div>
+            <button mat-raised-button color="primary"
+             (click)="updateMaterialCommentCounts()">Обновить комментарии в материалах</button>
+            <span>{{materialsNumbers$ | async}}</span>
+        </div>
+        
+        <div>
+            <button mat-raised-button color="primary"
+             (click)="updateUsersNumbers()">Обновить счетчики у пользователей</button>
+            <span>{{usersNumbers$ | async}}</span>
+        </div>
+    </ng-container>
 </ng-container>

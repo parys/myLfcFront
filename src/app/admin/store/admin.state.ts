@@ -6,6 +6,8 @@ import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { AdminStateModel } from './admin.model';
 import { AdminActions } from './admin.actions';
 import { AdminService } from '@admin/services/admin.service';
+import { NoticeMessage, NoticeType } from '@notices/shared';
+import { ShowNotice } from '@notices/store';
 
 
 @State<AdminStateModel>({
@@ -38,6 +40,12 @@ export class AdminState {
     @Action(AdminActions.RecalculateUsersNumbers)
     onRecalculateUsersNumbers(context: StateContext<AdminStateModel>) {
         return this.adminService.recalculateUsersNumbers();       
+    }    
+
+    @Action(AdminActions.CalculateCommentsNumber)
+    onCalculateCommentsNumber(context: StateContext<AdminStateModel>) {
+        return this.adminService.calculateCommentsNumber()
+        .pipe(tap(a => context.dispatch(new ShowNotice(new NoticeMessage(NoticeType.Success, "Комментарии обновлены")))));       
     }  
 
     @Action(AdminActions.UpdateMaterialCommentsCount)
