@@ -21,4 +21,9 @@ export namespace AdminActions {
         static readonly type = '[Admin] Update users numbers';
         public constructor(public readonly payload: string) {}
     }
+
+    export class SendTestEmail {
+        static readonly type = '[Admin] Send test email';
+        public constructor(public readonly payload: string) {}
+    }
 }

@@ -22,7 +22,10 @@ export class AdminService {
     }
 
     public calculateCommentsNumber(): Observable<any> {
-        debugger;
         return this.http.put(this.actionUrl + 'calculateCommentsNumber', {});
+    }
+
+    public sendTestEmail(email: string): Observable<any> {
+        return this.http.put(this.actionUrl + 'sendTestEmail', {email: email});
     }
 }

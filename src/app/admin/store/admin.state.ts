@@ -57,4 +57,9 @@ export class AdminState {
     onUpdateUsersNumbersCount({patchState}: StateContext<AdminStateModel>, { payload }: AdminActions.UpdateMaterialCommentsCount) {        
         patchState({usersNumbers: payload});               
     }
+    
+    @Action(AdminActions.SendTestEmail)
+    onSendTestEmail({patchState}: StateContext<AdminStateModel>, { payload }: AdminActions.SendTestEmail) {        
+        return this.adminService.sendTestEmail(payload);      
+    }
 }

@@ -37,4 +37,8 @@ export class AdminHomeComponent {
     public calculateCommentsNumber(): void {
         this.store.dispatch(new AdminActions.CalculateCommentsNumber());
     }
+
+    public sendTestEmail(email: string): void {
+        this.store.dispatch(new AdminActions.SendTestEmail(email))
+    }
 }

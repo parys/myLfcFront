@@ -33,5 +33,10 @@
              (click)="updateUsersNumbers()">Обновить счетчики у пользователей</button>
             <span>{{usersNumbers$ | async}}</span>
         </div>
+        <div>
+            <input matInput #email type="email">
+            <button mat-raised-button color="primary" [disabled]="!email.value"
+             (click)="sendTestEmail(email.value)">Отправить сообщение</button>
+        </div>
     </ng-container>
 </ng-container>
