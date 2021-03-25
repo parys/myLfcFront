@@ -48,5 +48,9 @@ export class AdminModule {
             (data: string) => {
                 this.store.dispatch(new AdminActions.UpdateUsersNumbersCount(data));
             });
+        this.signalRService.on('updateCommentVotes',
+            (data: string) => {
+                this.store.dispatch(new AdminActions.UpdateCommentVotes(data));
+            });
     }
 }

@@ -12,6 +12,10 @@ export namespace AdminActions {
         static readonly type = '[Admin] Calculate comments numbers';
     }
 
+    export class CalculateCommentVotes {
+        static readonly type = '[Admin] Calculate comments votes';
+    }
+
     export class UpdateMaterialCommentsCount {
         static readonly type = '[Admin] Update material comments count';
         public constructor(public readonly payload: string) {}
@@ -19,6 +23,11 @@ export namespace AdminActions {
 
     export class UpdateUsersNumbersCount {
         static readonly type = '[Admin] Update users numbers';
+        public constructor(public readonly payload: string) {}
+    }
+
+    export class UpdateCommentVotes {
+        static readonly type = '[Admin] Update comments votes';
         public constructor(public readonly payload: string) {}
     }
 

@@ -14,7 +14,8 @@ import { ShowNotice } from '@notices/store';
     name: 'admin',
     defaults: {
         materialsNumbers: null,
-        usersNumbers: null
+        usersNumbers: null,
+        commentsVotes: null
     },
 })
 @Injectable()
@@ -29,6 +30,11 @@ export class AdminState {
     static usersNumbers(state: AdminStateModel) {
         return state.usersNumbers;
     }
+
+    @Selector()
+    static commentsVotes(state: AdminStateModel) {
+        return state.commentsVotes;
+    }
     
     constructor(protected adminService: AdminService) { }
 
@@ -42,10 +48,16 @@ export class AdminState {
         return this.adminService.recalculateUsersNumbers();       
     }    
 
+    @Action(AdminActions.CalculateCommentVotes)
+    onCalculateCommentVotes(context: StateContext<AdminStateModel>) {
+        return this.adminService.calculateCommentVotes();       
+    }    
+
     @Action(AdminActions.CalculateCommentsNumber)
     onCalculateCommentsNumber(context: StateContext<AdminStateModel>) {
         return this.adminService.calculateCommentsNumber()
-        .pipe(tap(a => context.dispatch(new ShowNotice(new NoticeMessage(NoticeType.Success, "Комментарии обновлены")))));       
+            .pipe(tap(a => 
+                context.dispatch(new ShowNotice(new NoticeMessage(NoticeType.Success, "Комментарии обновлены")))));       
     }  
 
     @Action(AdminActions.UpdateMaterialCommentsCount)
@@ -57,9 +69,17 @@ export class AdminState {
     onUpdateUsersNumbersCount({patchState}: StateContext<AdminStateModel>, { payload }: AdminActions.UpdateMaterialCommentsCount) {        
         patchState({usersNumbers: payload});               
     }
+
+    @Action(AdminActions.UpdateCommentVotes)
+    onUpdateCommentVotes({patchState}: StateContext<AdminStateModel>, { payload }: AdminActions.UpdateCommentVotes) {        
+        patchState({commentsVotes: payload});               
+    }
     
     @Action(AdminActions.SendTestEmail)
-    onSendTestEmail({patchState}: StateContext<AdminStateModel>, { payload }: AdminActions.SendTestEmail) {        
-        return this.adminService.sendTestEmail(payload);      
+    onSendTestEmail(context: StateContext<AdminStateModel>, { payload }: AdminActions.SendTestEmail) {        
+        return this.adminService.sendTestEmail(payload)
+            .pipe(tap(a => 
+                context.dispatch(new ShowNotice(new NoticeMessage(NoticeType.Success, "Тестовое письмо успешно отправлено")))));       
+   
     }
 }

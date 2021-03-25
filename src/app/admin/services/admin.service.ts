@@ -21,6 +21,10 @@ export class AdminService {
         return this.http.put(this.actionUrl + 'recalculateUsersNumbers', {});
     }
 
+    public calculateCommentVotes(): Observable<any> {
+        return this.http.put(this.actionUrl + 'calculateCommentVotes', {});
+    }
+
     public calculateCommentsNumber(): Observable<any> {
         return this.http.put(this.actionUrl + 'calculateCommentsNumber', {});
     }

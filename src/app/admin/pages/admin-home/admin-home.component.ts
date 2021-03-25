@@ -22,6 +22,8 @@ export class AdminHomeComponent {
 
     @Select(AdminState.usersNumbers) usersNumbers$: Observable<string>;
 
+    @Select(AdminState.commentsVotes) commentsVotes$: Observable<string>;
+
     constructor(private store: Store) {
         
     }
@@ -36,6 +38,10 @@ export class AdminHomeComponent {
 
     public calculateCommentsNumber(): void {
         this.store.dispatch(new AdminActions.CalculateCommentsNumber());
+    }
+
+    public updateCommentsVotes(): void {
+        this.store.dispatch(new AdminActions.CalculateCommentVotes());
     }
 
     public sendTestEmail(email: string): void {
