@@ -8,7 +8,7 @@ import { ObserverComponent } from '@domain/base';
 import { Store, Select } from '@ngxs/store';
 import { AuthState } from '@auth/store';
 import { Observable } from 'rxjs';
-import { UsersState } from '@users/store';
+import { UserActions, UsersState } from '@users/store';
 import { GetUserDetailQuery } from '@network/shared/users';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangeRoleGroupDialogData, ChangeRoleGroupDialogComponent } from '@users/components/change-role-group-dialog/change-role-group-dialog.component';
@@ -76,16 +76,12 @@ export class UserDetailComponent extends ObserverComponent implements OnInit {
                 alert('Размер изображения не должен превышать 250КБ');
                 return;
             }
-            const sub = this.service.updateAvatar(file)
-                .subscribe((result: any) => {}/* todo this.item.photo = `${result.path}?${Math.random()}`*/);
-            this.subscriptions.push(sub);
+            this.store.dispatch(new UserActions.UpdateAvatar(file));
         }
     }
 
     public resetAvatar(userId: number): void {
-        const sub = this.service.resetAvatar(userId)
-            .subscribe((result: any) => {}/* todo this.item.photo = `${result.path}?${Math.random()}` */);
-        this.subscriptions.push(sub);
+        this.store.dispatch(new UserActions.ResetAvatar(userId));
     }
 
     public unban(userId: number): void {

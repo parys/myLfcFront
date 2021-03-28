@@ -16,7 +16,7 @@ export class GetUsersList {
 }
 
 export class SetPmReceiverId {
-    static readonly type = '[Users] Set pm receiver  id';
+    static readonly type = '[Users] Set pm receiver id';
     constructor(public payload: { id: number, userName: string}) { }
 }
 
@@ -43,4 +43,15 @@ export class GetUserById {
 export class ChangeUserRoleGroup {
     static readonly type = '[Users] Change user role group';
     constructor(public readonly payload: ChangeUserRoleGroupCommand.Request) { }
+}
+export namespace UserActions {
+    export class ResetAvatar {
+        static readonly type = '[Users] Reset user avatar';
+        constructor(public readonly payload: number) { }
+    }
+
+    export class UpdateAvatar {
+        static readonly type = '[Users] Upload user avatar';
+        constructor(public readonly payload: File) { }
+    }
 }

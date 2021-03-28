@@ -18,7 +18,8 @@ import {
     ChangePage,
     SetUsersFilterOptions,
     GetUserById,
-    ChangeUserRoleGroup
+    ChangeUserRoleGroup,
+    UserActions
 } from './users.actions';
 import { RoleGroupService } from '@role-groups/core';
 
@@ -139,6 +140,28 @@ export class UsersState {
                 const notice = NoticeMessage.success('Роль изменена', 'Группа пользователя заменена.');
                 ctx.dispatch(new ShowNotice(notice));
             }));
+    }
+
+    @Action(UserActions.ResetAvatar)
+    onResetAvatar({ patchState, getState }: StateContext<UsersStateModel>, { payload }: UserActions.ResetAvatar) {
+        return this.usersNetwork.resetAvatar(payload)
+            .pipe(
+                tap(path => {
+                    const { user } = getState();
+                    patchState({ user: { ...user, photo: path } });
+                })
+            );
+    }
+
+    @Action(UserActions.UpdateAvatar)
+    onUpdateAvatar({ patchState, getState }: StateContext<UsersStateModel>, { payload }: UserActions.UpdateAvatar) {
+        return this.usersNetwork.updateAvatar(payload)
+            .pipe(
+                tap(path => {
+                    const { user } = getState();
+                    patchState({ user: { ...user, photo: `${path}?${Math.random()}` } });
+                })
+            );
     }
 
 }
