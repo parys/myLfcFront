@@ -1,0 +1,5 @@
+mat-slider.mat-slider:not(.mat-slider-disabled).cdk-mouse-focused .mat-slider-thumb,
+mat-slider.mat-slider:not(.mat-slider-disabled).cdk-touch-focused .mat-slider-thumb,
+mat-slider.mat-slider:not(.mat-slider-disabled).cdk-program-focused .mat-slider-thumb {
+  transform: scale(0.7);
+}

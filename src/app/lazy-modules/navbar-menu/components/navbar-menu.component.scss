@@ -1,11 +1,20 @@
 ﻿a[role=button] {
     align-self: center;
-    color: white;
     font: "beauty-font";
+
+    &:not(:hover) {
+        color: white;
+    }
 }
 
-a:hover {
-    color: darkgoldenrod;
+.rules {
+    &>a {
+        color: red;
+
+        &:hover {
+            color: white;
+        }
+    }
 }
 
 div {
@@ -19,9 +28,6 @@ mat-icon {
     width: 18px;
 }
 
-.turquose {
-    color: darkturquoise;
-}
 
 :host {
 

@@ -1,0 +1,39 @@
+@import 'src/assets/styles/abstracts/module';
+
+.mat-checkbox {
+
+    &.mat-rounded-checkbox {
+        border-radius: 50%;
+
+        .mat-checkbox-layout,
+        .mat-checkbox-inner-container,
+        .mat-checkbox-background,
+        .mat-checkbox-frame {
+            border-radius: 50%;
+        }
+    }
+
+    &.mat-green-checkbox {
+        .mat-checkbox-frame {
+            border-color: $stratus-blue-2;
+        }
+
+        .mat-checkbox-checkmark-path {
+            stroke: $green !important;
+        }
+
+        .mat-checkbox-background {
+            background-color: inherit;
+        }
+    }
+
+    &.review-checkbox:not(.mat-checkbox-disabled) {
+        .mat-checkbox-frame {
+            border-color: $stratus-blue-2;
+        }
+
+        &.mat-checkbox-checked .mat-checkbox-background {
+            background-color: $stratus-blue-2;
+        }
+    }
+}

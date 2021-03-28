@@ -1,4 +1,6 @@
-﻿.logo-link {
+﻿@import 'src/assets/styles/abstracts/module';
+
+.logo-link {
     height: 77px;
     width: 272px;
 }
@@ -67,7 +69,8 @@
 
 nav {
     align-items: center;
-    background-color: #731010;
+  //  background-color: #731010;
+    background-color: $lfc-red-6;
     display: flex;
     font-family: "Beauty";
     width: 100%;

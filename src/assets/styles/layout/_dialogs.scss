@@ -1,0 +1,94 @@
+@import 'src/assets/styles/abstracts/module';
+
+.mat-sm-dialog-panel {
+    width: 650px;
+}
+
+.mat-md-dialog-panel {
+    width: 900px;
+}
+
+.mat-lg-dialog-panel {
+    width: 1200px;
+}
+
+.mat-80h-dialog-panel {
+    height: 80vh;
+}
+
+.mat-no-padding-dialog-pannel {
+    .mat-dialog-container {
+        padding: 0;
+        border-radius: 0;
+
+        .mat-dialog-content {
+            margin: 0;
+        }
+    }
+}
+
+.mat-dialog-container .mat-dialog-actions {
+    margin-bottom: -8px;
+}
+
+.mat-dialog-actions button.mat-button-base+.mat-button-base {
+    margin-left: 24px;
+}
+
+
+@include media-breakpoint("lt-md") {
+    .mat-lt-md-full-panel {
+        min-width: 100vw;
+        width: 100vw;
+        height: 100vh;
+
+        .mat-dialog-container {
+            border-radius: 0;
+        }
+    }
+}
+
+@include media-breakpoint("lt-sm") {
+    .mat-lt-sm-full-panel {
+        min-width: 100vw;
+        width: 100vw;
+        height: 100vh;
+
+        .mat-dialog-container {
+            border-radius: 0;
+        }
+    }
+}
+
+.mat-dialog-container {
+    .resize-handle-e {
+        position: absolute;
+        cursor: e-resize;
+        height: 100%;
+        width: .4375rem;
+        right: -.3125rem;
+        top: 0;
+    }
+
+    .resize-handle-se {
+        position: absolute;
+        cursor: se-resize;
+        height: 1rem;
+        width: 1rem;
+        right: 0;
+        bottom: 0;
+    }
+
+    .resize-handle-s {
+        position: absolute;
+        cursor: s-resize;
+        height: .4375rem;
+        width: 100%;
+        bottom: -.3125rem;
+        left: 0;
+    }
+
+    .resizing {
+        user-select: none;
+    }
+}

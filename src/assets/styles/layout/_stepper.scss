@@ -1,0 +1,105 @@
+@import 'src/assets/styles/abstracts/module';
+
+.mat-stepper-horizontal {
+    flex: 1 1 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    flex-direction: column;
+    display: flex !important;
+    max-width: 100%;
+    place-content: stretch flex-start;
+    align-items: stretch;   
+    background: inherit;
+
+    .mat-stepper-horizontal-line {
+        border-top-width: 2px;
+        border-top-style: dotted;
+    }
+        
+    .mat-horizontal-content-container {
+        height: 100%;
+        padding: 0;
+    }
+    
+    .mat-horizontal-stepper-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .mat-step-header {
+        height: 64px;
+    
+        .mat-step-icon {
+            height: 32px;
+            width: 32px;
+        }
+            
+        .mat-icon {
+            font-size: 20px;
+            height: 20px;
+            width: 20px;
+        }
+    }
+
+    .mat-step-header .mat-step-icon-selected,
+    .mat-step-header .mat-step-icon-state-edit {
+        background-color: $stratus-yellow-1;
+        border: 2px solid $white;
+        height: 36px;
+        width: 36px;
+    }
+    
+    .mat-step-header .mat-step-icon-state-done {
+        background-color: $stratus-blue-2;
+    }
+    
+    .mat-raised-button {
+    
+        .mat-progress-spinner circle,
+        .mat-spinner  circle{
+            stroke: white;
+        }
+    
+        &:hover {
+            .mat-progress-spinner circle,
+            .mat-spinner  circle{
+                stroke: $stratus-yellow-1;
+            }   
+        }
+    }
+    
+    .step-full-content {
+        padding: 24px;
+        background-color: $table-transparent-bg;
+        flex: 1;
+        overflow: hidden;
+    }
+    
+    .stepper-actions {
+        display: flex;
+        margin-top: 24px;
+    
+        button {
+            min-width: 100px;
+        }
+
+        button + button {
+            margin-left: 16px;
+        }
+    }
+}
+
+@include media-breakpoint("lt-lg") {
+    .mat-stepper-horizontal {
+        .step-full-content {
+            padding: 16px;
+        }
+    
+        .stepper-actions {
+            margin-top: 16px;
+        }
+    }
+}

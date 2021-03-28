@@ -5,12 +5,18 @@
     <div *ngFor="let event of data.events; let i = index;" class="events">
         <div [ngSwitch]="event.type" [class.right]="(!isHome && event.isOur) || (isHome && !event.isOur)"
             class="inline-flex">
-            <div *ngSwitchCase="MatchEventType.Goal"><img class="width20px" alt="Гол" src="/img/goal.png"
-                    [title]="event.typeName">{{event.personName}} - {{event.minute}}' </div>
-            <div *ngSwitchCase="MatchEventType.GoalPenalty"><img class="width20px" alt="Гол" src="/img/goal.png"
-                    [title]="event.typeName">(П){{event.personName}} - {{event.minute}}' </div>
-            <div *ngSwitchCase="MatchEventType.GoalPenaltySeries"><img class="width20px" alt="Гол" src="/img/goal.png"
-                    [title]="event.typeName">(П){{event.personName}}</div>
+            <div *ngSwitchCase="MatchEventType.Goal">
+                <img class="width20px" alt="Гол" src="/img/goal.png"
+                    [title]="event.typeName">{{event.personName}} - {{event.minute}}'
+            </div>
+            <div *ngSwitchCase="MatchEventType.GoalPenalty">
+                <img class="width20px" alt="Гол" src="/img/goal.png"
+                    [title]="event.typeName">(П){{event.personName}} - {{event.minute}}'
+                </div>
+            <div *ngSwitchCase="MatchEventType.GoalPenaltySeries">
+                <img class="width20px" alt="Гол" src="/img/goal.png"
+                    [title]="event.typeName">(П){{event.personName}}
+            </div>
             <span *ngSwitchCase="MatchEventType.GoalOwn"><img class="width20px" alt="Гол" src="/img/goal_own.png"
                     [title]="event.typeName">(А){{event.personName}} - {{event.minute}}' </span>
             <span *ngSwitchCase="MatchEventType.Assist" [title]="event.typeName">({{event.personName}})</span>
@@ -43,9 +49,9 @@
         </div>
     </div>
     <div *ngIf="data.isInformer" class="full-width">
-        <div class="full-width flex-space-between">
-            <button mat-raised-button color="warn" (click)="setEditing({isOur: isHome})" *ngIf="!data.editable">Добавить событие</button>
-            <button mat-raised-button color="warn" (click)="setEditing({isOur: !isHome})" *ngIf="!data.editable">Добавить событие</button>
+        <div class="add-buttons">
+            <button mat-raised-button color="primary" (click)="setEditing({isOur: isHome})" *ngIf="!data.editable">Добавить событие</button>
+            <button mat-raised-button color="primary" (click)="setEditing({isOur: !isHome})" *ngIf="!data.editable">Добавить событие</button>
         </div>
 
         <button mat-raised-button (click)="setEditing(null)" *ngIf="data.editable">Отменить редактирование</button>

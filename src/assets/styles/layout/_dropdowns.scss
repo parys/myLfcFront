@@ -1,0 +1,45 @@
+@import 'src/assets/styles/abstracts/module';
+
+.tiny-dropdown {
+    .mat-form-field-infix {
+        font-size: 12px;
+    }
+
+    .mat-form-field-flex>.mat-form-field-infix {
+        padding: 0.3em 0 !important;
+    }
+
+    .mat-form-field-label-wrapper {
+        top: -1.4em;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-wrapper {
+        padding-bottom: 0;
+    }
+
+    &.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+        transform: translateY(-1em) scale(0.65);
+        width: 100%;
+    }
+
+    .mat-form-field-outline-start,
+    .mat-form-field-outline-end {
+        background-color: white;
+    }
+
+    .mat-select-arrow {
+        color: $stratus-blue-2;
+    }
+
+    .mat-select-value {
+        transform: translateY(-20%)
+    }
+
+    .mat-form-field-outline-thick {
+        color: $stratus-blue-2;
+    }
+
+    .mat-form-field-outline {
+        color: $stratus-blue-2;
+    }
+}

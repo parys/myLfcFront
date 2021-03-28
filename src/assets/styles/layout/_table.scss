@@ -1,0 +1,111 @@
+@import 'src/assets/styles/abstracts/module';
+
+.mat-table {
+    width: 100%;
+    background-color: transparent; //to override the angular default (or something like that, whatever this is: wentrum-app/node_modules/@angular/material/_theming.scss)
+
+    .mat-header-cell {
+        font-weight: $bold-font-weight;
+        font-size: $md-font-size;
+    }
+
+    .mat-row {
+
+        &:hover {
+    //        background-color: $gray-light;
+        }
+     
+        &.selected-row {
+    //        background-color: $stratus-blue-4;
+        }
+    }
+
+    .mat-header-row {
+ //       background-color: $gray;
+    }
+
+    .mat-cell {
+        font-size: $md-font-size;
+    }
+
+    .mat-cell,
+    .mat-header-cell {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    &.compact-table {
+
+        .mat-cell,
+        .mat-header-cell,
+        .mat-footer-cell {
+
+            &:first-of-type {
+                padding-left: 12px;
+            }
+
+            &:last-of-type {
+                padding-right: 12px;
+            }
+        }
+    }
+
+    .mat-sort-header-arrow {
+
+        .mat-sort-header-stem {
+            display: none;
+        }
+
+        .mat-sort-header-indicator {
+            opacity: 1;
+            color: black;
+            font-weight: bold;
+
+            .mat-sort-header-pointer-left,
+            .mat-sort-header-pointer-right,
+            .mat-sort-header-pointer-middle {
+                display: none;
+            }
+        }
+    }
+
+
+    [aria-sort="ascending"] {
+        .mat-sort-header-arrow {
+            &::before {
+                content: "";
+                display: block;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 0 5px 6px 5px;
+                border-color: transparent transparent rgba(0, 0, 0, 0.54) transparent;
+                top: 3px;
+                right: 1px;
+                position: absolute;
+            }
+        }
+    }
+
+    [aria-sort="descending"] {
+        .mat-sort-header-arrow {
+            &::before {
+                content: "";
+                display: block;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 6px 5px 0 5px;
+                border-color: rgba(0, 0, 0, 0.54) transparent transparent transparent;
+                top: 3px;
+                right: 1px;
+                position: absolute;
+            }
+        }
+    }
+
+}
+
+.table-scroller {
+    background-color: $table-transparent-bg;
+}

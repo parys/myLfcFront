@@ -1,35 +1,39 @@
 ﻿<ng-container *ngIf="{ isLogined: isLogined$ | async, isModerator: isModerator$ | async, userId: userId$ | async,
     miniMessages: miniMessages$ | async,
     maxiMessages: maxiMessages$ | async } as data">
-<div class="block-minichat">
-    <div class="blocktitle text-center">
+
+    <!-- <div class="blocktitle text-center">
         <b></b>
     </div>
-</div>
+</div> -->
 <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Макси-чат(флудилка)">
         <ng-template matTabContent>
-            <chat-window [type]="3" [height]="500"
-                [isLogined]="data.isLogined"
-                [isModerator]="data.isModerator"
-                [userId]="data.userId"
-                [messages]="data.maxiMessages"
-                (createMessage)="onCreateMessage($event)"
-                (updateMessage)="onUpdateMessage($event)"
-                (deleteMessage)="onDeleteMessage($event)"
-            ></chat-window>
+            <div class="block-minichat">
+                <chat-window [type]="3" [height]="500"
+                    [isLogined]="data.isLogined"
+                    [isModerator]="data.isModerator"
+                    [userId]="data.userId"
+                    [messages]="data.maxiMessages"
+                    (createMessage)="onCreateMessage($event)"
+                    (updateMessage)="onUpdateMessage($event)"
+                    (deleteMessage)="onDeleteMessage($event)"
+                ></chat-window>
+            </div>
         </ng-template>
     </mat-tab>
     <mat-tab label="Мини-чат">
         <ng-template matTabContent>
-            <chat-window [type]="0" [height]="500"
-                [isLogined]="data.isLogined"
-                [isModerator]="data.isModerator"
-                [userId]="data.userId"
-                [messages]="data.miniMessages"
-                (createMessage)="onCreateMessage($event)"
-                (updateMessage)="onUpdateMessage($event)"
-                (deleteMessage)="onDeleteMessage($event)"></chat-window>
+            <div class="block-minichat">
+                <chat-window [type]="0" [height]="500"
+                    [isLogined]="data.isLogined"
+                    [isModerator]="data.isModerator"
+                    [userId]="data.userId"
+                    [messages]="data.miniMessages"
+                    (createMessage)="onCreateMessage($event)"
+                    (updateMessage)="onUpdateMessage($event)"
+                    (deleteMessage)="onDeleteMessage($event)"></chat-window>
+            </div>
         </ng-template>
     </mat-tab>
 </mat-tab-group>

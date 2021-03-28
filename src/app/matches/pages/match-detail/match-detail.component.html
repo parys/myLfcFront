@@ -2,7 +2,7 @@
                         match: match$ | async } as data">
     <div class="full-width" >
         <div *ngIf="data.isInformer" class="flex-space-between">
-            <button mat-raised-button color="warn" (click)="pin(data.match.id)">Закрепить на главной</button>
+            <button mat-raised-button color="primary" (click)="pin(data.match.id)">Закрепить на главной</button>
             <button mat-raised-button (click)="pin(0)">Открепить от главной</button>
             <button mat-raised-button [routerLink]="['./edit']">Изменить</button>
         </div>
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <div class="full-width font-size40" *ngIf="data.match.scoreHome != null; else countDown;">
+                <div class="score" *ngIf="data.match.scoreHome != null; else countDown;">
                     <b class=""><span [textContent]="data.match.scoreHome"></span></b>
                     <span class="padding5">:</span>
                     <b class=""><span [textContent]="data.match.scoreAway"></span></b>
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <mat-tab-group mat-stretch-tabs color="warn" [selectedIndex]="data.match.scoreHome != null ? 1 : 0">
+        <mat-tab-group mat-stretch-tabs color="primary" [selectedIndex]="data.match.scoreHome != null ? 1 : 0">
             <mat-tab label="Состав" isActive="data.match.scoreHome == null">
                     <match-person-panel [matchId]="data.match.id" [isHome]="data.match.homeClubId === 1"></match-person-panel>
                 

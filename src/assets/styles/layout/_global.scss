@@ -1,0 +1,29 @@
+@import 'src/assets/styles/abstracts/module';
+
+.spacer {
+    flex: 1;
+}
+
+.page-title {
+  //  color: $stratus-blue-1;
+    font-weight: $bold-font-weight;
+    margin: 0;
+    line-height: 48px;
+    font-size: $lg-font-size;
+}
+
+.page-subtitle {
+ //   color: $stratus-blue-1;
+    margin: 0;
+    line-height: 48px;
+    font-weight: $bold-font-weight;
+    font-size: $md-font-size;
+}
+
+mat-drawer-container.mat-drawer-container {
+ //   background-color: $page-bg;
+}
+
+.justify-text {
+    text-align: justify;
+}
