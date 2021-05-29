@@ -24,15 +24,15 @@ export class MatchCalendarComponent implements OnInit, OnDestroy {
                 private cd: ChangeDetectorRef) { }
 
     public ngOnInit(): void {
-        const savedData = this.transferState.get(MATCH_CALENDAR_KEY, null);
-        if (savedData) {
-            this.parse(savedData);
-        } else {
+      //  const savedData = this.transferState.get(MATCH_CALENDAR_KEY, null);
+      //  if (savedData) {
+     //       this.parse(savedData);
+     //   } else {
             this.sub = this.service.getForCalendar().subscribe(data => {
                 this.parse(data);
-                this.transferState.set(MATCH_CALENDAR_KEY, data);
+             //   this.transferState.set(MATCH_CALENDAR_KEY, data);
             });
-        }
+      //  }
     }
     private parse(matches: MatchCalendar): void {
         this.last = matches.last;

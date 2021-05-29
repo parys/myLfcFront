@@ -7,7 +7,7 @@ import { Store } from '@ngxs/store';
 import { Pm, MatchEvent } from '@domain/models';
 import { environment } from '@environments/environment';
 import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions';
-import { Cookies } from '@cedx/ngx-cookies';
+import { Cookies } from '@base/cookie';
 import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages-list.query';
 import { UsersOnline } from '@network/shared/right-sidebar/user-online.model';
 import { AdminActions } from '@admin/store';
@@ -22,10 +22,10 @@ import { Notification } from '@notifications/models/notification.model';
 export class SignalRService {
     private hubConnection: HubConnection;
 
-    constructor(private cookies: Cookies,        
+    constructor(private cookies: Cookies,
                 private store: Store,
                 @Inject(PLATFORM_ID) private platformId: object) {
-                    console.warn("NEW SIGNALR");
+                    console.warn('NEW SIGNALR');
     }
 
     public initializeHub(): void {
@@ -91,7 +91,7 @@ export class SignalRService {
                 console.warn('started');
             })
             .catch((err: Error) => {
-                console.error("signalr-ee", err);
+                console.error('signalr-ee', err);
             });
     }
 

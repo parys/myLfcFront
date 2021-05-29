@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { tap, catchError, flatMap } from 'rxjs/operators';
 import { Observable, Subscription, of, interval, throwError } from 'rxjs';
-import {Cookies, CookieOptions} from '@cedx/ngx-cookies';
 
 import { StorageService } from '@base/storage';
 import { SignalRService } from '@base/signalr';
@@ -13,6 +12,7 @@ import { UriEncoder } from '../uri-encoder';
 import { environment } from '@environments/environment';
 import { Store } from '@ngxs/store';
 import { SetTokens, SetUser, Logout } from '@auth/store';
+import { CookieOptions, Cookies } from '@base/cookie';
 
 @Injectable()
 export class AuthService {
