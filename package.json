@@ -31,7 +31,7 @@
     "@angular/router": "11.2.12",
     "@angular/service-worker": "11.2.12",
     "@cedx/ngx-cookies": "3.1.0",
-    "@microsoft/signalr": "5.0.5",
+    "@microsoft/signalr": "5.0.6",
     "@nguniversal/common": "11.2.1",
     "@nguniversal/express-engine": "11.2.1",
     "@ngxs/store": "3.7.1",
