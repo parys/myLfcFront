@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, TrackByFunction } from '@angular/core';
 import { MatchPersonTypeEnum } from '@domain/enums/match-person-type.enum';
 
 import { ObserverComponent } from '@domain/base';
@@ -66,7 +66,7 @@ export class MatchPersonPanelComponent extends ObserverComponent implements OnIn
         this.store.dispatch(new MatchPersonActions.Delete(person));
     }
 
-    public trackByFn(_: number, item: MatchPerson) {
+    public trackByFn(_: number, item: GetMatchPersonsListQuery.MatchPersonListDto): number {
         if (!item) { return null; }
         return item.personId;
     }

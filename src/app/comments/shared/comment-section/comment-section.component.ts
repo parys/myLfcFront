@@ -140,7 +140,7 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
     }
 
 
-    public trackByFn(index: number, item: Comment) {
+    public trackByFn(index: number, item: GetCommentListByEntityIdQuery.CommentListDto) {
         if (!item) { return null; }
         return item.id && item.children;
     }

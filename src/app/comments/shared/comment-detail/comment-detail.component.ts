@@ -167,7 +167,7 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
         this.cd.markForCheck();
     }
 
-    public trackByFn(index: number, item: Comment) {
+    public trackByFn(index: number, item: GetCommentListByEntityIdQuery.CommentListDto) {
         if (!item) { return null; }
         return item.id;
     }

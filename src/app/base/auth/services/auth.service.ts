@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { tap, catchError, flatMap } from 'rxjs/operators';
+import { tap, catchError, flatMap, retry } from 'rxjs/operators';
 import { Observable, Subscription, of, interval, throwError } from 'rxjs';
 
 import { StorageService } from '@base/storage';
@@ -33,7 +33,6 @@ export class AuthService {
     ) {
     }
 
-    // new one
     public get authorizationHeader(): string {
         if (this.tokens) {
             return `${this.tokens.token_type} ${this.tokens.access_token}`;
@@ -42,7 +41,6 @@ export class AuthService {
         }
     }
 
-    // old stuff
     public async init(): Promise<IAuthTokenModel> {
         return await this.startupTokenRefresh();
     }
@@ -85,19 +83,9 @@ export class AuthService {
             .forEach(key => params2 = params2.append(key, data[key]));
 
         return this.http.post<IAuthTokenModel>(environment.apiUrl + 'connect/token', params2.toString(), { headers }).pipe(
+            retry(2),
             tap((tokens: IAuthTokenModel) => {
-
-                tokens.expiration_date = new Date(new Date().getTime() + tokens.expires_in * 1000).getTime().toString();
-                tokens.refresh_token = tokens.refresh_token ?? this.tokens?.refresh_token;
-                tokens.id_token = '';
-                const user = JSON.parse(atob(tokens.access_token.split('.')[1]));
-
-                this.setTokens(tokens);
-
-                this.tokens = tokens;
-                this.store.dispatch(new SetTokens(tokens));
-                this.setUserProfile(user);
-                this.scheduleRefresh();
+                this.parseTokens(tokens);
             }));
     }
 
@@ -141,5 +129,19 @@ export class AuthService {
     private setTokens(tokens: IAuthTokenModel): void {
         this.cookies.setObject('auth-tokens', tokens, this.coockieOptions);
         this.storage.setTokens(tokens);
+    }
+
+    private parseTokens(tokens: IAuthTokenModel): void {
+        tokens.expiration_date = new Date(new Date().getTime() + tokens.expires_in * 1000).getTime().toString();
+        tokens.refresh_token = tokens.refresh_token ?? this.tokens?.refresh_token;
+        tokens.id_token = '';
+        const user = JSON.parse(atob(tokens.access_token.split('.')[1]));
+
+        this.setTokens(tokens);
+
+        this.tokens = tokens;
+        this.store.dispatch(new SetTokens(tokens));
+        this.setUserProfile(user);
+        this.scheduleRefresh();
     }
 }
