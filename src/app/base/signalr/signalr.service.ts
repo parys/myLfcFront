@@ -25,7 +25,6 @@ export class SignalRService {
     constructor(private cookies: Cookies,
                 private store: Store,
                 @Inject(PLATFORM_ID) private platformId: object) {
-                    console.warn('NEW SIGNALR');
     }
 
     public initializeHub(): void {
