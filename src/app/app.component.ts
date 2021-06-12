@@ -73,7 +73,7 @@ export class AppComponent extends ObserverComponent implements OnInit {
                 }
                 return null;
             })).subscribe((data: any) => {
-                if (data.title) {
+                if (data?.title) {
                     this.titleService.setTitle(data.title);
                     this.titleService.updateKeywordsMetaTag(data.keywords || '');
                     this.titleService.updateDescriptionMetaTag(data.description || '');
