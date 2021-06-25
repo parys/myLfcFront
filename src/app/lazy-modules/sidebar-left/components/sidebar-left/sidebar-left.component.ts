@@ -13,11 +13,7 @@ export class SidebarLeftComponent {
         if (isPlatformBrowser(this.platformId)) {
             const scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
-            if (scrollPos >= 200) {
-                document.getElementById('goToTop').className = '';
-            } else {
-                document.getElementById('goToTop').className = 'hidden';
-            }
+            document.getElementById('goToTop').className = scrollPos >= 200 ? '' : 'hidden';
         }
     }
     constructor(@Inject(PLATFORM_ID) private platformId: object) {
