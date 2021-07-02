@@ -52,7 +52,7 @@
     "@schematics/angular": "12.1.0",
     "@types/express": "4.17.12",
     "@types/node": "14.17.4",
-    "@types/tinymce": "4.6.3",
+    "@types/tinymce": "4.6.4",
     "@types/lodash": "4.14.170",
     "codelyzer": "6.0.2",
     "source-map-explorer": "2.5.2",
