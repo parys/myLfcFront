@@ -1,7 +1,10 @@
-﻿<div>
-    <a [routerLink]="[0, 'edit']">Добавить стадион</a>
-</div>
+﻿<div class="flex-space-around flex-v-c">
+    <button mat-raised-button color="primary" [routerLink]="[0, 'edit']">Добавить стадион</button>
 
+    <mat-form-field>
+        <input matInput #nameInput placeholder="Название или город" />
+    </mat-form-field>
+</div>
 
 <table mat-table [dataSource]="items" matSort class="full-width" matSortActive="name" matSortDirection="asc">
     <ng-container matColumnDef="name">

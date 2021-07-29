@@ -1,15 +1,15 @@
-import { Component, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 
-import { merge, of, Observable } from 'rxjs';
-import { startWith, switchMap, map, catchError } from 'rxjs/operators';
+import { merge, of, Observable, fromEvent } from 'rxjs';
+import { startWith, switchMap, map, catchError, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 import { PagedList } from '@domain/models';
 import { StadiumService } from '@stadiums/core';
-import { PAGE, STADIUMS_ROUTE } from '@constants/index';
+import { DEBOUNCE_TIME, KEYUP, PAGE, STADIUMS_ROUTE } from '@constants/index';
 import { ConfirmationMessage } from '@notices/shared';
 import { ObserverComponent } from '@domain/base';
 import { NotifierService } from '@notices/services';
@@ -27,6 +27,7 @@ export class StadiumListComponent extends ObserverComponent implements AfterView
 
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild('nameInput') nameInput: ElementRef;
 
     constructor(private service: StadiumService,
                 private route: ActivatedRoute,
@@ -44,15 +45,17 @@ export class StadiumListComponent extends ObserverComponent implements AfterView
 
         this.subscriptions.push(sub$);
 
-        merge(this.sort.sortChange
-           //     ,
-          //      fromEvent(this.nameInput.nativeElement, KEYUP)
-          //      .pipe(debounceTime(DEBOUNCE_TIME),
-           //         distinctUntilChanged())
+        merge(this.sort.sortChange,
+            fromEvent(this.nameInput.nativeElement, KEYUP)
+                .pipe(debounceTime(DEBOUNCE_TIME),
+                distinctUntilChanged())
                     )
             .subscribe(() => this.paginator.pageIndex = 0);
 
-        merge(this.sort.sortChange, this.paginator.page)
+        merge(this.sort.sortChange, this.paginator.page,
+            fromEvent(this.nameInput.nativeElement, KEYUP)
+                .pipe(debounceTime(DEBOUNCE_TIME),
+                distinctUntilChanged()))
             .pipe(
                 startWith({}),
                 switchMap(() => {
@@ -88,6 +91,7 @@ export class StadiumListComponent extends ObserverComponent implements AfterView
 
     public update(): Observable<PagedList<Stadium>> {
         const filters = new StadiumFilters();
+        filters.name = this.nameInput.nativeElement.value;
         filters.currentPage = this.paginator.pageIndex + 1;
         filters.pageSize = this.paginator.pageSize;
         filters.sortOn = this.sort.active;
