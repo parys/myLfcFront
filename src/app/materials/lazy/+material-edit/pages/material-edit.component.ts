@@ -18,7 +18,7 @@ import { MaterialEditService } from '../materials-edit.service';
 import { MaterialsState } from '@materials/lazy/store';
 import { GetMaterialDetailQuery } from '@network/shared/materials';
 import { tap } from 'rxjs/operators';
-import { MaterialCategoriesState, MaterialCategoryActions } from '@material-categories/core/store';
+import { MaterialCategoriesState } from '@material-categories/core/store';
 import { GetMaterialCategoriesListQuery } from '@network/shared/material-categories';
 
 @Component({
@@ -38,12 +38,12 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
     @Select(MaterialCategoriesState.materialCategories) categories$: Observable<GetMaterialCategoriesListQuery.MaterialCategoryListDto[]>;
 
     constructor(private service: MaterialEditService,
-        private router: Router,
-        private snackBar: MatSnackBar,
-        private location: Location,
-        private notifierService: NotifierService,
-        private store: Store,
-        private formBuilder: FormBuilder) {
+                private router: Router,
+                private snackBar: MatSnackBar,
+                private location: Location,
+                private notifierService: NotifierService,
+                private store: Store,
+                private formBuilder: FormBuilder) {
         super();
         if (this.router.url.startsWith('/news')) {
             this.type = MaterialType.News;
@@ -56,10 +56,8 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
         this.item = this.store.selectSnapshot(MaterialsState.material) || new GetMaterialDetailQuery.Response();
         const userId = this.store.selectSnapshot(AuthState.userId);
         this.id = this.item ?.id ?? 0;
-        this.item .userId = userId;
+        this.item.userId = userId;
         this.initForm(this.item);
-
-        this.store.dispatch(new MaterialCategoryActions.GetMaterialCategoriesList(this.type))
     }
 
     public onSubmit(): void {

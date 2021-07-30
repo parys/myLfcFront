@@ -1,18 +1,20 @@
 ﻿import { Injectable, Inject } from '@angular/core';
 
-import { LocalStorage } from './local-storage';
+import { LocalStorage, SessionStorage } from './local-storage';
 import { USER_ID } from '@constants/help.constants';
 
 @Injectable()
 export class StorageService {
     constructor(
-        @Inject(LocalStorage) private localStorage: any) {
+        @Inject(LocalStorage) private localStorage: any,
+        @Inject(SessionStorage) private sessionStorage: any,
+        ) {
     }
 
     public getUser(): any {
         return this.getObject('USER');
     }
-    
+
     public getTokens(): any {
         return this.getObject('TOKENS');
     }
@@ -35,22 +37,22 @@ export class StorageService {
     }
 
     public tryAddViewForMaterial(id: number): boolean {
-        if (!this.localStorage) { return false; }
-        if (!this.get(`material${id}`)) {
-            this.set(`material${id}`, '1');
+        if (!this.sessionStorage) { return false; }
+        if (!this.getSession(`material${id}`)) {
+            this.setSession(`material${id}`, '1');
             return true;
         }
         return false;
     }
 
-    private set(key: string, value: string): void {
-        if (!this.localStorage) { return; }
-        localStorage[key] = value;
+    private setSession(key: string, value: string): void {
+        if (!this.sessionStorage) { return; }
+        sessionStorage[key] = value;
     }
 
-    private get(key: string): string {
-        if (!this.localStorage) { return ''; }
-        return localStorage[key] || '';
+    private getSession(key: string): string {
+        if (!this.sessionStorage) { return ''; }
+        return sessionStorage[key] || '';
     }
 
     private setObject(key: string, value: any): void {

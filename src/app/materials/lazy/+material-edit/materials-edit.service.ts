@@ -16,9 +16,8 @@ export class MaterialEditService {
 
     public createOrUpdate(itemToUpdate: Material, id: number): Observable<Material> {
         const item = JSON.stringify(itemToUpdate);
-        if(id > 0) {
+        if (id > 0) {
             return this.http.put<Material>(this.actionUrl + id, item);
-
         } else {
             return this.http.post<Material>(`${this.actionUrl}`, item);
         }

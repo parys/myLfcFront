@@ -63,9 +63,9 @@ export class MaterialsState {
     }
 
     constructor(protected network: MaterialService,
-        private storage: StorageService,
-        @Inject(PLATFORM_ID) private platformId: object,
-        protected titleService: CustomTitleMetaService) { }
+                private storage: StorageService,
+                @Inject(PLATFORM_ID) private platformId: object,
+                protected titleService: CustomTitleMetaService) { }
 
     @Action(ChangeSort)
     @Action(ChangePage)

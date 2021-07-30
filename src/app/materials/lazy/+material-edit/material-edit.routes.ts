@@ -5,7 +5,7 @@ import { EDITING_RU } from '@constants/ru.constants';
 
 import { MaterialEditComponent } from './pages/material-edit.component';
 import { MaterialLeaveGuard } from './leave-guard/leave-guard.service';
-import { MaterialResolver } from '../resolvers'
+import { EditMaterialResolver } from './resolvers';
 
 export const materialEditRoutes: Routes = [
     {
@@ -17,6 +17,6 @@ export const materialEditRoutes: Routes = [
         },
         canActivate: [RoleGuard],
         canDeactivate: [MaterialLeaveGuard],
-        resolve: { MaterialResolver }
+        resolve: { EditMaterialResolver }
     }
 ];
