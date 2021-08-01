@@ -106,6 +106,9 @@ export class AuthService {
     }
 
     private scheduleRefresh(): void {
+        if (this.refreshSubscription$) {
+            this.refreshSubscription$.unsubscribe();
+        }
         // refresh every half the total expiration time
         if (this.tokens) {
             this.refreshSubscription$ = interval(this.tokens.expires_in * 500).pipe(
