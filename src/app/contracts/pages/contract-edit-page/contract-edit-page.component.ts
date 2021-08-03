@@ -48,6 +48,7 @@ export class ContractEditPageComponent implements OnInit {
         this.contractEditForm = this.formBuilder.group({
             id: [contract.id || 0],
             personId: [contract.personId, Validators.required],
+            personName: [contract.personName],
             salary: [contract.salary || 0, Validators.required],
             startDate: [contract.startDate, Validators.required],
             endDate: [contract.endDate, Validators.required]

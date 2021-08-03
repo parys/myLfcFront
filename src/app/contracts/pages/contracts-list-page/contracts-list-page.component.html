@@ -12,8 +12,11 @@
                 <td mat-cell *matCellDef="let contract">
                     <span [textContent]="contract.personName" *ngIf="!data.isAdminAssistant;else admin"></span>
                     <ng-template #admin>
-                        <a [routerLink]="['contracts', contract.id, 'edit']" class="">
+                        <a [routerLink]="['/persons', contract.personId, 'edit']" class="">
                             <span [textContent]="contract.personName"></span>
+                        </a>
+                        <a [routerLink]="['/contracts', contract.id, 'edit']">
+                            <mat-icon>edit</mat-icon>
                         </a>
                         <a (click)="onDelete(contract.id)">
                             <mat-icon>clear</mat-icon>
