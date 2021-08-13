@@ -19,10 +19,6 @@ export class PersonService extends BaseRestService<Person, PersonFilters> {
         return this.http.put<boolean>(`${this.actionUrl}bestPlayer/${personId}`, '');
     }
 
-    public getTypes(): Observable<PersonType[]> {
-        return this.http.get<PersonType[]>(this.actionUrl + 'types/');
-    }
-
     public getStuff(type: string): Observable<Person[]> {
         return this.http.get<Person[]>(`${this.actionUrl}stuff?type=${type}`);
     }

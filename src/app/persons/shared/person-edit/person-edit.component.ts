@@ -3,9 +3,14 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { Observable } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+
 import { PersonService } from '@persons/person.service';
 import { Person, PersonType } from '@domain/models';
 import { PERSONS_ROUTE } from '@constants/routes.constants';
+import { PersonEditService } from '../person-edit.service';
+import { PersonEditActions, PersonEditState } from '../store';
 
 @Component({
     selector: 'person-edit',
@@ -16,28 +21,33 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
     private id: number;
     public editPersonForm: FormGroup;
     public photo: string;
-    public types: PersonType[];
+
+    @Select(PersonEditState.types) types$: Observable<PersonType[]>;
+
     @Input() public isFull = true;
     @Output() public newPerson = new EventEmitter<Person>();
     @ViewChild('pInput', { static: true })private elementRef: ElementRef;
 
     constructor(private service: PersonService,
+                private editService: PersonEditService,
                 private route: ActivatedRoute,
                 private router: Router,
                 private snackBar: MatSnackBar,
+                private store: Store,
                 private formBuilder: FormBuilder) {
     }
 
     public ngOnInit(): void {
         this.initForm();
         if (this.isFull) {
-            this.id = +this.route.snapshot.params['id'] || 0;
+            this.id = +this.route.snapshot.params.id || 0;
             if (this.id > 0) {
                 this.service.getSingle(this.id)
                     .subscribe((data: Person) => this.parse(data));
             }
         }
-        this.updateTypes();
+
+        this.store.dispatch(new PersonEditActions.GetTypes());
     }
 
     public ngAfterViewInit(): void {
@@ -70,21 +80,19 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
 
     }
 
-    public getRandomNumber(): number {
-        return Math.random();
+    public parseAcademy(value: string): void {
+        this.editService.parseAcademy(value).subscribe(x => this.parse(x));
     }
 
-    private updateTypes(): void {
-        this.service
-            .getTypes()
-            .subscribe((data: PersonType[]) => this.types = data);
+    public getRandomNumber(): number {
+        return Math.random();
     }
 
     private parse(data: Person): void {
         this.id = data.id;
         data.birthday = new Date(data.birthday);
         this.editPersonForm.patchValue(data);
-        this.photo = `${data.photo}?${Math.random()}`;
+        this.photo = `${data?.photo}?${Math.random()}`;
     }
 
     private parseForm(): Person {

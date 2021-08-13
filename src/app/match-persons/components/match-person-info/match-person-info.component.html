@@ -1,8 +1,12 @@
 ﻿<ng-container *ngIf="{ isInformer: isInformer$ | async } as data">
-    <span *ngIf="isPlayer">{{person.number}} - </span>{{person.personName}}
+    <span *ngIf="isPlayer">{{person.number}} - </span><span *ngIf="!data.isInformer; else linkPerson">{{person.personName}}</span>
+    <ng-template #linkPerson>
+        <a [routerLink]="['/persons', person.personId, 'edit']">
+            <span [textContent]="person.personName"></span>
+        </a>
+    </ng-template>
     <span *ngIf="data.isInformer">
-        <span role="button" (click)="onSelectPerson(person)" class="material-icons" style="font-size: 100%;">edit</span>
-        <span role="button" (click)="showDeleteModal(person)" class="material-icons"
-            style="font-size: 100%;">clear</span>
+        <span role="button" (click)="onSelectPerson(person)" class="material-icons">edit</span>
+        <span role="button" (click)="showDeleteModal(person)" class="material-icons">clear</span>
     </span>
 </ng-container>
