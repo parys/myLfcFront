@@ -1,8 +1,10 @@
 ﻿<ng-container *ngIf="{ isInformer: isInformer$ | async } as data">
-    <span *ngIf="isPlayer">{{person.number}} - </span><span *ngIf="!data.isInformer; else linkPerson">{{person.personName}}</span>
+    <ng-container *ngIf="!data.isInformer; else linkPerson">
+        <span *ngIf="isPlayer">{{person.number}} - </span>{{person.personName}}
+    </ng-container>
     <ng-template #linkPerson>
         <a [routerLink]="['/persons', person.personId, 'edit']">
-            <span [textContent]="person.personName"></span>
+            <span *ngIf="isPlayer">{{person.number}} - </span>{{person.personName}}
         </a>
     </ng-template>
     <span *ngIf="data.isInformer">

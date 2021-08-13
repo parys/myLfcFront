@@ -26,7 +26,7 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
 
     @Input() public isFull = true;
     @Output() public newPerson = new EventEmitter<Person>();
-    @ViewChild('pInput', { static: true })private elementRef: ElementRef;
+    @ViewChild('pInput')private elementRef: ElementRef;
 
     constructor(private service: PersonService,
                 private editService: PersonEditService,
@@ -74,6 +74,8 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
                         this.newPerson.emit(data);
                         this.editPersonForm.get('firstRussianName').setValue(null);
                         this.editPersonForm.get('lastRussianName').setValue(null);
+                        this.editPersonForm.get('nickName').setValue(null);
+                        this.editPersonForm.get('number').setValue(null);
                     }
                 },
                 () => this.snackBar.open('Изменения НЕ сохранены'));

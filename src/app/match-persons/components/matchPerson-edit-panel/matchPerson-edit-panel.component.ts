@@ -51,7 +51,9 @@ export class MatchPersonEditPanelComponent implements OnInit, OnChanges {
 
     public setPerson(person: Person): void {
         this.editMatchPersonForm.controls.personId.patchValue(person.id);
-        this.onSubmit();
+        if (this.editMatchPersonForm.valid) {
+            this.onSubmit();
+        }
     }
 
     public getControl(): FormControl {
