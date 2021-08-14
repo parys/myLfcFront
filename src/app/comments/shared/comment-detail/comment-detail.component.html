@@ -54,7 +54,7 @@
                     <div class="width15p"><b>Ответ:</b></div>
                     <div class="width85p">
                         <i *ngIf="!isEditMode" [innerHTML]="item.answer | safe: 'html'"></i>
-                        <bbeditor *ngIf="isEditMode" [value]="item.answer" formControlName="answer"></bbeditor>
+                        <bbeditor *ngIf="isEditMode" [height]="150" [value]="item.answer" formControlName="answer"></bbeditor>
                     </div>
                 </div>
                 <div class="full-width"
@@ -69,7 +69,7 @@
                         <img class="avatar-medium" [src]="item.photo" [alt]="item.authorUserName" />
                     </div>
                     <div class="width85p">
-                        <bbeditor formControlName="message" #replyInput></bbeditor>
+                        <bbeditor [height]="150" formControlName="message" #replyInput></bbeditor>
                     </div>
                 </div>
                 <div class="full-width flex" *ngIf="data.isEditor">
@@ -92,7 +92,7 @@
                 <h4 class="">Добавление ответа на комментарий</h4>
                 <form class="form-horizontal" role="form" [formGroup]="commentForm" (ngSubmit)="addComment()">
                     <div class="">
-                        <bbeditor formControlName="message" #replyInput></bbeditor>
+                        <bbeditor formControlName="message" [height]="150" #replyInput></bbeditor>
                     </div>
                     <div class="comment-action-buttons">
                         <button mat-raised-button color="warn" [disabled]="!commentForm.valid"

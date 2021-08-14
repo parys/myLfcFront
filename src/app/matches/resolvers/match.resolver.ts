@@ -9,6 +9,8 @@ import { GetMatchDetailQuery } from '@network/shared/matches';
 import { MatchActions } from '@matches/store/matches.actions';
 import { MatchEventActions } from '@match-events/store';
 import { MatchPersonActions } from '@match-persons/store';
+import { CommentActions } from '@comments/shared/store';
+import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-list-by-entity-id-query';
 
 
 @Injectable()
@@ -21,8 +23,8 @@ export class MatchResolver implements Resolve<any> {
         return this.store.dispatch([
             new MatchActions.GetMatchById(payload),
             new MatchEventActions.GetList(route.params.id),
-            new MatchPersonActions.GetList(route.params.id)
-       //     new CommentActions.GetCommentsListByEntity( new GetCommentListByEntityIdQuery.Request({matchId: route.params.id}))
+            new MatchPersonActions.GetList(route.params.id),
+            new CommentActions.GetCommentsListByEntity( new GetCommentListByEntityIdQuery.Request({matchId: route.params.id}))
        ]);
     }
 

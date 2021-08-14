@@ -63,7 +63,7 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
     public ngOnInit(): void {
         const sub$ = this.comments$.subscribe(comments => this.comments = comments);
         this.subscriptions.push(sub$);
-        this.update();
+      //  this.update();
         this.commentAddForm = this.formBuilder.group({
             message: ['', Validators.compose([
                 Validators.required, Validators.minLength(3)])]
