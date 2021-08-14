@@ -12,6 +12,9 @@ import { AuthState } from '@auth/store';
 import { NotifierService } from '@notices/services';
 import { ConfirmationMessage } from '@notices/shared';
 import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-list-by-entity-id-query';
+import { SignalrEntity } from '@base/signalr/models/signalr-entity.model';
+import { SignalRService } from '@base/signalr';
+import { SignalREntityEnum } from '@base/signalr/models/signalr-entity-type.model';
 
 @Component({
     selector: 'comment-detail',
@@ -45,12 +48,14 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
     constructor(private materialCommentService: CommentService,
                 private notifier: NotifierService,
                 private cd: ChangeDetectorRef,
+                private signalR: SignalRService,
                 private formBuilder: FormBuilder) {
         super();
     }
 
     public ngOnInit(): void {
         this.initForm();
+        this.subscribeOnSignalR();
 
         // const sub$ = this.signalRService.newComment.subscribe((data: Comment) => {
         //     if (data.matchId === this.matchId || data.materialId === this.materialId) {
@@ -65,7 +70,7 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
         //         }
         //     }
         // });
-        //this.subscriptions.push(sub$);
+        // this.subscriptions.push(sub$);
     }
 
     public verify(): void {
@@ -211,19 +216,40 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
 
     private getComment(): Comment | GetCommentListByEntityIdQuery.CommentListDto {
         const comment: Comment | GetCommentListByEntityIdQuery.CommentListDto = this.item;
-        comment.message = this.commentForm.controls['message'].value;
-        comment.answer = this.commentForm.controls['answer'].value;
+        comment.message = this.commentForm.controls.message.value;
+        comment.answer = this.commentForm.controls.answer.value;
         return comment;
     }
 
     private getNewComment(): Comment | GetCommentListByEntityIdQuery.CommentListDto {
         const comment: Comment | GetCommentListByEntityIdQuery.CommentListDto = new Comment();
-        comment.message = this.commentForm.controls['message'].value;
+        comment.message = this.commentForm.controls.message.value;
         comment.materialId = this.materialId;
         comment.matchId = this.matchId;
         comment.parentId = this.item.id;
         comment.type = this.type;
         return comment;
+    }
+
+
+    private subscribeOnSignalR(): void {
+        const sub$ = this.signalR.commentUpdate.subscribe(comment => this.putComment(comment));
+        this.subscriptions.push(sub$);
+    }
+
+    private putComment(comment: SignalrEntity<GetCommentListByEntityIdQuery.CommentListDto>): void {
+
+        if (comment.entity.parentId === this.item.id && comment.type === SignalREntityEnum.Add) {
+            this.item.children.push(comment.entity);
+            this.cd.detectChanges();
+            return;
+        }
+
+        if (comment.entity.id === this.item.id && comment.type === SignalREntityEnum.Update) {
+            this.item = comment.entity;
+            this.cd.detectChanges();
+            return;
+        }
     }
 }
 

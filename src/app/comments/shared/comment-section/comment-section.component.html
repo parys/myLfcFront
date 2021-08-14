@@ -1,5 +1,4 @@
 ﻿<ng-container *ngIf="{ isLogined: isLogined$ | async,
-                    comments: comments$ | async, 
                     commentsNumber: commentsNumber$ | async } as data">
     <od [blockName]="'R-A-255349-2'"></od>
 
@@ -10,7 +9,7 @@
         </a>
     </div>
 
-    <div *ngFor="let comment of data.comments; trackBy: trackByFn">
+    <div *ngFor="let comment of comments; trackBy: trackByFn">
         <comment-detail [item]="comment" [deep]="0" [materialId]="materialId" [canCommentary]="canCommentary"
             [type]="type" [matchId]="matchId"></comment-detail>
     </div>

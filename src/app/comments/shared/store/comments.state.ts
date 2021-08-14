@@ -48,61 +48,61 @@ export class CommentsState {
                 })
             );
     }
+// TODO Research how to deal with that (have comments list + signalR update + keep comments when editing)
+    // @Action(SignalRActions.UpdateComment)
+    // onUpdate({ patchState, getState, setState }: StateContext<CommentsStateModel>, { payload }: SignalRActions.UpdateComment) {
 
-    @Action(SignalRActions.UpdateComment)
-    onUpdate({ patchState, getState, setState }: StateContext<CommentsStateModel>, { payload }: SignalRActions.UpdateComment) {
-        
-        const materialId = this.store.selectSnapshot(MaterialsState.material)?.id;
-        const matchId = this.store.selectSnapshot(MatchesState.match)?.id;
+    //     const materialId = this.store.selectSnapshot(MaterialsState.material)?.id;
+    //     const matchId = this.store.selectSnapshot(MatchesState.match)?.id;
 
-        if (matchId !== payload.entity.matchId && materialId !== payload.entity.materialId) {
-                 return;
-        }
-        if (payload.type != SignalREntityEnum.Update) {
-            let { commentsNumber } = getState();
-            let diff = payload.type === SignalREntityEnum.Add ? 1 : -1;
-            patchState({ commentsNumber: (commentsNumber + diff) });
-        } 
-        const { comments } = getState();
-        if (payload.entity.parentId == null) {
-            const index = comments.findIndex(x => x.id === payload.entity.id);
-            if (index !== -1) {
-                payload.entity.children = comments[index].children;
-                comments[index] = payload.entity;
-                setState(patch({ comments: updateItem(x => x.id === payload.entity.id, payload.entity)}));
-            } else {
-                setState(patch({ comments: insertItem(payload.entity, comments.length)}));
-            }
-        } else {
-            this.updateComment(comments, payload.entity);
-            patchState({ comments: cloneDeep(comments) });
-        }
-    }
+    //     if (matchId !== payload.entity.matchId && materialId !== payload.entity.materialId) {
+    //              return;
+    //     }
+    //     if (payload.type != SignalREntityEnum.Update) {
+    //         let { commentsNumber } = getState();
+    //         let diff = payload.type === SignalREntityEnum.Add ? 1 : -1;
+    //         patchState({ commentsNumber: (commentsNumber + diff) });
+    //     }
+    //     const { comments } = getState();
+    //     if (payload.entity.parentId == null) {
+    //         const index = comments.findIndex(x => x.id === payload.entity.id);
+    //         if (index !== -1) {
+    //             payload.entity.children = comments[index].children;
+    //             comments[index] = payload.entity;
+    //             setState(patch({ comments: updateItem(x => x.id === payload.entity.id, payload.entity)}));
+    //         } else {
+    //             setState(patch({ comments: insertItem(payload.entity, comments.length)}));
+    //         }
+    //     } else {
+    //         this.updateComment(comments, payload.entity);
+    //         patchState({ comments: cloneDeep(comments) });
+    //     }
+    // }
 
-    private updateComment(comments: GetCommentListByEntityIdQuery.CommentListDto[],
-            payload: GetCommentListByEntityIdQuery.CommentListDto): GetCommentListByEntityIdQuery.CommentListDto {
-        let commentFound: GetCommentListByEntityIdQuery.CommentListDto;
-        for (let index = 0; index < comments.length; index++) {
-            if (comments[index].id === payload.parentId) {
-                this.putToChildren(comments[index], payload);
-                commentFound = payload;
-                return payload;
-            } else {
-                if (!commentFound) {
-                    commentFound = this.updateComment(comments[index].children, payload);
-                }
-            }
-        };
-    }
+    // private updateComment(comments: GetCommentListByEntityIdQuery.CommentListDto[],
+    //         payload: GetCommentListByEntityIdQuery.CommentListDto): GetCommentListByEntityIdQuery.CommentListDto {
+    //     let commentFound: GetCommentListByEntityIdQuery.CommentListDto;
+    //     for (let index = 0; index < comments.length; index++) {
+    //         if (comments[index].id === payload.parentId) {
+    //             this.putToChildren(comments[index], payload);
+    //             commentFound = payload;
+    //             return payload;
+    //         } else {
+    //             if (!commentFound) {
+    //                 commentFound = this.updateComment(comments[index].children, payload);
+    //             }
+    //         }
+    //     };
+    // }
 
-    private putToChildren(comment: GetCommentListByEntityIdQuery.CommentListDto,
-        payload: GetCommentListByEntityIdQuery.CommentListDto): void {
-        const commentIndex = comment.children.findIndex(x => x.id === payload.id);
-        if (commentIndex !== -1) {
-            payload.children = comment.children[commentIndex].children;
-            comment.children[commentIndex] = payload;
-        } else {
-            comment.children.push(payload);
-        }
-    }
+    // private putToChildren(comment: GetCommentListByEntityIdQuery.CommentListDto,
+    //     payload: GetCommentListByEntityIdQuery.CommentListDto): void {
+    //     const commentIndex = comment.children.findIndex(x => x.id === payload.id);
+    //     if (commentIndex !== -1) {
+    //         payload.children = comment.children[commentIndex].children;
+    //         comment.children[commentIndex] = payload;
+    //     } else {
+    //         comment.children.push(payload);
+    //     }
+    // }
 }

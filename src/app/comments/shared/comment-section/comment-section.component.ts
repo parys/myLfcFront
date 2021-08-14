@@ -22,6 +22,8 @@ import { Select, Store } from '@ngxs/store';
 import { AuthState } from '@auth/store';
 import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-list-by-entity-id-query';
 import { CommentActions, CommentsState } from '../store';
+import { SignalRService } from '@base/signalr';
+import { SignalrEntity, SignalREntityEnum } from '@base/signalr/models';
 
 @Component({
     selector: 'comment-section',
@@ -33,6 +35,7 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
     private prevHeight = 0;
     private isScrolled: boolean;
     public commentAddForm: FormGroup;
+    public comments: GetCommentListByEntityIdQuery.CommentListDto[];
     @Input() public materialId: number;
     @Input() public matchId: number;
     @Input() public type: number;
@@ -51,11 +54,15 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
                 private renderer: Renderer2,
                 public element: ElementRef,
                 private router: Router,
+                private signalR: SignalRService,
+                private cdr: ChangeDetectorRef,
                 private formBuilder: FormBuilder) {
         super();
     }
 
     public ngOnInit(): void {
+        const sub$ = this.comments$.subscribe(comments => this.comments = comments);
+        this.subscriptions.push(sub$);
         this.update();
         this.commentAddForm = this.formBuilder.group({
             message: ['', Validators.compose([
@@ -67,6 +74,7 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
             this.cd.markForCheck();
         });
         this.subscriptions.push(sub2$);
+        this.subscribeOnSignalR();
     }
 
     public ngOnChanges(): void {
@@ -125,7 +133,7 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
                 } else {
                     element.scrollIntoView();
                     this.isScrolled = true;
-                    const pathWithoutHash = this.location.path(false); 
+                    const pathWithoutHash = this.location.path(false);
                     this.location.replaceState(pathWithoutHash);
                 }
             }
@@ -142,7 +150,7 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
 
     public trackByFn(index: number, item: GetCommentListByEntityIdQuery.CommentListDto) {
         if (!item) { return null; }
-        return item.id && item.children;
+        return item.id;
     }
 
     public onSubmit(): void {
@@ -152,12 +160,34 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
         comment.type = this.type ? this.type : 3; // todo
         const sub$ = this.commentService.createOrUpdate(comment.id, comment)
             .subscribe((data: any) => {
-                this.commentAddForm.controls['message'].patchValue('');
+                this.commentAddForm.controls.message.patchValue('');
             },
                 null,
                 () => {
                     this.cd.markForCheck();
                 });
         this.subscriptions.push(sub$);
+    }
+
+    private subscribeOnSignalR(): void {
+        const sub$ = this.signalR.commentUpdate.subscribe(comment => this.putComment(comment));
+        this.subscriptions.push(sub$);
+    }
+
+    private putComment(comment: SignalrEntity<GetCommentListByEntityIdQuery.CommentListDto>): void {
+
+        if (this.matchId !== comment.entity.matchId && this.materialId !== comment.entity.materialId) {
+            return;
+        }
+        // add comments count update
+        if (comment.entity.parentId) {
+            return;
+        }
+
+        if (comment.type === SignalREntityEnum.Add) {
+            this.comments.push(comment.entity);
+            this.cdr.detectChanges();
+        }
+        // TODO implement remove comments
     }
 }

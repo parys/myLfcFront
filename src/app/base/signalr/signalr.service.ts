@@ -3,6 +3,7 @@ import { isPlatformServer } from '@angular/common';
 
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { Store } from '@ngxs/store';
+import { Subject } from 'rxjs/internal/Subject';
 
 import { Pm, MatchEvent } from '@domain/models';
 import { environment } from '@environments/environment';
@@ -21,6 +22,7 @@ import { Notification } from '@notifications/models/notification.model';
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
     private hubConnection: HubConnection;
+    public commentUpdate = new Subject<SignalrEntity<GetCommentListByEntityIdQuery.CommentListDto>>();
 
     constructor(private cookies: Cookies,
                 private store: Store,
@@ -63,7 +65,8 @@ export class SignalRService {
         });
         this.hubConnection.on('comment', (data: SignalrEntity<GetCommentListByEntityIdQuery.CommentListDto>) => {
             data.entity.children = data.entity.children || [];
-            this.store.dispatch(new SignalRActions.UpdateComment(data));
+            this.commentUpdate.next(data);
+         //   this.store.dispatch(new SignalRActions.UpdateComment(data));
         });
         if (token) {
             this.hubConnection.on('readPm',
