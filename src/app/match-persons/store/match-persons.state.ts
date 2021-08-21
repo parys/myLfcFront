@@ -86,7 +86,7 @@ export class MatchPersonsState {
 
     @Action(MatchPersonActions.Delete)
     onDelete({patchState, getState }: StateContext<MatchPersonsStateModel>, { payload }: MatchPersonActions.Delete) {
-        
+
         return this.matchPersonNetwork.delete(payload.matchId, payload.personId)
         .pipe(tap(response => {
             // notify about delete
@@ -94,23 +94,23 @@ export class MatchPersonsState {
     }
 
     @Action(SignalRActions.UpdateMP)
-    onUpdateMP({ setState, getState, patchState }: StateContext<MatchPersonsStateModel>, { payload }: SignalRActions.UpdateMP) {
-        
+    onUpdateMP({ getState, patchState }: StateContext<MatchPersonsStateModel>, { payload }: SignalRActions.UpdateMP) {
+
         const match = this.store.selectSnapshot(MatchesState.match);
         if (match.id !== payload.entity.matchId) {
             return;
         }
-        let { matchPersons } = getState();
+        const { matchPersons } = getState();
         switch (payload.type) {
             case SignalREntityEnum.Add: {
-                matchPersons[payload.entity.placeType].push(payload.entity);      
+                matchPersons[payload.entity.placeType].push(payload.entity);
                 patchState({ matchPersons: cloneDeep(matchPersons) });
                 break;
             }
-            case SignalREntityEnum.Update: {  
+            case SignalREntityEnum.Update: {
                 const index = matchPersons[payload.entity.placeType].findIndex(x => x.personId === payload.entity.personId);
                 if (index > -1) {
-                    matchPersons[payload.entity.placeType][index] = payload.entity;            
+                    matchPersons[payload.entity.placeType][index] = payload.entity;
                     patchState({ matchPersons: cloneDeep(matchPersons) });
                 }
                 break;
@@ -118,7 +118,7 @@ export class MatchPersonsState {
             case SignalREntityEnum.Delete: {
                 const index = matchPersons[payload.entity.placeType].findIndex(x => x.personId === payload.entity.personId);
                 if (index > -1) {
-                    matchPersons[payload.entity.placeType].splice(index, 1);            
+                    matchPersons[payload.entity.placeType].splice(index, 1);
                     patchState({ matchPersons: cloneDeep(matchPersons) });
                 }
                 break;

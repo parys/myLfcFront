@@ -11,7 +11,7 @@ import { MatchPersonType } from '@match-persons/models/match-person-type.model';
 
 @Component({
     selector: 'match-person-edit-panel',
-    templateUrl: './matchPerson-edit-panel.component.html',
+    templateUrl: './match-person-edit-panel.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 

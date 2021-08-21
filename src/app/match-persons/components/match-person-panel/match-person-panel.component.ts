@@ -11,8 +11,8 @@ import { MatchPerson } from '@match-persons/models/match-person.model';
 
 @Component({
     selector: 'match-person-panel',
-    templateUrl: './matchPerson-panel.component.html',
-    styleUrls: ['./matchPerson-panel.component.scss'],
+    templateUrl: './match-person-panel.component.html',
+    styleUrls: ['./match-person-panel.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MatchPersonPanelComponent extends ObserverComponent implements OnInit {
