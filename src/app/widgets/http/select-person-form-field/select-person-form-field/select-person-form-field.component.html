@@ -5,7 +5,7 @@
     <mat-autocomplete #person="matAutocomplete">
         <mat-option *ngFor="let person of persons$ | async" [value]="person.personName"
             (click)="onSelectionChange(person)">
-            <span>{{ person.personName }}</span>&nbsp;<span *ngIf="person.nickname">({{person.nickname}})</span>
+            <span *ngIf="person.number">{{ person.number }} - </span><span>{{ person.personName }}</span>&nbsp;<span *ngIf="person.nickname">({{person.nickname}})</span>
         </mat-option>
     </mat-autocomplete>
 </mat-form-field>

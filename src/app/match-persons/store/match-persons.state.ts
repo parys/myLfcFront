@@ -17,6 +17,7 @@ import { SignalREntityEnum } from '@base/signalr/models';
     name: 'matchPersons',
     defaults: {
         matchPersonTypes: [],
+        flatMatchPersons: null,
         matchPersons: null,
         editOptions: null,
         selected: null,
@@ -33,6 +34,11 @@ export class MatchPersonsState {
     @Selector()
     static matchPersons(state: MatchPersonsStateModel) {
         return state.matchPersons;
+    }
+
+    @Selector()
+    static flatMatchPersons(state: MatchPersonsStateModel) {
+        return state.flatMatchPersons;
     }
 
     @Selector()
@@ -53,7 +59,7 @@ export class MatchPersonsState {
         return this.matchPersonNetwork.getMatchPersons(payload)
             .pipe(
                 tap(response => {
-                    patchState({ matchPersons: response.results || [] });
+                    patchState({ matchPersons: response.results || [], flatMatchPersons: response.flatListResults });
                 }));
     }
 

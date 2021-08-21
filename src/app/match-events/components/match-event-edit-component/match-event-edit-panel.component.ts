@@ -1,7 +1,12 @@
 ﻿import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+
 import { MatchEvent, MatchEventType } from '@domain/models';
+import { MatchPersonsState } from '@match-persons/store';
+import { GetMatchPersonsListQuery } from '@network/shared/match-persons';
 
 @Component({
     selector: 'match-event-edit-panel',
@@ -12,8 +17,10 @@ import { MatchEvent, MatchEventType } from '@domain/models';
 export class MatchEventEditPanelComponent implements OnInit {
     @Input() public selectedEvent: MatchEvent;
     @Input() public matchId: number;
-    @Input() public types: MatchEventType[];;
+    @Input() public types: MatchEventType[];
     @Output() public updated = new EventEmitter<MatchEvent>();
+
+    @Select(MatchPersonsState.flatMatchPersons) flatMatchPersons$: Observable<GetMatchPersonsListQuery.MatchPersonListDto[]>;
 
     public editMatchEventForm: FormGroup;
 

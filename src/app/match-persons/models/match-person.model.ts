@@ -1,9 +1,6 @@
-﻿export class MatchPerson {
-    public matchId: number;
-    public personId: number;
-    public personName: string;
-    public personType: number;
+﻿import { GetMatchPersonsListQuery } from '@network/shared/match-persons/get-match-persons-list.query';
+
+export class MatchPerson extends GetMatchPersonsListQuery.MatchPersonListDto {
     public placeType: number;
     public personTypeName: string;
-    public number: number;
 }
