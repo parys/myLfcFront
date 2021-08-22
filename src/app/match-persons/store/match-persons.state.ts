@@ -77,16 +77,19 @@ export class MatchPersonsState {
 
     @Action(MatchPersonActions.AddEdit)
     onAddEdit({ patchState, getState }: StateContext<MatchPersonsStateModel>, { payload }: MatchPersonActions.AddEdit) {
-        const { editOptions } = getState();
+
         return this.matchPersonNetwork.createOrUpdate(payload)
         .pipe(
             tap(response => {
+                const { editOptions, selected } = getState();
                 editOptions.currentCount++;
+
                 if (this.checkExit(editOptions.neededCount, editOptions.currentCount)) {
                     patchState({ editOptions: null});
                 } else {
-                    patchState({ editOptions: {...editOptions }, selected: null});
+                    patchState({ editOptions: {...editOptions }});
                 }
+                patchState({ selected: { ...selected, id: null, personId: null, personName: null } });
         }));
     }
 

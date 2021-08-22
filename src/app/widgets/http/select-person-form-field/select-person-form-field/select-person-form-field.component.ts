@@ -7,7 +7,9 @@ import {
     Input,
     AfterViewInit,
     OnChanges,
-    SimpleChanges
+    SimpleChanges,
+    Output,
+    EventEmitter
 } from '@angular/core';
 import { FormControl, ControlValueAccessor } from '@angular/forms';
 
@@ -40,6 +42,7 @@ export class SelectPersonFormFieldComponent extends AbstractControlComponent<num
     @Input() focus = false;
     @Input() type = null;
     @Input() matchId = null;
+    @Output() selectionChange = new EventEmitter<BasePerson>();
     @ViewChild('selectInput', { static: true }) selectInput: ElementRef;
 
     public persons$: Observable<BasePerson[]>;
@@ -81,12 +84,16 @@ export class SelectPersonFormFieldComponent extends AbstractControlComponent<num
         if (changes.person) {
             this.selectCtrl.setValue(changes.person.currentValue.personName);
         }
+        if (changes.selected) {
+            this.selectCtrl.setValue(changes.selected.currentValue?.personName);
+        }
     }
 
 
     public onSelectionChange(person: BasePerson): void {
         this.value = person.id || person.personId;
         this.personName = person.personName;
+        this.selectionChange.emit(person);
     }
 
     public ngAfterViewInit(): void {
