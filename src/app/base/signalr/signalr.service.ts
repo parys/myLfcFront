@@ -3,7 +3,7 @@ import { isPlatformServer } from '@angular/common';
 
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { Store } from '@ngxs/store';
-import { Subject } from 'rxjs/internal/Subject';
+import { Subject } from 'rxjs';
 
 import { Pm, MatchEvent } from '@domain/models';
 import { environment } from '@environments/environment';
@@ -11,7 +11,7 @@ import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/
 import { Cookies } from '@base/cookie';
 import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages-list.query';
 import { UsersOnline } from '@network/shared/right-sidebar/user-online.model';
-import { AdminActions } from '@admin/store';
+
 import { SignalrEntity } from './models';
 import { SignalRActions } from './signalr.actions';
 import { GetMatchDetailQuery } from '@network/shared/matches/get-match-detail.query';
