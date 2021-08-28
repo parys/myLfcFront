@@ -11,7 +11,6 @@ import { MaterialCoreModule } from '@materials/core/material-core.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppMaterialModule } from './app-material.module';
 import { PipesModule } from './base/pipes';
-import { SignalRModule } from '@base/signalr';
 import { AuthModule } from '@base/auth';
 import { StorageModule } from '@base/storage';
 import { LoaderModule } from '@base/loader';
@@ -46,7 +45,8 @@ export function runAppInitializerFactories(injector: Injector): () => Promise<an
 @NgModule({
     imports: [
         CommonModule,
-        BrowserModule.withServerTransition({ appId: 'mylfc' }),
+        BrowserModule,
+        //BrowserModule.withServerTransition({ appId: 'mylfc' }),
         CoreModule.forRoot(),
         NgxsModule.forRoot([]),
         HttpClientModule,
@@ -55,7 +55,6 @@ export function runAppInitializerFactories(injector: Injector): () => Promise<an
         AppMaterialModule,
         PipesModule,
         StorageModule.forRoot(),
-        SignalRModule.forRoot(),
         AuthModule.forRoot(),
         LoaderModule.forRoot(),
         BreadcrumbModule.forRoot(),

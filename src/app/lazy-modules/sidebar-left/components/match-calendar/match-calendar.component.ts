@@ -1,12 +1,9 @@
 ﻿import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { TransferState, makeStateKey } from '@angular/platform-browser';
 
 import { Subscription } from 'rxjs';
 
 import { Match, MatchCalendar } from '@domain/models';
 import { SidebarLeftService } from '@lazy-modules/sidebar-left/sidebar-left.service';
-
-const MATCH_CALENDAR_KEY = makeStateKey<Match[]>('match-calendar');
 
 @Component({
     selector: 'match-calendar',
@@ -20,19 +17,12 @@ export class MatchCalendarComponent implements OnInit, OnDestroy {
     public next: Match;
 
     constructor(private service: SidebarLeftService,
-                private transferState: TransferState,
                 private cd: ChangeDetectorRef) { }
 
     public ngOnInit(): void {
-      //  const savedData = this.transferState.get(MATCH_CALENDAR_KEY, null);
-      //  if (savedData) {
-     //       this.parse(savedData);
-     //   } else {
-            this.sub = this.service.getForCalendar().subscribe(data => {
-                this.parse(data);
-             //   this.transferState.set(MATCH_CALENDAR_KEY, data);
-            });
-      //  }
+        this.sub = this.service.getForCalendar().subscribe(data => {
+            this.parse(data);
+        });
     }
     private parse(matches: MatchCalendar): void {
         this.last = matches.last;

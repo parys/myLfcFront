@@ -33,7 +33,7 @@ export function getAccessToken(injector: Injector): Promise<any> {
         CommonModule,
         RouterModule,
         HttpWrapperModule,
-        NgxsModule.forFeature([AuthState])
+        NgxsModule.forRoot([AuthState])
     ]
 })
 export class AuthModule extends EnsureModuleLoadedOnceGuard {
