@@ -15,7 +15,7 @@ export class UnSignedGuard implements CanActivate {
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
         const authState = this.store.selectSnapshot(AuthState);
-        if (authState.user != null || authState.tokens != null) {
+        if (authState != null && (authState.user != null || authState.tokens != null)) {
             this.router.navigate(['/']);
             return false;
         }
