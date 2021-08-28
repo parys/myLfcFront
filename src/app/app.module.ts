@@ -45,8 +45,7 @@ export function runAppInitializerFactories(injector: Injector): () => Promise<an
 @NgModule({
     imports: [
         CommonModule,
-        BrowserModule,
-        //BrowserModule.withServerTransition({ appId: 'mylfc' }),
+        BrowserModule.withServerTransition({ appId: 'mylfc' }),
         CoreModule.forRoot(),
         NgxsModule.forRoot([]),
         HttpClientModule,

@@ -63,7 +63,7 @@ export class AppComponent extends ObserverComponent implements OnInit {
             filter((event: any) => event instanceof NavigationEnd),
             map(() => {
                 let child = this.activatedRoute.firstChild;
-                this.sidenav.close();
+                this.sidenav?.close();
                 while (child) {
                     if (child.firstChild) {
                         child = child.firstChild;
