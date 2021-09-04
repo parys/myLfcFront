@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 import { Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
@@ -43,6 +44,7 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
                 private location: Location,
                 private notifierService: NotifierService,
                 private store: Store,
+                private clipboard: Clipboard,
                 private formBuilder: FormBuilder) {
         super();
         if (this.router.url.startsWith('/news')) {
@@ -60,7 +62,13 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
         this.initForm(this.item);
     }
 
-    public onSubmit(): void {
+    public onFullSave(): void {
+        this.editForm.get('stayOnPage').setValue(false);
+        this.editForm.get('pending').setValue(false);
+        this.onSubmit(true);
+    }
+
+    public onSubmit(copyUrl: boolean = false): void {
         const newsItem = this.editForm.value;
         newsItem.type = this.type;
         this.service.createOrUpdate(newsItem, this.id)
@@ -75,6 +83,9 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
                     this.snackBar.open('Материал создан');
                 } else {
                     this.snackBar.open('Материал обновлен');
+                }
+                if (copyUrl) {
+                    this.clipboard.copy(window.location.href);
                 }
             },
                 e => {

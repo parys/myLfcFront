@@ -19,8 +19,9 @@
                 </bbeditor>
             </div>
             <div class="full-width">
-                <button mat-raised-button color="warn" class="full-width" type="submit"
+                <button mat-raised-button color="warn" type="submit"
                     [disabled]="!editForm.valid">Сохранить</button>
+                <button mat-raised-button color="primary" (click)="onFullSave()" [disabled]="!editForm.valid">Сохранить и скопировать</button>
             </div>
             <div class="full-width">
                 <mat-form-field class="full-width">
