@@ -71,7 +71,8 @@ export class SelectPersonFormFieldComponent extends AbstractControlComponent<num
             this.persons$ = this.selectCtrl.valueChanges.pipe(
                 distinctUntilChanged(),
                 switchMap((value: string) => {
-                    return this.src.pipe(map(p => p.filter(x => x.personName.search(value))));
+                    value = value.toLowerCase();
+                    return this.src.pipe(map(p => p.filter(x => x.personName.toLowerCase().includes(value))                    ));
                 }));
         }
         this.selectCtrl.setValue(this.selected?.personName ?? this.personName);
