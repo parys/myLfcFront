@@ -77,15 +77,15 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
                     this.router.navigate([`/${MaterialType[this.type].toLowerCase()}`, data.id]);
                 }
                 if (!this.id) {
-                    this.location.go(this.router.createUrlTree([MaterialType[this.type].toLowerCase(), data.id, EDIT_ROUTE]).toString());
                     this.id = data.id;
+                    this.location.go(this.router.createUrlTree([MaterialType[this.type].toLowerCase(), data.id, EDIT_ROUTE]).toString());
                     this.editForm.patchValue({id: this.id });
                     this.snackBar.open('Материал создан');
                 } else {
                     this.snackBar.open('Материал обновлен');
                 }
                 if (copyUrl) {
-                    this.clipboard.copy(window.location.href);
+                    this.clipboard.copy(window.location.href.replace('/0', `/${data.id}`));
                 }
             },
                 e => {
