@@ -14,6 +14,9 @@
                 <mat-option *ngFor="let type of data.types" [value]="type.key">{{ type.value }}</mat-option>
             </mat-select>
         </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput  placeholder="Номер на футболке" formControlName="number">
+        </mat-form-field>
         <div class="full-width">
             <mat-checkbox color="warn" formControlName="useType">Фильтр по типу</mat-checkbox>
         </div>

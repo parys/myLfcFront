@@ -64,7 +64,8 @@ export class MatchPersonEditPanelComponent implements OnChanges {
             personType: [selected?.personName ? selected.personType : this.editOptions.mpType, Validators.required],
             useType: [true],
             isHome: [this.isHome],
-            matchId: [this.matchId, Validators.required]
+            matchId: [this.matchId, Validators.required],
+            number: [selected?.number ?? null]
         });
     }
 }
