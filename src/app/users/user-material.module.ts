@@ -11,6 +11,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { PaginationModule } from '@base/pagination/pagination.module';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const materialModules = [
     MatIconModule,
@@ -23,7 +24,8 @@ const materialModules = [
     MatSlideToggleModule,
     MatSortModule,
     PaginationModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
 ];
 
 @NgModule({
