@@ -24,8 +24,10 @@ import { ClubFilters } from '@clubs/models/club-filters.model';
 export class SelectClubFormFieldComponent extends AbstractControlComponent<number>
     implements OnInit, ControlValueAccessor {
 
-    @Input() clubName: string;
-    @ViewChild('selectClub', { static: true }) selectClub: ElementRef;
+    @Input() set clubName(value: string) {
+        this.clubCtrl.setValue(value);
+    }
+    @ViewChild('selectClub') selectClub: ElementRef;
 
     public clubs$: Observable<Club[]>;
     public clubCtrl = new FormControl();
@@ -34,7 +36,7 @@ export class SelectClubFormFieldComponent extends AbstractControlComponent<numbe
         super(cdRef);
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.clubs$ = this.clubCtrl.valueChanges.pipe(
             debounceTime(DEBOUNCE_TIME),
             distinctUntilChanged(),
@@ -46,9 +48,5 @@ export class SelectClubFormFieldComponent extends AbstractControlComponent<numbe
             switchMap((pagingClubs: PagedList<Club>): Observable<Club[]> => {
                 return of(pagingClubs.results);
             }));
-    }
-
-    public onSelectionChange(clubId: number): void {
-        this.value = clubId;
     }
 }

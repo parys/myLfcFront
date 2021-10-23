@@ -2,4 +2,6 @@
 
 export class ClubFilters extends PagedQueryBase {
     public name: string;
+
+    public includeIds: number[];
 }

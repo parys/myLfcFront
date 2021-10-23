@@ -23,7 +23,7 @@ import { SelectSeasonFormFieldModule } from '@widgets/http/select-season-form-fi
 import { PaginationModule } from '@base/pagination/pagination.module';
 import { NgxsModule } from '@ngxs/store';
 import { MatchesState } from './store';
-import { MatchResolver } from './resolvers';
+import { MatchEditResolver, MatchResolver } from './resolvers';
 
 @NgModule({
     imports: [
@@ -49,7 +49,8 @@ import { MatchResolver } from './resolvers';
     ],
     providers: [
         MatchService,
-        MatchResolver
+        MatchResolver,
+        MatchEditResolver
     ]
 })
 export class MatchModule {

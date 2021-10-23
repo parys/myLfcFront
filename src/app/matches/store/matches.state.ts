@@ -57,9 +57,9 @@ export class MatchesState {
     }
 
     constructor(protected matchNetwork: MatchService,
-        private store: Store,
-        @Inject(PLATFORM_ID) private platformId: object,
-        protected titleService: CustomTitleMetaService) { }
+                private store: Store,
+                @Inject(PLATFORM_ID) private platformId: object,
+                protected titleService: CustomTitleMetaService) { }
 
     @Action(MatchActions.ChangeSort)
     @Action(MatchActions.ChangePage)
@@ -104,8 +104,10 @@ export class MatchesState {
             .pipe(
                 tap(match => {
                     patchState({ match });
-                    this.updateTitlesAndTags(match);
-                    dispatch(new MatchActions.UpdateTimeRemaining(true));
+                    if (match?.id) {
+                        this.updateTitlesAndTags(match);
+                        dispatch(new MatchActions.UpdateTimeRemaining(true));
+                    }
                 })
             );
     }

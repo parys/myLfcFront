@@ -20,12 +20,14 @@ export class MatchResolver implements Resolve<any> {
 
     public resolve(route: ActivatedRouteSnapshot): Observable<GetMatchDetailQuery.Response> {
         const payload = new GetMatchDetailQuery.Request({ id: route.params.id });
-        return this.store.dispatch([
-            new MatchActions.GetMatchById(payload),
-            new MatchEventActions.GetList(route.params.id),
-            new MatchPersonActions.GetList(route.params.id),
-            new CommentActions.GetCommentsListByEntity( new GetCommentListByEntityIdQuery.Request({matchId: route.params.id}))
-       ]);
+        const actions = [];
+        actions.push(new MatchActions.GetMatchById(payload));
+        if (route.params.id) {
+            actions.push(new MatchEventActions.GetList(route.params.id));
+            actions.push(new MatchPersonActions.GetList(route.params.id));
+            actions.push(new CommentActions.GetCommentsListByEntity(new GetCommentListByEntityIdQuery.Request({matchId: route.params.id})));
+             }
+        return this.store.dispatch(actions);
     }
 
 }
