@@ -18,10 +18,11 @@
                 <bbeditor name="message" [type]="2" [value]="item?.message" [height]="400" formControlName="message">
                 </bbeditor>
             </div>
-            <div class="full-width">
+            <div class="full-width flex-space-between">
                 <button mat-raised-button color="warn" type="submit"
-                    [disabled]="!editForm.valid">Сохранить</button>
-                <button mat-raised-button color="primary" (click)="onFullSave()" [disabled]="!editForm.valid">Сохранить и скопировать</button>
+                    [disabled]="!editForm.valid || isSaving">Сохранить</button>
+                <button mat-raised-button color="primary" (click)="onFullSave()"
+                 [disabled]="!editForm.valid || isSaving">Сохранить и скопировать урл</button>
             </div>
             <div class="full-width">
                 <mat-form-field class="full-width">

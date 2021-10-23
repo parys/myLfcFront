@@ -81,7 +81,7 @@
                 <div class="flex full-width">
                     <span class="width15p"></span>
                     <div class="width85p comment-action-buttons">
-                        <button mat-raised-button color="warn" [disabled]="!commentForm.valid"
+                        <button mat-raised-button color="warn" [disabled]="!commentForm.valid || isSaving"
                             type="submit">Обновить</button>
                         <button mat-raised-button (click)="cancelEdit()" type="button">Отмена</button>
                     </div>
@@ -95,7 +95,7 @@
                         <bbeditor formControlName="message" [height]="150" #replyInput></bbeditor>
                     </div>
                     <div class="comment-action-buttons">
-                        <button mat-raised-button color="warn" [disabled]="!commentForm.valid"
+                        <button mat-raised-button color="warn" [disabled]="!commentForm.valid || isSaving"
                             type="submit">Добавить</button>
                         <button mat-raised-button (click)="cancelAdding()" type="button">Отмена</button>
                     </div>

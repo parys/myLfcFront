@@ -36,6 +36,7 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
     private isScrolled: boolean;
     public commentAddForm: FormGroup;
     public comments: GetCommentListByEntityIdQuery.CommentListDto[];
+    public isSaving = false;
     @Input() public materialId: number;
     @Input() public matchId: number;
     @Input() public type: number;
@@ -154,6 +155,10 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
     }
 
     public onSubmit(): void {
+        if (this.isSaving) {
+            return;
+        }
+        this.isSaving = true;
         const comment: Comment = this.commentAddForm.value;
         comment.materialId = this.materialId;
         comment.matchId = this.matchId;
@@ -164,6 +169,7 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
             },
                 null,
                 () => {
+                    this.isSaving = false;
                     this.cd.markForCheck();
                 });
         this.subscriptions.push(sub$);

@@ -33,6 +33,7 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
     public item: GetMaterialDetailQuery.Response;
     public type: MaterialType;
     public additional = 'additional';
+    public isSaving = false;
 
     @Select(AuthState.isEditor) isEditor$: Observable<boolean>;
 
@@ -69,27 +70,37 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
     }
 
     public onSubmit(copyUrl: boolean = false): void {
+        if (this.isSaving) {
+            return;
+        }
+        this.isSaving = true;
         const newsItem = this.editForm.value;
         newsItem.type = this.type;
+
         this.service.createOrUpdate(newsItem, this.id)
             .subscribe(data => {
+                this.location.go(this.router.createUrlTree([MaterialType[this.type].toLowerCase(), data.id, EDIT_ROUTE]).toString());
+
+                if (copyUrl) {
+                    const url = window.location.href.replace('/0', `/${data.id}`).replace('/edit', '');
+                    this.clipboard.copy(url);
+                }
                 if (!this.editForm.get('stayOnPage').value) {
                     this.router.navigate([`/${MaterialType[this.type].toLowerCase()}`, data.id]);
                 }
                 if (!this.id) {
                     this.id = data.id;
-                    this.location.go(this.router.createUrlTree([MaterialType[this.type].toLowerCase(), data.id, EDIT_ROUTE]).toString());
                     this.editForm.patchValue({id: this.id });
                     this.snackBar.open('Материал создан');
                 } else {
                     this.snackBar.open('Материал обновлен');
                 }
-                if (copyUrl) {
-                    this.clipboard.copy(window.location.href.replace('/0', `/${data.id}`));
-                }
             },
                 e => {
                     this.snackBar.open('Материал НЕ обновлен');
+                },
+                () => {
+                    this.isSaving = false;
                 });
         this.editForm.markAsPristine();
     }

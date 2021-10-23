@@ -44,6 +44,7 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
     public commentForm: FormGroup;
     public isEditMode = false;
     public isAddingMode = false;
+    public isSaving = false;
 
     constructor(private materialCommentService: CommentService,
                 private notifier: NotifierService,
@@ -56,21 +57,6 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
     public ngOnInit(): void {
         this.initForm();
         this.subscribeOnSignalR();
-
-        // const sub$ = this.signalRService.newComment.subscribe((data: Comment) => {
-        //     if (data.matchId === this.matchId || data.materialId === this.materialId) {
-        //         if (data.parentId === this.item.id) {
-        //             const index = this.item.children.findIndex(x => x.id === data.id);
-        //             if (index !== -1) {
-        //                 this.item.children[index] = data;
-        //             } else {
-        //                 this.item.children.push(data);
-        //             }
-        //             this.cd.markForCheck();
-        //         }
-        //     }
-        // });
-        // this.subscriptions.push(sub$);
     }
 
     public verify(): void {
@@ -111,11 +97,16 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
     }
 
     public cancelAdding(): void {
+        this.isSaving = false;
         this.isAddingMode = false;
         this.cd.markForCheck();
     }
 
     public addComment(): void {
+        if (this.isSaving) {
+            return;
+        }
+        this.isSaving = true;
         this.commentForm.markAsPending();
         const comment = this.getNewComment();
         const sub$ = this.materialCommentService.createOrUpdate(comment.id, comment)
