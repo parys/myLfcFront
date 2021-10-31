@@ -42,6 +42,7 @@ export class MatchEventEditPanelComponent implements OnInit {
             personId: [this.selectedEvent ? this.selectedEvent.personId : '', Validators.required],
             type: [this.selectedEvent ? this.selectedEvent.type : '', Validators.required],
             minute: [this.selectedEvent ? this.selectedEvent.minute : '', Validators.required],
+            addMinutes: [this.selectedEvent ? this.selectedEvent.addMinutes : ''],
             isOur: [this.selectedEvent ? this.selectedEvent.isOur : true]
         });
     }

@@ -1,6 +1,7 @@
 ﻿export class MatchEvent {
     public id?: number;
     public minute?: number;
+    public addMinutes?: number;
     public personId?: number;
     public personName?: string;
     public matchId?: number;

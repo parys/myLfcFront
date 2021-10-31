@@ -6,37 +6,36 @@
         <div [ngSwitch]="event.type" [class.right]="(!isHome && event.isOur) || (isHome && !event.isOur)"
             class="inline-flex">
             <div *ngSwitchCase="MatchEventType.Goal"><img class="width20px" alt="Гол" src="/img/goal.png"
-                    [title]="event.typeName">{{event.personName}} - {{event.minute}}' </div>
+                    [title]="event.typeName">{{event | matchEvent}}</div>
             <div *ngSwitchCase="MatchEventType.GoalPenalty"><img class="width20px" alt="Гол" src="/img/goal.png"
-                    [title]="event.typeName">(П){{event.personName}} - {{event.minute}}' </div>
+                    [title]="event.typeName">(П){{event | matchEvent}}</div>
             <div *ngSwitchCase="MatchEventType.GoalPenaltySeries"><img class="width20px" alt="Гол" src="/img/goal.png"
                     [title]="event.typeName">(П){{event.personName}}</div>
             <span *ngSwitchCase="MatchEventType.GoalOwn"><img class="width20px" alt="Гол" src="/img/goal_own.png"
-                    [title]="event.typeName">(А){{event.personName}} - {{event.minute}}' </span>
+                    [title]="event.typeName">(А){{event | matchEvent}}</span>
             <span *ngSwitchCase="MatchEventType.Assist" [title]="event.typeName">({{event.personName}})</span>
             <span *ngSwitchCase="MatchEventType.Yellow" class="flex-v-c">
-                <mat-icon class="color-gold">sim_card_alert</mat-icon>{{event.personName}} - {{event.minute}}'
+                <mat-icon class="color-gold">sim_card_alert</mat-icon>{{event | matchEvent}}
             </span>
             <div *ngSwitchCase="MatchEventType.Red" class="flex-v-c">
-                <mat-icon class="color-red" [title]="event.typeName">sim_card_alert</mat-icon>{{event.personName}} -
-                {{event.minute}}'
+                <mat-icon class="color-red" [title]="event.typeName">sim_card_alert</mat-icon>{{event | matchEvent}}
             </div>
             <div *ngSwitchCase="MatchEventType.SubstitudeOut" class="flex-v-c" [title]="event.typeName">
-                <mat-icon class="color-red">arrow_downward</mat-icon>{{event.personName}} - {{event.minute}}'
+                <mat-icon class="color-red">arrow_downward</mat-icon>{{event | matchEvent}}
             </div>
             <div *ngSwitchCase="MatchEventType.SubstitudeIn" class="flex-v-c" [title]="event.typeName">
-                <mat-icon class="color-green">arrow_upward</mat-icon>{{event.personName}} - {{event.minute}}'
+                <mat-icon class="color-green">arrow_upward</mat-icon>{{event | matchEvent}}
             </div>
             <span *ngSwitchCase="MatchEventType.NotGoalPenalty">
                 <img class="width20px" alt="Незабитый пенальти" src="/img/goal_own.png" [title]="event.typeName">
-                П(нереализованный)&nbsp;{{event.personName}} - {{event.minute}}'
+                П(нереализованный)&nbsp;{{event | matchEvent}}
             </span>
             <span *ngSwitchCase="MatchEventType.NotGoalPenaltySeries"><img class="width20px" alt="Незабитый пенальти" src="/img/goal_own.png"
                     [title]="event.typeName">П(нереализованный)&nbsp;{{event.personName}}
             </span>
-            <span *ngSwitchCase="MatchEventType.Injury"><span class="">Травма </span>{{event.personName}} - {{event.minute}}' </span>
+            <span *ngSwitchCase="MatchEventType.Injury"><span class="">Травма </span>{{event | matchEvent}}</span>
             <span *ngSwitchCase="MatchEventType.DisallowedGoal"><img class="width20px" [alt]="event.typeName" src="/img/not_goal.png"
-                [title]="event.typeName">{{event.personName}} - {{event.minute}}' </span>
+                [title]="event.typeName">{{event | matchEvent}}</span>
             <i *ngIf="data.isInformer" role="button" (click)="setEditing(event)">
                 <mat-icon class="small">edit</mat-icon>
             </i>
