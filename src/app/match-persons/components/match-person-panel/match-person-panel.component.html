@@ -45,127 +45,138 @@
                     (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
             </div>
         </div>
-        <div class="width50p">
-            <i class="full-width top10">
-                <b>Главный тренер:</b>
-                <span *ngIf="data.isInformer && data.persons[mpType.Coach]?.length == 0" role="button"
-                    (click)="addMatchPerson(isHome ? (mpType.Coach) : (mpType.CompetitorCoach), 0, 1, isHome ? 6 : 14)">
-                    <mat-icon>add</mat-icon>
-                </span>
-                <div class="full-width" *ngFor="let person of data.persons[mpType.Coach]; trackBy: trackByFn">
-                    <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="false" [matchId]="matchId"
-                        (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
-                </div>
-            </i>
-            <i class="full-width top10">
-                <b>Состав:</b>
-                <span *ngIf="data.isInformer && data.persons[mpType.Team]?.length < 11" role="button"
-                    (click)="addMatchPerson(isHome ? (mpType.Team) : (mpType.Competitor), data.persons[mpType.Team]?.length, 11, isHome ? 1 : 4)">
-                    <mat-icon>add</mat-icon>
-                </span>
-            </i>
-            <div class="full-width" *ngFor="let person of data.persons[mpType.Team]; trackBy: trackByFn">
-                <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
-                    (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
-            </div>
-            <i class="full-width top10">
-                <b>Запасные:</b>
-                <span *ngIf="data.isInformer && data.persons[mpType.TeamBench]?.length < 7" role="button"
-                    (click)="addMatchPerson(isHome ? (mpType.TeamBench) : (mpType.CompetitorBench), data.persons[mpType.TeamBench].length, 7, isHome ? 1 : 4)">
-                    <mat-icon>add</mat-icon>
-                </span>
-            </i>
-            <div class="full-width" *ngFor="let person of data.persons[mpType.TeamBench]; trackBy: trackByFn">
-                <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
-                    (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
-            </div>
-            <div class="full-width top10" *ngIf="data.persons[mpType.Ban]?.length > 0 || data.isInformer">
-                <i class="full-width"><b>Дисквалифицированы:</b>
-                    <span *ngIf="data.isInformer" role="button"
-                        (click)="addMatchPerson(isHome ? (mpType.Ban) : (mpType.BanCompetitor), 0, 0, isHome ? 1 : 4)">
+        <ng-container  *ngIf="data.isInformer">
+            <button mat-raised-button color="warn" class="full-width" *ngIf="hideTeams;else hideBtn" (click)="toggleHideTeams()">Показать составы</button>   
+            <ng-template #hideBtn> 
+                <button mat-raised-button color="primary" class="full-width" (click)="toggleHideTeams()">Скрыть составы</button>    
+            </ng-template>
+        </ng-container>
+        <ng-container *ngIf="data.isInformer || !hideTeams; else emptyTeams">
+            <div class="width50p">
+                <i class="full-width top10">
+                    <b>Главный тренер:</b>
+                    <span *ngIf="data.isInformer && data.persons[mpType.Coach]?.length == 0" role="button"
+                        (click)="addMatchPerson(isHome ? (mpType.Coach) : (mpType.CompetitorCoach), 0, 1, isHome ? 6 : 14)">
+                        <mat-icon>add</mat-icon>
+                    </span>
+                    <div class="full-width" *ngFor="let person of data.persons[mpType.Coach]; trackBy: trackByFn">
+                        <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="false" [matchId]="matchId"
+                            (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
+                    </div>
+                </i>
+                <i class="full-width top10">
+                    <b>Состав:</b>
+                    <span *ngIf="data.isInformer && data.persons[mpType.Team]?.length < 11" role="button"
+                        (click)="addMatchPerson(isHome ? (mpType.Team) : (mpType.Competitor), data.persons[mpType.Team]?.length, 11, isHome ? 1 : 4)">
                         <mat-icon>add</mat-icon>
                     </span>
                 </i>
-                <div class="full-width" *ngFor="let person of data.persons[mpType.Ban]; trackBy: trackByFn">
+                <div class="full-width" *ngFor="let person of data.persons[mpType.Team]; trackBy: trackByFn">
                     <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
                         (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
                 </div>
+                <i class="full-width top10">
+                    <b>Запасные:</b>
+                    <span *ngIf="data.isInformer && data.persons[mpType.TeamBench]?.length < 7" role="button"
+                        (click)="addMatchPerson(isHome ? (mpType.TeamBench) : (mpType.CompetitorBench), data.persons[mpType.TeamBench].length, 7, isHome ? 1 : 4)">
+                        <mat-icon>add</mat-icon>
+                    </span>
+                </i>
+                <div class="full-width" *ngFor="let person of data.persons[mpType.TeamBench]; trackBy: trackByFn">
+                    <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
+                        (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
+                </div>
+                <div class="full-width top10" *ngIf="data.persons[mpType.Ban]?.length > 0 || data.isInformer">
+                    <i class="full-width"><b>Дисквалифицированы:</b>
+                        <span *ngIf="data.isInformer" role="button"
+                            (click)="addMatchPerson(isHome ? (mpType.Ban) : (mpType.BanCompetitor), 0, 0, isHome ? 1 : 4)">
+                            <mat-icon>add</mat-icon>
+                        </span>
+                    </i>
+                    <div class="full-width" *ngFor="let person of data.persons[mpType.Ban]; trackBy: trackByFn">
+                        <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
+                            (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
+                    </div>
+                </div>
+                <div class="full-width top10" *ngIf="data.persons[mpType.Injury]?.length > 0 || data.isInformer">
+                    <i class="full-width">
+                        <b>Травмированы:</b>
+                        <span *ngIf="data.isInformer" role="button"
+                            (click)="addMatchPerson(isHome ? (mpType.Injury) : (mpType.InjuryCompetitor), 0, 0, isHome ? 1 : 4)">
+                            <mat-icon>add</mat-icon>
+                        </span>
+                    </i>
+                    <div class="full-width" *ngFor="let person of data.persons[mpType.Injury]; trackBy: trackByFn">
+                        <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
+                            (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
+                    </div>
+                </div>
             </div>
-            <div class="full-width top10" *ngIf="data.persons[mpType.Injury]?.length > 0 || data.isInformer">
-                <i class="full-width">
+            <div class="width50p text-right">
+                <i class="full-width top10">
+                    <b>Главный тренер:</b>
+                    <span *ngIf="data.isInformer && data.persons[mpType.CompetitorCoach]?.length == 0" role="button"
+                        (click)="addMatchPerson(isHome ? (mpType.CompetitorCoach) : (mpType.Coach), 0, 1, isHome ? 14 : 6)">
+                        <mat-icon>add</mat-icon>
+                    </span>
+                    <div class="full-width" *ngFor="let person of data.persons[mpType.CompetitorCoach]; trackBy: trackByFn">
+                        <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="false" [matchId]="matchId"
+                            (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
+                    </div>
+                </i>
+                <i class="full-width top10">
+                    <b>Состав:</b>
+                    <span *ngIf="data.isInformer && data.persons[mpType.Competitor]?.length < 11" role="button"
+                        (click)="addMatchPerson(isHome ? (mpType.Competitor) : (mpType.Team), data.persons[mpType.Competitor].length, 11, isHome ? 4 : 1)">
+                        <mat-icon>add</mat-icon>
+                    </span>
+                </i>
+                <div class="full-width" *ngFor="let person of data.persons[mpType.Competitor]; trackBy: trackByFn">
+                    <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
+                        (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
+                </div>
+                <i class="full-width top10">
+                    <b>Запасные:</b>
+                    <span *ngIf="data.isInformer && data.persons[mpType.CompetitorBench]?.length < 7" role="button"
+                        (click)="addMatchPerson(isHome ? (mpType.CompetitorBench) : (mpType.TeamBench), data.persons[mpType.CompetitorBench]?.length, 7, isHome ? 4 : 1)">
+                        <mat-icon>add</mat-icon>
+                    </span>
+                </i>
+                <div class="full-width" *ngFor="let person of data.persons[mpType.CompetitorBench]; trackBy: trackByFn">
+                    <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
+                        (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
+                </div>
+                <div class="full-width top10" *ngIf="data.persons[mpType.BanCompetitor]?.length > 0 || data.isInformer">
+                    <i class="full-width">
+                        <b>Дисквалифицированы:</b>
+                        <span *ngIf="data.isInformer" role="button"
+                            (click)="addMatchPerson(isHome ? (mpType.BanCompetitor) : (mpType.Ban), 0, 0, isHome ? 4 : 1)">
+                            <mat-icon>add</mat-icon>
+                        </span>
+                    </i>
+                    <div class="full-width" *ngFor="let person of data.persons[mpType.BanCompetitor]; trackBy: trackByFn">
+                        <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
+                            (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
+                    </div>
+                </div>
+                <div class="full-width top10" *ngIf="data.persons[mpType.InjuryCompetitor]?.length > 0 || data.isInformer">
+                    <i class="full-width">
                     <b>Травмированы:</b>
-                    <span *ngIf="data.isInformer" role="button"
-                        (click)="addMatchPerson(isHome ? (mpType.Injury) : (mpType.InjuryCompetitor), 0, 0, isHome ? 1 : 4)">
-                        <mat-icon>add</mat-icon>
-                    </span>
-                </i>
-                <div class="full-width" *ngFor="let person of data.persons[mpType.Injury]; trackBy: trackByFn">
-                    <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
-                        (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
+                        <span *ngIf="data.isInformer" role="button"
+                            (click)="addMatchPerson(isHome ? (mpType.InjuryCompetitor) : (mpType.Injury), 0, 0, isHome ? 4 : 1)">
+                            <mat-icon>add</mat-icon>
+                        </span>
+                    </i>
+                    <div class="full-width" *ngFor="let person of data.persons[mpType.InjuryCompetitor]; trackBy: trackByFn">
+                        <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
+                            (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="width50p text-right">
-            <i class="full-width top10">
-                <b>Главный тренер:</b>
-                <span *ngIf="data.isInformer && data.persons[mpType.CompetitorCoach]?.length == 0" role="button"
-                    (click)="addMatchPerson(isHome ? (mpType.CompetitorCoach) : (mpType.Coach), 0, 1, isHome ? 14 : 6)">
-                    <mat-icon>add</mat-icon>
-                </span>
-                <div class="full-width" *ngFor="let person of data.persons[mpType.CompetitorCoach]; trackBy: trackByFn">
-                    <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="false" [matchId]="matchId"
-                        (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
-                </div>
-            </i>
-            <i class="full-width top10">
-                <b>Состав:</b>
-                <span *ngIf="data.isInformer && data.persons[mpType.Competitor]?.length < 11" role="button"
-                    (click)="addMatchPerson(isHome ? (mpType.Competitor) : (mpType.Team), data.persons[mpType.Competitor].length, 11, isHome ? 4 : 1)">
-                    <mat-icon>add</mat-icon>
-                </span>
-            </i>
-            <div class="full-width" *ngFor="let person of data.persons[mpType.Competitor]; trackBy: trackByFn">
-                <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
-                    (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
-            </div>
-            <i class="full-width top10">
-                <b>Запасные:</b>
-                <span *ngIf="data.isInformer && data.persons[mpType.CompetitorBench]?.length < 7" role="button"
-                    (click)="addMatchPerson(isHome ? (mpType.CompetitorBench) : (mpType.TeamBench), data.persons[mpType.CompetitorBench]?.length, 7, isHome ? 4 : 1)">
-                    <mat-icon>add</mat-icon>
-                </span>
-            </i>
-            <div class="full-width" *ngFor="let person of data.persons[mpType.CompetitorBench]; trackBy: trackByFn">
-                <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
-                    (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
-            </div>
-            <div class="full-width top10" *ngIf="data.persons[mpType.BanCompetitor]?.length > 0 || data.isInformer">
-                <i class="full-width">
-                    <b>Дисквалифицированы:</b>
-                    <span *ngIf="data.isInformer" role="button"
-                        (click)="addMatchPerson(isHome ? (mpType.BanCompetitor) : (mpType.Ban), 0, 0, isHome ? 4 : 1)">
-                        <mat-icon>add</mat-icon>
-                    </span>
-                </i>
-                <div class="full-width" *ngFor="let person of data.persons[mpType.BanCompetitor]; trackBy: trackByFn">
-                    <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
-                        (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
-                </div>
-            </div>
-            <div class="full-width top10" *ngIf="data.persons[mpType.InjuryCompetitor]?.length > 0 || data.isInformer">
-                <i class="full-width">
-                <b>Травмированы:</b>
-                    <span *ngIf="data.isInformer" role="button"
-                        (click)="addMatchPerson(isHome ? (mpType.InjuryCompetitor) : (mpType.Injury), 0, 0, isHome ? 4 : 1)">
-                        <mat-icon>add</mat-icon>
-                    </span>
-                </i>
-                <div class="full-width" *ngFor="let person of data.persons[mpType.InjuryCompetitor]; trackBy: trackByFn">
-                    <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
-                        (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
-                </div>
-            </div>
-        </div>
+        </ng-container>
+        <ng-template #emptyTeams>
+            <i class="top10">Составы команд публикуются не раньше 60 минут до начала игры.</i>
+        </ng-template>
     </div>
     <div *ngIf="data.isInformer" class="full-width">
         <button mat-raised-button color="warn" (click)="addMatchPerson()" class="full-width"

@@ -63,6 +63,9 @@ export class SignalRService {
         this.hubConnection.on('updateMatch', (data: SignalrEntity<GetMatchDetailQuery.Response>) => {
             this.store.dispatch(new SignalRActions.UpdateMatch(data));
         });
+        this.hubConnection.on('toggleHideTeams', (data: {matchId: number, result: boolean}) => {
+            this.store.dispatch(new SignalRActions.ToggleHideTeams(data));
+        });
         this.hubConnection.on('comment', (data: SignalrEntity<GetCommentListByEntityIdQuery.CommentListDto>) => {
             data.entity.children = data.entity.children || [];
             this.commentUpdate.next(data);

@@ -39,5 +39,6 @@ export namespace GetMatchDetailQuery {
         public videoUrl: string;
         public previewId: string;
         public reportId: string;
+        public hideTeams: boolean;
     }
 }

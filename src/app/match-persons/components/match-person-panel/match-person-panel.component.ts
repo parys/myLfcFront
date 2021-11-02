@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { MatchPersonsState, MatchPersonActions } from '@match-persons/store';
 import { GetMatchPersonsListQuery, UpdateMatchPersonCommand } from '@network/shared/match-persons';
 import { MatchPerson } from '@match-persons/models/match-person.model';
+import { MatchActions } from '@matches/store';
 
 @Component({
     selector: 'match-person-panel',
@@ -19,6 +20,7 @@ export class MatchPersonPanelComponent extends ObserverComponent implements OnIn
     mpType = MatchPersonTypeEnum;
     @Input() public matchId: number;
     @Input() public isHome: boolean;
+    @Input() public hideTeams: boolean;
 
     @Select(AuthState.isInformer) isInformer$: Observable<boolean>;
 
@@ -52,6 +54,10 @@ export class MatchPersonPanelComponent extends ObserverComponent implements OnIn
 
     public cancelMatchPersonEdit(): void {
         this.store.dispatch(new MatchPersonActions.CancelEdit());
+    }
+
+    public toggleHideTeams(): void {
+        this.store.dispatch(new MatchActions.ToggleHideTeams(this.matchId));
     }
 
     public onSelectPerson(person: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto): void {

@@ -30,6 +30,11 @@ export namespace MatchActions {
         constructor(public readonly payload: GetMatchDetailQuery.Request) { }
     }
 
+    export class ToggleHideTeams {
+        static readonly type = '[Matches] Toggle hide teams';
+        constructor(public readonly payload: number) { }
+    }
+
     export class UpdateTimeRemaining {
         static readonly type = '[Matches] Update time remaining';
         constructor(public readonly payload: boolean) { }

@@ -36,7 +36,7 @@ export class MatchEventPanelComponent extends ObserverComponent {
         this.store.dispatch(new MatchEventActions.StartEdit(editable));
     }
 
-    public updateEvent(event: MatchEvent) {
+    public updateEvent(event: MatchEvent): void {
         if (event.id) {
             this.store.dispatch(new MatchEventActions.Edit(event));
         } else {

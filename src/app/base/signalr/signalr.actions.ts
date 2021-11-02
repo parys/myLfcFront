@@ -37,4 +37,9 @@ export namespace SignalRActions {
         static readonly type = '[Signal R] Set online users list';
         constructor(public readonly payload: UsersOnline) { }
     }
+
+    export class ToggleHideTeams {
+        static readonly type = '[Signal R] Toggle users list';
+        constructor(public readonly payload: {matchId: number, result: boolean}) { }
+    }
 }
