@@ -10,6 +10,8 @@ export namespace UpdateMatchPersonCommand {
         public personType: number;
 
         public isHome: boolean;
+
+        public order: number;
     }
 
     export class Response extends BaseEntity<Response> {

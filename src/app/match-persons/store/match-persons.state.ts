@@ -78,18 +78,26 @@ export class MatchPersonsState {
     @Action(MatchPersonActions.AddEdit)
     onAddEdit({ patchState, getState }: StateContext<MatchPersonsStateModel>, { payload }: MatchPersonActions.AddEdit) {
 
+        const { editOptions, selected } = getState();
+
+        if (editOptions) {
+            editOptions.currentCount++;
+        }
+        if (!payload.order) {
+            payload.order = editOptions?.currentCount;
+        }
         return this.matchPersonNetwork.createOrUpdate(payload)
         .pipe(
             tap(response => {
-                const { editOptions, selected } = getState();
-                editOptions.currentCount++;
 
-                if (this.checkExit(editOptions.neededCount, editOptions.currentCount)) {
-                    patchState({ editOptions: null});
-                } else {
-                    patchState({ editOptions: {...editOptions }});
+                if (editOptions) {
+                    if (this.checkExit(editOptions.neededCount, editOptions.currentCount)) {
+                        patchState({ editOptions: null});
+                    } else {
+                        patchState({ editOptions: {...editOptions }});
+                    }
+                    patchState({ selected: { ...selected, id: null, personId: null, personName: null } });
                 }
-                patchState({ selected: { ...selected, id: null, personId: null, personName: null } });
         }));
     }
 
@@ -113,6 +121,7 @@ export class MatchPersonsState {
         switch (payload.type) {
             case SignalREntityEnum.Add: {
                 matchPersons[payload.entity.placeType].push(payload.entity);
+                matchPersons[payload.entity.placeType] = matchPersons[payload.entity.placeType].sort(x => x.order);
                 patchState({ matchPersons: cloneDeep(matchPersons) });
                 break;
             }
@@ -120,6 +129,7 @@ export class MatchPersonsState {
                 const index = matchPersons[payload.entity.placeType].findIndex(x => x.personId === payload.entity.personId);
                 if (index > -1) {
                     matchPersons[payload.entity.placeType][index] = payload.entity;
+                    matchPersons[payload.entity.placeType] = matchPersons[payload.entity.placeType].sort(x => x.order);
                     patchState({ matchPersons: cloneDeep(matchPersons) });
                 }
                 break;

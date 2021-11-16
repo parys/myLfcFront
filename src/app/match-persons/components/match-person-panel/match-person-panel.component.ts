@@ -64,11 +64,11 @@ export class MatchPersonPanelComponent extends ObserverComponent implements OnIn
         this.store.dispatch(new MatchPersonActions.SetSelectedPerson(person));
     }
 
-    public onCreate(person: UpdateMatchPersonCommand.Request) {
+    public onCreateUpdate(person: UpdateMatchPersonCommand.Request): void {
         this.store.dispatch(new MatchPersonActions.AddEdit(person));
     }
 
-    public onDelete(person: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto) {
+    public onDelete(person: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto): void {
         this.store.dispatch(new MatchPersonActions.Delete(person));
     }
 
