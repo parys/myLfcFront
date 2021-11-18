@@ -1,10 +1,32 @@
 ﻿:host {
-    .club-logo {
-        max-width: 45px;
+    .club {
+        width: 120px;
     }
-    @media screen and (max-width: 767px) {
+
+    .club-logo {
+        max-width: 35px;
+    }
+    
+    .club-name {
+        display: flex;
+        justify-content: center;
+    }
+
+    @media screen and (max-width: 1260px) {
+        .club {
+            width: 90px;
+        }
         .stadium, .match-type {
             display: none;
         }
+    }
+
+    .links-column {
+        height: 100%;
+        width: 82px;
+    }
+
+    .score {
+        font-size: 30px;
     }
 }
