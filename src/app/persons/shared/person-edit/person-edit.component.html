@@ -33,8 +33,11 @@
                 <input matInput placeholder="Страна рождения" formControlName="country">
             </mat-form-field>
             <div class="full-width top20 flex-v-c flex-space-around flex"
-                *ngIf="editPersonForm.get('firstName').value && editPersonForm.get('lastName').value">
-                <img class="avatar" *ngIf="photo" [src]="photo" alt="" />
+                *ngIf="editPersonForm.get('firstName').value && editPersonForm.get('lastName').value">   
+                <div *ngIf="photo">             
+                    <img class="avatar" [src]="photo" alt="" />
+                    <button mat-raised-button (click)="clearImg()" type="button">Удалить</button>
+                 </div>
                 <crop-image-field (cropped)="croppedImage($event)"></crop-image-field>
             </div>
             <mat-form-field class="full-width">
