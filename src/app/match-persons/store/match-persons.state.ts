@@ -11,6 +11,7 @@ import { MatchPersonService } from '@match-persons/match-person.service';
 import { SignalRActions } from '@base/signalr/signalr.actions';
 import { MatchesState } from '@matches/store';
 import { SignalREntityEnum } from '@base/signalr/models';
+import { GetMatchPersonsListQuery } from '@network/shared/match-persons/get-match-persons-list.query';
 
 
 @State<MatchPersonsStateModel>({
@@ -121,7 +122,7 @@ export class MatchPersonsState {
         switch (payload.type) {
             case SignalREntityEnum.Add: {
                 matchPersons[payload.entity.placeType].push(payload.entity);
-                matchPersons[payload.entity.placeType] = matchPersons[payload.entity.placeType].sort(x => x.order);
+                matchPersons[payload.entity.placeType] = matchPersons[payload.entity.placeType].sort(compare);
                 patchState({ matchPersons: cloneDeep(matchPersons) });
                 break;
             }
@@ -129,7 +130,7 @@ export class MatchPersonsState {
                 const index = matchPersons[payload.entity.placeType].findIndex(x => x.personId === payload.entity.personId);
                 if (index > -1) {
                     matchPersons[payload.entity.placeType][index] = payload.entity;
-                    matchPersons[payload.entity.placeType] = matchPersons[payload.entity.placeType].sort(x => x.order);
+                    matchPersons[payload.entity.placeType] = matchPersons[payload.entity.placeType].sort(compare);
                     patchState({ matchPersons: cloneDeep(matchPersons) });
                 }
                 break;
@@ -165,4 +166,11 @@ export class MatchPersonsState {
     private checkExit(neededCount: number, currentCount: number): boolean {
         return currentCount === neededCount && neededCount !== 0;
     }
+}
+
+function compare(a: GetMatchPersonsListQuery.MatchPersonListDto, b: GetMatchPersonsListQuery.MatchPersonListDto) {
+    return a.order - b.order;
+    // var x = a.order;
+    // var y = b.order;
+    // return x < y ? -1 : x > y ? 1 : 0;
 }

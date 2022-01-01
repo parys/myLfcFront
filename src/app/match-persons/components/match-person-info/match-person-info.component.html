@@ -12,5 +12,6 @@
         <span role="button" (click)="showDeleteModal(person)" class="material-icons">clear</span>
         <span role="button" (click)="onUp(person)" class="material-icons" *ngIf="isPlayer">arrow_upward</span>
         <span role="button" (click)="onDown(person)" class="material-icons" *ngIf="isPlayer">arrow_downward</span>
+        <span *ngIf="person.order">({{person.order}})</span>
     </span>
 </ng-container>
