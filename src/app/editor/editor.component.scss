@@ -1,3 +1,9 @@
 ﻿textarea {
     display: none;
 }
+
+::ng-deep { 
+    .mce-panel {
+        width: inherit !important;
+    }
+}

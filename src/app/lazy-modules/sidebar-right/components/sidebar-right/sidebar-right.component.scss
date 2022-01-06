@@ -1,4 +1,6 @@
-﻿@media (max-width: 767px) {
+﻿@import 'src/assets/styles/abstracts/module';
+
+@media (max-width: 767px) {
     .split-button {
         width: 50%;
     }
@@ -26,6 +28,6 @@
 }
 
 .online {
-    background-color: maroon;
+    background-color: $lfc-red-6;
     padding: 5px;
 }

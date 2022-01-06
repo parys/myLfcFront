@@ -1,0 +1,25 @@
+.form-actions button {
+    min-width: 110px;
+
+    .mat-progress-spinner circle,
+    .mat-spinner circle {
+        stroke: white;
+    }
+}
+
+.form-row {
+    display: flex;
+
+    .mat-form-field {
+        flex: 1;
+    }
+
+    > * + * {
+        margin-left: 12px;
+        flex: 1;
+    }
+
+    > * {
+        width: calc(50% - 8px);
+    }
+}

@@ -1,0 +1,23 @@
+@import 'src/assets/styles/abstracts/module';
+
+.spacer {
+    flex: 1;
+}
+
+.page-title {
+    font-weight: $bold-font-weight;
+    margin: 0;
+    line-height: 48px;
+    font-size: $lg-font-size;
+}
+
+.page-subtitle {
+    margin: 0;
+    line-height: 48px;
+    font-weight: $bold-font-weight;
+    font-size: $md-font-size;
+}
+
+.justify-text {
+    text-align: justify;
+}

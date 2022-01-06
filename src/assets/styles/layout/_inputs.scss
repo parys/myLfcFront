@@ -1,0 +1,68 @@
+@import 'src/assets/styles/abstracts/module';
+
+.mat-form-field-appearance-fill, .mat-form-field-appearance-outline {
+    
+    .mat-form-field-flex {
+        align-items: flex-start;
+    }
+
+    .mat-form-field-underline { 
+        position: static;
+
+        &::before {
+          //  background-color: $-blue-1;
+        }
+    }
+
+    &.mat-form-field-invalid.mat-form-field-invalid {
+
+        .mat-form-field-label,
+        .mat-select-arrow,
+        .mat-form-field-required-marker,
+        .mat-form-field-outline-thick,
+        .mat-form-field-fill-thick,
+        .mat-form-field-flex {
+           // color: $-yellow-4;
+        }
+    }
+
+    &.mat-form-field-disabled .mat-form-field-flex {
+        background-color: #EAF0F3;
+    }
+
+    .mat-form-field-subscript-wrapper {
+        margin-top: 0.2em;
+    }
+
+    .mat-error {
+        font-size: $sm-font-size;
+        color: black;
+    }
+
+    .mat-form-field-label {
+        transform: scale(0.875);
+
+        mat-label {
+            font-size: 16px;
+            line-height: 14px;
+        }
+    }
+}
+
+.mat-form-field-appearance-fill {
+    .mat-form-field-flex {
+        background-color: white;
+    }
+}
+
+.mat-select-disabled .mat-select-value, .mat-input-element:disabled {
+    color: $gray-dark;
+}
+
+.mat-form-field-ripple {
+  //  background-color: $blue-1;
+}
+
+.mat-form-field-required-marker {
+  //  color: $-yellow-4;
+}
