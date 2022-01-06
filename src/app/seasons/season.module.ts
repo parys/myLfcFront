@@ -12,7 +12,6 @@ import { SeasonCalendarComponent } from '@seasons/pages/season-calendar';
 import { SeasonEditComponent } from '@seasons/pages/season-edit';
 import { SeasonListComponent } from '@seasons/pages/season-list';
 import { SeasonStatisticsComponent } from '@seasons/pages/season-statistics';
-import { SeasonStatisticsItemComponent } from '@seasons/components/season-statistics-item';
 import { SeasonMaterialModule } from './season-material.module';
 import { SeasonService } from '@seasons/season.service';
 
@@ -29,8 +28,7 @@ import { SeasonService } from '@seasons/season.service';
         SeasonCalendarComponent,
         SeasonEditComponent,
         SeasonListComponent,
-        SeasonStatisticsComponent,
-        SeasonStatisticsItemComponent
+        SeasonStatisticsComponent
     ],
     providers: [
         SeasonService

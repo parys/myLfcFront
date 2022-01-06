@@ -2,7 +2,7 @@
 <h6 class="text-center">Добавление события матча</h6>
 <form class="full-width" role="form" [formGroup]="editMatchEventForm" (ngSubmit)="onSubmit()">
     <mat-slide-toggle formControlName="isOur" color="warn">Наше событие</mat-slide-toggle>
-    <select-person-form-field formControlName="personId"
+    <select-person-form-field formControlName="personId" [src]="flatMatchPersons$"
         [personName]="editMatchEventForm.controls['personName'].value" [matchId]="matchId" [focus]="true">
     </select-person-form-field>
     <mat-form-field class="full-width">
@@ -12,6 +12,9 @@
     </mat-form-field>
     <mat-form-field class="full-width">
         <input matInput placeholder="Минута" formControlName="minute">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <input matInput placeholder="Добавленное время (минута)" formControlName="addMinutes">
     </mat-form-field>
     <div class="full-width text-center">
         <button mat-raised-button color="warn" class="full-width" type="submit"

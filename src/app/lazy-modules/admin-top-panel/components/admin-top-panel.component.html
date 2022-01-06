@@ -1,9 +1,18 @@
 ﻿<ng-container *ngIf="{ isNewsmaker: isNewsmaker$ | async,
-    isInformer: isInformer$ | async
+    isInformer: isInformer$ | async,
+    signalr: signalr$ | async
  } as data">
     <div class="panel">
-        <a *ngIf="data.isNewsmaker" [routerLink]="['/news', 0, 'edit']">+ новость</a>
-        <a [routerLink]="['/blogs', 0, 'edit']">+ блог</a>
+        <a *ngIf="data.isNewsmaker" [routerLink]="['/news', 0, 'edit']">+Новость</a>
+        <a [routerLink]="['/blogs', 0, 'edit']">+Блог</a>
         <a [routerLink]="['/admin']">Админка</a>
+        <a [routerLink]="['/persons']">Люди</a>
+        <a [routerLink]="['/persons/0/edit']">Л+</a>
+        <a [routerLink]="['/stadiums']">Стадионы</a>
+        <a [routerLink]="['/stadiums/0/edit']">С+</a>
+        <a [routerLink]="['/matches']">Матчи</a>
+        <a [routerLink]="['/matches/0/edit']">М+</a>
+        <a [routerLink]="['/injuries/0/edit']">Т+</a>
+        <b [ngClass]="data.signalr ? 'green': 'red'">{{data.signalr ? 'подключено' : 'отключено'}}</b>
     </div>
 </ng-container>

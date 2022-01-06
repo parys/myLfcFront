@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 const materialModules = [
     MatIconModule,
@@ -13,7 +14,8 @@ const materialModules = [
     MatSelectModule,
     MatCheckboxModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ClipboardModule
 ];
 
 @NgModule({

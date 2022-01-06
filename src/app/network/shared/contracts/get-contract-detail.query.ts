@@ -17,6 +17,8 @@ export namespace GetContractDetailQuery {
 
         public personId: number;
 
+        public personName: string;
+
         public startDate: Date;
 
         public endDate: Date;

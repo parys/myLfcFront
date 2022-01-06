@@ -33,8 +33,8 @@ export class UserService {
         return this.http.put<boolean>(`${this.actionUrl}${id}/unban`, '');
     }
 
-    public resetAvatar(id: number): Observable<object> {
-        return this.http.put<object>(`${this.actionUrl}${id}/resetAvatar`, '');
+    public resetAvatar(id: number): Observable<string> {
+        return this.http.put<string>(`${this.actionUrl}${id}/resetAvatar`, '');
     }
 
     public updateAvatar(file: File): Observable<object> {

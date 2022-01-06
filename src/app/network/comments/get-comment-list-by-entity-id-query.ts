@@ -47,11 +47,11 @@ export namespace GetCommentListByEntityIdQuery {
 
         public answer: string;
 
-        public materialId?: number;
+        public materialId: number;
 
-        public matchId?: number;
+        public matchId: number;
 
-        public parentId?: number;
+        public parentId: number;
 
         public children: CommentListDto[] = [];
 

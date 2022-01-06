@@ -25,7 +25,9 @@ import { SeasonFilters } from '@seasons/models/season-filters.model';
 export class SelectSeasonFormFieldComponent extends AbstractControlComponent<number>
     implements OnInit, ControlValueAccessor {
 
-    @Input() seasonName: string;
+    @Input() set seasonName(value: string) {
+        this.seasonCtrl.setValue(value);
+    }
     @ViewChild('selectSeason', { static: true }) selectSeason: ElementRef;
 
     public seasons$: Observable<Season[]>;

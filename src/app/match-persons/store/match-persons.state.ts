@@ -11,12 +11,14 @@ import { MatchPersonService } from '@match-persons/match-person.service';
 import { SignalRActions } from '@base/signalr/signalr.actions';
 import { MatchesState } from '@matches/store';
 import { SignalREntityEnum } from '@base/signalr/models';
+import { GetMatchPersonsListQuery } from '@network/shared/match-persons/get-match-persons-list.query';
 
 
 @State<MatchPersonsStateModel>({
     name: 'matchPersons',
     defaults: {
         matchPersonTypes: [],
+        flatMatchPersons: null,
         matchPersons: null,
         editOptions: null,
         selected: null,
@@ -33,6 +35,11 @@ export class MatchPersonsState {
     @Selector()
     static matchPersons(state: MatchPersonsStateModel) {
         return state.matchPersons;
+    }
+
+    @Selector()
+    static flatMatchPersons(state: MatchPersonsStateModel) {
+        return state.flatMatchPersons;
     }
 
     @Selector()
@@ -53,7 +60,7 @@ export class MatchPersonsState {
         return this.matchPersonNetwork.getMatchPersons(payload)
             .pipe(
                 tap(response => {
-                    patchState({ matchPersons: response.results || [] });
+                    patchState({ matchPersons: response.results || [], flatMatchPersons: response.flatListResults });
                 }));
     }
 
@@ -71,22 +78,33 @@ export class MatchPersonsState {
 
     @Action(MatchPersonActions.AddEdit)
     onAddEdit({ patchState, getState }: StateContext<MatchPersonsStateModel>, { payload }: MatchPersonActions.AddEdit) {
-        const { editOptions } = getState();
+
+        const { editOptions, selected } = getState();
+
+        if (editOptions) {
+            editOptions.currentCount++;
+        }
+        if (!payload.order) {
+            payload.order = editOptions?.currentCount;
+        }
         return this.matchPersonNetwork.createOrUpdate(payload)
         .pipe(
             tap(response => {
-                editOptions.currentCount++;
-                if (this.checkExit(editOptions.neededCount, editOptions.currentCount)) {
-                    patchState({ editOptions: null});
-                } else {
-                    patchState({ editOptions: {...editOptions }, selected: null});
+
+                if (editOptions) {
+                    if (this.checkExit(editOptions.neededCount, editOptions.currentCount)) {
+                        patchState({ editOptions: null});
+                    } else {
+                        patchState({ editOptions: {...editOptions }});
+                    }
+                    patchState({ selected: { ...selected, id: null, personId: null, personName: null } });
                 }
         }));
     }
 
     @Action(MatchPersonActions.Delete)
     onDelete({patchState, getState }: StateContext<MatchPersonsStateModel>, { payload }: MatchPersonActions.Delete) {
-        
+
         return this.matchPersonNetwork.delete(payload.matchId, payload.personId)
         .pipe(tap(response => {
             // notify about delete
@@ -94,23 +112,25 @@ export class MatchPersonsState {
     }
 
     @Action(SignalRActions.UpdateMP)
-    onUpdateMP({ setState, getState, patchState }: StateContext<MatchPersonsStateModel>, { payload }: SignalRActions.UpdateMP) {
-        
+    onUpdateMP({ getState, patchState }: StateContext<MatchPersonsStateModel>, { payload }: SignalRActions.UpdateMP) {
+
         const match = this.store.selectSnapshot(MatchesState.match);
         if (match.id !== payload.entity.matchId) {
             return;
         }
-        let { matchPersons } = getState();
+        const { matchPersons } = getState();
         switch (payload.type) {
             case SignalREntityEnum.Add: {
-                matchPersons[payload.entity.placeType].push(payload.entity);      
+                matchPersons[payload.entity.placeType].push(payload.entity);
+                matchPersons[payload.entity.placeType] = matchPersons[payload.entity.placeType].sort(compare);
                 patchState({ matchPersons: cloneDeep(matchPersons) });
                 break;
             }
-            case SignalREntityEnum.Update: {  
+            case SignalREntityEnum.Update: {
                 const index = matchPersons[payload.entity.placeType].findIndex(x => x.personId === payload.entity.personId);
                 if (index > -1) {
-                    matchPersons[payload.entity.placeType][index] = payload.entity;            
+                    matchPersons[payload.entity.placeType][index] = payload.entity;
+                    matchPersons[payload.entity.placeType] = matchPersons[payload.entity.placeType].sort(compare);
                     patchState({ matchPersons: cloneDeep(matchPersons) });
                 }
                 break;
@@ -118,7 +138,7 @@ export class MatchPersonsState {
             case SignalREntityEnum.Delete: {
                 const index = matchPersons[payload.entity.placeType].findIndex(x => x.personId === payload.entity.personId);
                 if (index > -1) {
-                    matchPersons[payload.entity.placeType].splice(index, 1);            
+                    matchPersons[payload.entity.placeType].splice(index, 1);
                     patchState({ matchPersons: cloneDeep(matchPersons) });
                 }
                 break;
@@ -146,4 +166,11 @@ export class MatchPersonsState {
     private checkExit(neededCount: number, currentCount: number): boolean {
         return currentCount === neededCount && neededCount !== 0;
     }
+}
+
+function compare(a: GetMatchPersonsListQuery.MatchPersonListDto, b: GetMatchPersonsListQuery.MatchPersonListDto) {
+    return a.order - b.order;
+    // var x = a.order;
+    // var y = b.order;
+    // return x < y ? -1 : x > y ? 1 : 0;
 }

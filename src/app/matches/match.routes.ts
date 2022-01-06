@@ -6,7 +6,7 @@ import { EDITING_RU, MATCHES_RU, MATCH_RU, EDIT_ROUTE } from '@constants/index';
 import { MatchListComponent } from '@matches/pages/match-list';
 import { MatchDetailComponent } from '@matches/pages/match-detail';
 import { MatchEditComponent } from '@matches/pages/match-edit';
-import { MatchResolver } from './resolvers';
+import { MatchEditResolver, MatchResolver } from './resolvers';
 
 export const matchRoutes: Routes = [
     {
@@ -23,7 +23,7 @@ export const matchRoutes: Routes = [
         children: [
             {
                 path: '',
-                component: MatchDetailComponent,               
+                component: MatchDetailComponent,
                 resolve: [MatchResolver]
             },
             {
@@ -33,6 +33,7 @@ export const matchRoutes: Routes = [
                     title: EDITING_RU,
                     roles: [RolesEnum[RolesEnum.InfoStart]]
                 },
+                resolve: [MatchEditResolver],
                 canActivate: [RoleGuard]
             }
         ]

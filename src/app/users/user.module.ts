@@ -47,9 +47,6 @@ import { UserResolver } from './resolvers';
     providers: [
         UserService,
         UserResolver
-    ],
-    entryComponents: [
-        ChangeRoleGroupDialogComponent
     ]
 })
 export class UserModule {

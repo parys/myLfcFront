@@ -7,6 +7,8 @@ import { Store } from '@ngxs/store';
 import { GetMaterialDetailQuery } from '@network/shared/materials';
 
 import { GetMaterialById } from '@materials/lazy/store/materials.actions';
+import { CommentActions } from '@comments/shared/store';
+import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-list-by-entity-id-query';
 
 
 @Injectable()
@@ -18,7 +20,7 @@ export class MaterialResolver implements Resolve<any> {
         const payload = new GetMaterialDetailQuery.Request({ id: route.params.id });
         return this.store.dispatch([
             new GetMaterialById(payload),
-       //     new CommentActions.GetCommentsListByEntity(new GetCommentListByEntityIdQuery.Request({materialId: route.params.id}))
+            new CommentActions.GetCommentsListByEntity(new GetCommentListByEntityIdQuery.Request({materialId: route.params.id}))
         ]);
     }
 

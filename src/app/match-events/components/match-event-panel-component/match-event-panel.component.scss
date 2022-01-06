@@ -26,5 +26,11 @@
     flex-flow: row;
     flex-wrap: wrap;
     margin-top: 12px;
+}
+
+.buttons-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
     width: 100%;
 }

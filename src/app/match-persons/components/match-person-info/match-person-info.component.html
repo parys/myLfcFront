@@ -1,8 +1,17 @@
 ﻿<ng-container *ngIf="{ isInformer: isInformer$ | async } as data">
-    <span *ngIf="isPlayer">{{person.number}} - </span>{{person.personName}}
+    <ng-container *ngIf="!data.isInformer; else linkPerson">
+        <span *ngIf="isPlayer">{{person.number}} - </span>{{person.personName}}
+    </ng-container>
+    <ng-template #linkPerson>
+        <a [routerLink]="['/persons', person.personId, 'edit']">
+            <span *ngIf="isPlayer">{{person.number}} - </span>{{person.personName}}
+        </a>
+    </ng-template>
     <span *ngIf="data.isInformer">
-        <span role="button" (click)="onSelectPerson(person)" class="material-icons" style="font-size: 100%;">edit</span>
-        <span role="button" (click)="showDeleteModal(person)" class="material-icons"
-            style="font-size: 100%;">clear</span>
+        <span role="button" (click)="onSelectPerson(person)" class="material-icons">edit</span>
+        <span role="button" (click)="showDeleteModal(person)" class="material-icons">clear</span>
+        <span role="button" (click)="onUp(person)" class="material-icons" *ngIf="isPlayer">arrow_upward</span>
+        <span role="button" (click)="onDown(person)" class="material-icons" *ngIf="isPlayer">arrow_downward</span>
+        <span *ngIf="person.order">({{person.order}})</span>
     </span>
 </ng-container>

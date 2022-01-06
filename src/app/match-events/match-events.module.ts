@@ -10,6 +10,7 @@ import { MatchEventsMaterialModule } from '@match-events/match-events-material.m
 import { MatchEventService } from '@match-events/matchEvent.service';
 import { NgxsModule } from '@ngxs/store';
 import { MatchEventsState } from './store';
+import { MatchEventPipe } from './pipes';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { MatchEventsState } from './store';
     ],
     declarations: [
         MatchEventEditPanelComponent,
-        MatchEventPanelComponent
+        MatchEventPanelComponent,
+        MatchEventPipe
     ],
     exports: [
         MatchEventEditPanelComponent,

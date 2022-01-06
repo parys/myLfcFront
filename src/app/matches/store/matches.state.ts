@@ -57,9 +57,9 @@ export class MatchesState {
     }
 
     constructor(protected matchNetwork: MatchService,
-        private store: Store,
-        @Inject(PLATFORM_ID) private platformId: object,
-        protected titleService: CustomTitleMetaService) { }
+                private store: Store,
+                @Inject(PLATFORM_ID) private platformId: object,
+                protected titleService: CustomTitleMetaService) { }
 
     @Action(MatchActions.ChangeSort)
     @Action(MatchActions.ChangePage)
@@ -104,15 +104,29 @@ export class MatchesState {
             .pipe(
                 tap(match => {
                     patchState({ match });
-                    this.updateTitlesAndTags(match);
-                    dispatch(new MatchActions.UpdateTimeRemaining(true));
+                    if (match?.id) {
+                        this.updateTitlesAndTags(match);
+                        dispatch(new MatchActions.UpdateTimeRemaining(true));
+                    }
+                })
+            );
+    }
+
+    @Action(MatchActions.ToggleHideTeams)
+    onToggleHideTeams({ patchState, getState }: StateContext<MatchesStateModel>, { payload }: any) {
+        return this.matchNetwork.toggleHideTeams(payload)
+            .pipe(
+                tap(response => {
+                    const { match } = getState();
+                    match.hideTeams = response.result;
+                    patchState({ match });
                 })
             );
     }
 
     @Action(MatchActions.UpdateTimeRemaining)
     onUpdateTimeRemaining({patchState, getState}: StateContext<MatchesStateModel>, { payload }: MatchActions.UpdateTimeRemaining ) {
-        
+
         if (isPlatformBrowser(this.platformId)) {
             const { match } = getState();
 
@@ -136,6 +150,18 @@ export class MatchesState {
         patchState({ match: payload.entity});
         this.updateTitlesAndTags(payload.entity);
     }
+
+    @Action(SignalRActions.ToggleHideTeams)
+    onToggleHideTeamsSignalR({patchState, getState}: StateContext<MatchesStateModel>, { payload }: SignalRActions.ToggleHideTeams) {
+        const { match } = getState();
+
+        if (match.id !== payload.matchId) {
+            return;
+        }
+        match.hideTeams = payload.result;
+        patchState({ match: {...match} });
+    }
+
 
     private static COUNTDOWN$: Subscription;
 

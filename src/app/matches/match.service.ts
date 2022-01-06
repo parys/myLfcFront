@@ -7,6 +7,7 @@ import { MATCHES_ROUTE } from '@constants/routes.constants';
 import { BaseRestService } from '@base/infrastructure';
 import { MatchFilters, Match, MatchType } from '@domain/models';
 import { GetMatchesListQuery, GetMatchDetailQuery } from '@network/shared/matches';
+import { ToggleHideTeamsCommand } from '@network/shared/matches/toggle-hide-teams.command';
 
 @Injectable()
 export class MatchService extends BaseRestService<Match, MatchFilters> {
@@ -31,5 +32,9 @@ export class MatchService extends BaseRestService<Match, MatchFilters> {
 
     public getSingle2(id: number): Observable<GetMatchDetailQuery.Response> {
         return this.http.get<GetMatchDetailQuery.Response>(this.baseActionUrl + id);
+    }
+
+    public toggleHideTeams(id: number): Observable<ToggleHideTeamsCommand.Response> {
+        return this.http.put<ToggleHideTeamsCommand.Response>(`${this.baseActionUrl}${id}/hideTeams`, {});
     }
 }

@@ -1,4 +1,5 @@
 import { BaseEntity } from '@domain/models';
+import { BasePerson } from '@domain/models/base-person.model';
 
 
 export namespace GetMatchPersonsListQuery {
@@ -12,20 +13,19 @@ export namespace GetMatchPersonsListQuery {
 
     export class Response extends BaseEntity<Response> {
         public results: Record<number, GetMatchPersonsListQuery.MatchPersonListDto[]>;
+        public flatListResults: GetMatchPersonsListQuery.MatchPersonListDto[];
     }
 
 
-    export class MatchPersonListDto extends BaseEntity<MatchPersonListDto> {
+    export class MatchPersonListDto extends BasePerson {
 
         public personId: number;
 
-        public number?: number;
-
         public personType: number;
 
-        public personName: string;
-
         public matchId: number;
+
+        public order: number;
     }
 
 

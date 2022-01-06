@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { merge, of, Observable, fromEvent } from 'rxjs';
 import { startWith, switchMap, map, catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Select, Store } from '@ngxs/store';
 
 import { PersonService } from '@persons/person.service';
 import { Person, PersonType, PersonFilters, PagedList } from '@domain/models';
@@ -16,6 +17,8 @@ import { KEYUP, PAGE } from '@constants/help.constants';
 import { ObserverComponent } from '@domain/base';
 import { NotifierService } from '@notices/services';
 import { ConfirmationMessage } from '@notices/shared';
+import { PersonEditActions, PersonEditState } from '@persons/shared/store';
+
 
 @Component({
     selector: 'person-list',
@@ -23,8 +26,10 @@ import { ConfirmationMessage } from '@notices/shared';
 })
 export class PersonListComponent extends ObserverComponent implements OnInit, AfterViewInit {
     public items: Person[];
-    public personTypes: PersonType[];
     displayedColumns = ['lastRussianName', 'firstRussianName', 'birthday', 'position', 'country'];
+
+
+    @Select(PersonEditState.types) types$: Observable<PersonType[]>;
 
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -34,18 +39,18 @@ export class PersonListComponent extends ObserverComponent implements OnInit, Af
     constructor(private personService: PersonService,
                 private route: ActivatedRoute,
                 private location: Location,
+                private store: Store,
                 private notifier: NotifierService) {
         super();
     }
 
     public ngOnInit(): void {
-        this.personService.getTypes()
-            .subscribe((data: PersonType[]) => this.personTypes = data);
+        this.store.dispatch(new PersonEditActions.GetTypes());
     }
 
     public ngAfterViewInit(): void {
         this.parseQueryParams();
-        
+
         merge(this.sort.sortChange,
             this.typeSelect.selectionChange,
             fromEvent(this.nameInput.nativeElement, KEYUP)

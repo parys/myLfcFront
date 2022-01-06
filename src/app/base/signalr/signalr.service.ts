@@ -3,14 +3,15 @@ import { isPlatformServer } from '@angular/common';
 
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 import { Store } from '@ngxs/store';
+import { Subject } from 'rxjs';
 
 import { Pm, MatchEvent } from '@domain/models';
 import { environment } from '@environments/environment';
-import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions';
-import { Cookies } from '@cedx/ngx-cookies';
+import { NewPm, ReadPms, NewNotification, ReadNotifications, CoreActios } from '@core/store/core.actions';
+import { Cookies } from '@base/cookie';
 import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages-list.query';
 import { UsersOnline } from '@network/shared/right-sidebar/user-online.model';
-import { AdminActions } from '@admin/store';
+
 import { SignalrEntity } from './models';
 import { SignalRActions } from './signalr.actions';
 import { GetMatchDetailQuery } from '@network/shared/matches/get-match-detail.query';
@@ -21,11 +22,11 @@ import { Notification } from '@notifications/models/notification.model';
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
     private hubConnection: HubConnection;
+    public commentUpdate = new Subject<SignalrEntity<GetCommentListByEntityIdQuery.CommentListDto>>();
 
-    constructor(private cookies: Cookies,        
+    constructor(private cookies: Cookies,
                 private store: Store,
                 @Inject(PLATFORM_ID) private platformId: object) {
-                    console.warn("NEW SIGNALR");
     }
 
     public initializeHub(): void {
@@ -44,6 +45,7 @@ export class SignalRService {
 
         this.hubConnection?.stop();
         this.hubConnection = new HubConnectionBuilder()
+            .withAutomaticReconnect()
             .withUrl(`${environment.apiUrl}hubs/${hubUrl}`, options)
             .configureLogging(LogLevel.Warning)
             .build();
@@ -62,9 +64,13 @@ export class SignalRService {
         this.hubConnection.on('updateMatch', (data: SignalrEntity<GetMatchDetailQuery.Response>) => {
             this.store.dispatch(new SignalRActions.UpdateMatch(data));
         });
+        this.hubConnection.on('toggleHideTeams', (data: {matchId: number, result: boolean}) => {
+            this.store.dispatch(new SignalRActions.ToggleHideTeams(data));
+        });
         this.hubConnection.on('comment', (data: SignalrEntity<GetCommentListByEntityIdQuery.CommentListDto>) => {
             data.entity.children = data.entity.children || [];
-            this.store.dispatch(new SignalRActions.UpdateComment(data));
+            this.commentUpdate.next(data);
+         //   this.store.dispatch(new SignalRActions.UpdateComment(data));
         });
         if (token) {
             this.hubConnection.on('readPm',
@@ -85,13 +91,22 @@ export class SignalRService {
                 });
         }
 
-        this.hubConnection.stop();
+        this.hubConnection.onclose(() => {
+            console.log('signalR: on close');
+            this.store.dispatch(new CoreActios.ChangeSignalr(false));
+        });
+
+        this.hubConnection.stop().then(() => {
+            console.log('signalR: stop');
+            this.store.dispatch(new CoreActios.ChangeSignalr(false));
+        });
         this.hubConnection.start()
             .then(() => {
-                console.warn('started');
+                this.store.dispatch(new CoreActios.ChangeSignalr(true));
             })
             .catch((err: Error) => {
-                console.error("signalr-ee", err);
+                this.store.dispatch(new CoreActios.ChangeSignalr(false));
+                console.error('signalr-ee', err);
             });
     }
 

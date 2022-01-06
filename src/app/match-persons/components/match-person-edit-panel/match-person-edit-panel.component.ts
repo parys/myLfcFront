@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, Input, EventEmitter, Output, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
+﻿import { Component, Input, EventEmitter, Output, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
 import { Person } from '@domain/models';
@@ -11,11 +11,11 @@ import { MatchPersonType } from '@match-persons/models/match-person-type.model';
 
 @Component({
     selector: 'match-person-edit-panel',
-    templateUrl: './matchPerson-edit-panel.component.html',
+    templateUrl: './match-person-edit-panel.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class MatchPersonEditPanelComponent implements OnInit, OnChanges {
+export class MatchPersonEditPanelComponent implements OnChanges {
 
     @Input() public matchId: number;
     @Input() public selected: GetMatchPersonsListQuery.MatchPersonListDto;
@@ -35,10 +35,6 @@ export class MatchPersonEditPanelComponent implements OnInit, OnChanges {
     constructor(private formBuilder: FormBuilder) {
     }
 
-    public ngOnInit(): void {
-        this.initForm();
-    }
-
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.editOptions) {
             this.initForm();
@@ -46,32 +42,30 @@ export class MatchPersonEditPanelComponent implements OnInit, OnChanges {
     }
 
     public onSubmit(): void {
-        this.create.emit(this.parseForm());
+        if (this.editMatchPersonForm.valid) {
+            this.create.emit(this.editMatchPersonForm.value);
+        }
     }
 
     public setPerson(person: Person): void {
         this.editMatchPersonForm.controls.personId.patchValue(person.id);
+
         this.onSubmit();
     }
 
     public getControl(): FormControl {
-        return this.editMatchPersonForm.controls['personId'] as FormControl;
-    }
-
-    private parseForm(): UpdateMatchPersonCommand.Request {
-        const item: UpdateMatchPersonCommand.Request = this.editMatchPersonForm.value;
-        item.matchId = this.matchId;
-        return item;
+        return this.editMatchPersonForm.controls.personId as FormControl;
     }
 
     private initForm(): void {
         const selected = this.selected;
-
         this.editMatchPersonForm = this.formBuilder.group({
-            personId: [selected ? this.selected.personId : '', Validators.required],
-            personType: [selected ? this.selected.personType : this.editOptions.mpType, Validators.required],
+            personId: [selected ? selected.personId : '', Validators.required],
+            personType: [selected?.personName ? selected.personType : this.editOptions.mpType, Validators.required],
             useType: [true],
-            isHome: [this.isHome]
+            isHome: [this.isHome],
+            matchId: [this.matchId, Validators.required],
+            number: [selected?.number ?? null]
         });
     }
 }

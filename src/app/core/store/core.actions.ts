@@ -1,9 +1,16 @@
 import { Pm } from '@domain/models/pm.model';
 import { Notification } from '@notifications/models/notification.model';
 
-export class ChangeMobile {
-    static readonly type = '[Core] Change mobile view';
-    constructor(public readonly payload: boolean) { }
+export namespace CoreActios {
+    export class ChangeMobile {
+        static readonly type = '[Core] Change mobile view';
+        constructor(public readonly payload: boolean) { }
+    }
+
+    export class ChangeSignalr {
+        static readonly type = '[Core] Change current signal R state (connected/not connected)';
+        constructor(public readonly payload: boolean) { }
+    }
 }
 
 export class NewPm {

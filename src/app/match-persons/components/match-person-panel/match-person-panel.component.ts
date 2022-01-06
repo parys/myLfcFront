@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, TrackByFunction } from '@angular/core';
 import { MatchPersonTypeEnum } from '@domain/enums/match-person-type.enum';
 
 import { ObserverComponent } from '@domain/base';
@@ -8,17 +8,19 @@ import { Observable } from 'rxjs';
 import { MatchPersonsState, MatchPersonActions } from '@match-persons/store';
 import { GetMatchPersonsListQuery, UpdateMatchPersonCommand } from '@network/shared/match-persons';
 import { MatchPerson } from '@match-persons/models/match-person.model';
+import { MatchActions } from '@matches/store';
 
 @Component({
     selector: 'match-person-panel',
-    templateUrl: './matchPerson-panel.component.html',
-    styleUrls: ['./matchPerson-panel.component.scss'],
+    templateUrl: './match-person-panel.component.html',
+    styleUrls: ['./match-person-panel.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MatchPersonPanelComponent extends ObserverComponent implements OnInit {
     mpType = MatchPersonTypeEnum;
     @Input() public matchId: number;
     @Input() public isHome: boolean;
+    @Input() public hideTeams: boolean;
 
     @Select(AuthState.isInformer) isInformer$: Observable<boolean>;
 
@@ -54,19 +56,23 @@ export class MatchPersonPanelComponent extends ObserverComponent implements OnIn
         this.store.dispatch(new MatchPersonActions.CancelEdit());
     }
 
+    public toggleHideTeams(): void {
+        this.store.dispatch(new MatchActions.ToggleHideTeams(this.matchId));
+    }
+
     public onSelectPerson(person: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto): void {
         this.store.dispatch(new MatchPersonActions.SetSelectedPerson(person));
     }
 
-    public onCreate(person: UpdateMatchPersonCommand.Request) {
+    public onCreateUpdate(person: UpdateMatchPersonCommand.Request): void {
         this.store.dispatch(new MatchPersonActions.AddEdit(person));
     }
 
-    public onDelete(person: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto) {
+    public onDelete(person: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto): void {
         this.store.dispatch(new MatchPersonActions.Delete(person));
     }
 
-    public trackByFn(_: number, item: MatchPerson) {
+    public trackByFn(_: number, item: GetMatchPersonsListQuery.MatchPersonListDto): number {
         if (!item) { return null; }
         return item.personId;
     }

@@ -1,5 +1,5 @@
 ﻿<form class="form-horizontal full-width" role="form" [formGroup]="contractEditForm" (ngSubmit)="onSubmit()">
-    <select-person-form-field formControlName="personId">
+    <select-person-form-field formControlName="personId" [personName]="contractEditForm.get('personName').value">
     </select-person-form-field>
 
     <mat-form-field class="full-width">

@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { TransferState, makeStateKey } from '@angular/platform-browser';
 
 import { Subscription } from 'rxjs';
 
@@ -9,10 +8,6 @@ import { CustomTitleMetaService } from '@core/services';
 import { TITLE_RU } from '@constants/ru.constants';
 
 import { MaterialCoreService } from '@materials/core/material-core.service';
-
-const MAT_LATEST_KEY = makeStateKey<PagedList<Material>>('mat-latest');
-const MAT_PINNED_KEY = makeStateKey<PagedList<Material>>('mat-pinned');
-
 @Component({
     selector: 'material-home',
     templateUrl: './material-home.component.html',
@@ -26,7 +21,7 @@ export class MaterialHomeComponent implements OnInit, OnDestroy {
     public latest: Material[];
     public pinned: Material[];
 
-    constructor(private transferState: TransferState,
+    constructor(
                 private router: Router,
                 private materialService: MaterialCoreService,
                 private cd: ChangeDetectorRef,
@@ -69,38 +64,26 @@ export class MaterialHomeComponent implements OnInit, OnDestroy {
     }
 
     private updateLatest(): void {
-        // todo const savedData = this.transferState.get(MAT_LATEST_KEY, null);
-        // if (savedData) {
-        //    this.parseLatest(savedData);
-        //    this.transferState.remove(MAT_LATEST_KEY);
-        // } else {
             this.$latest = this.materialService
                 .getLatest()
                 .subscribe(data => {
                         this.parseLatest(data);
-                        this.transferState.set(MAT_LATEST_KEY, data);
 
                     },
                     null,
                     () => this.cd.markForCheck());
-      //  }
+
     }
 
     private updatePinned(): void {
-        // const savedData = this.transferState.get(MAT_PINNED_KEY, null);
-        // if (savedData) {
-        //    this.parsePinned(savedData);
-        //    this.transferState.remove(MAT_PINNED_KEY);
-        // } else {
             this.$pinned = this.materialService
                 .getTop()
                 .subscribe(data => {
                         this.parsePinned(data);
-                        this.transferState.set(MAT_PINNED_KEY, data);
 
                     },
                     null,
                     () => this.cd.markForCheck());
-       // }
+
     }
 }

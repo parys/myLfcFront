@@ -14,8 +14,8 @@ import { MaterialEditMaterialModule } from './material-edit-material.module';
 import { MaterialEditService } from './materials-edit.service';
 import { NgxsModule } from '@ngxs/store';
 import { MaterialsState } from '../store';
-import { MaterialResolver } from '../resolvers';
 import { MaterialCategoriesState } from '@material-categories/core/store';
+import { EditMaterialResolver } from './resolvers';
 
 @NgModule({
     imports: [
@@ -35,7 +35,7 @@ import { MaterialCategoriesState } from '@material-categories/core/store';
     providers: [
         MaterialLeaveGuard,
         MaterialEditService,
-        MaterialResolver
+        EditMaterialResolver
     ]
 })
 export class MaterialEditModule { }

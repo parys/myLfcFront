@@ -18,12 +18,14 @@ import {
     ChangePage,
     SetUsersFilterOptions,
     GetUserById,
-    ChangeUserRoleGroup
+    ChangeUserRoleGroup,
+    UserActions
 } from './users.actions';
 import { RoleGroupService } from '@role-groups/core';
 
 import { GetUsersListQuery, GetUserDetailQuery } from '@network/shared/users';
 import { UserService } from '@users/user.service';
+import { RoleGroup } from '@role-groups/models/role-group.model';
 
 
 @State<UsersStateModel>({
@@ -91,7 +93,7 @@ export class UsersState {
         const { request } = ctx.getState();
         return this.usersNetwork.getAll2(new GetUsersListQuery.Request(request))
             .pipe(
-                tap(response => {
+                tap((response: GetUsersListQuery.Response) => {
                     ctx.patchState({ users: response.results || [] });
                     ctx.patchState({
                         request: {
@@ -109,7 +111,7 @@ export class UsersState {
         if (roleGroups.length === 0) {
             return this.network.getAll()
                 .pipe(
-                    tap(response => { patchState({ roleGroups: response || [] }); }),
+                    tap((response: RoleGroup[]) => { patchState({ roleGroups: response || [] }); }),
                 );
         }
     }
@@ -123,7 +125,7 @@ export class UsersState {
     onGetUserById({ patchState }: StateContext<UsersStateModel>, { payload }: GetUserById) {
         return (payload.id ? this.usersNetwork.getSingle2(payload.id) : of(new GetUserDetailQuery.Response()))
             .pipe(
-                tap(user => {
+                tap((user: GetUserDetailQuery.Response) => {
                     patchState({ user });
                     this.titleService.setTitle('Пользователь ' + user.userName);
                 })
@@ -139,6 +141,28 @@ export class UsersState {
                 const notice = NoticeMessage.success('Роль изменена', 'Группа пользователя заменена.');
                 ctx.dispatch(new ShowNotice(notice));
             }));
+    }
+
+    @Action(UserActions.ResetAvatar)
+    onResetAvatar({ patchState, getState }: StateContext<UsersStateModel>, { payload }: UserActions.ResetAvatar) {
+        return this.usersNetwork.resetAvatar(payload)
+            .pipe(
+                tap((path: string) => {
+                    const { user } = getState();
+                    patchState({ user: { ...user, photo: path } });
+                })
+            );
+    }
+
+    @Action(UserActions.UpdateAvatar)
+    onUpdateAvatar({ patchState, getState }: StateContext<UsersStateModel>, { payload }: UserActions.UpdateAvatar) {
+        return this.usersNetwork.updateAvatar(payload)
+            .pipe(
+                tap(path => {
+                    const { user } = getState();
+                    patchState({ user: { ...user, photo: `${path}?${Math.random()}` } });
+                })
+            );
     }
 
 }

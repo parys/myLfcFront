@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 import { Observable } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
@@ -18,7 +19,7 @@ import { MaterialEditService } from '../materials-edit.service';
 import { MaterialsState } from '@materials/lazy/store';
 import { GetMaterialDetailQuery } from '@network/shared/materials';
 import { tap } from 'rxjs/operators';
-import { MaterialCategoriesState, MaterialCategoryActions } from '@material-categories/core/store';
+import { MaterialCategoriesState } from '@material-categories/core/store';
 import { GetMaterialCategoriesListQuery } from '@network/shared/material-categories';
 
 @Component({
@@ -32,18 +33,20 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
     public item: GetMaterialDetailQuery.Response;
     public type: MaterialType;
     public additional = 'additional';
+    public isSaving = false;
 
     @Select(AuthState.isEditor) isEditor$: Observable<boolean>;
 
     @Select(MaterialCategoriesState.materialCategories) categories$: Observable<GetMaterialCategoriesListQuery.MaterialCategoryListDto[]>;
 
     constructor(private service: MaterialEditService,
-        private router: Router,
-        private snackBar: MatSnackBar,
-        private location: Location,
-        private notifierService: NotifierService,
-        private store: Store,
-        private formBuilder: FormBuilder) {
+                private router: Router,
+                private snackBar: MatSnackBar,
+                private location: Location,
+                private notifierService: NotifierService,
+                private store: Store,
+                private clipboard: Clipboard,
+                private formBuilder: FormBuilder) {
         super();
         if (this.router.url.startsWith('/news')) {
             this.type = MaterialType.News;
@@ -56,22 +59,36 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
         this.item = this.store.selectSnapshot(MaterialsState.material) || new GetMaterialDetailQuery.Response();
         const userId = this.store.selectSnapshot(AuthState.userId);
         this.id = this.item ?.id ?? 0;
-        this.item .userId = userId;
+        this.item.userId = userId;
         this.initForm(this.item);
-
-        this.store.dispatch(new MaterialCategoryActions.GetMaterialCategoriesList(this.type))
     }
 
-    public onSubmit(): void {
+    public onFullSave(): void {
+        this.editForm.get('stayOnPage').setValue(false);
+        this.editForm.get('pending').setValue(false);
+        this.onSubmit(true);
+    }
+
+    public onSubmit(copyUrl: boolean = false): void {
+        if (this.isSaving) {
+            return;
+        }
+        this.isSaving = true;
         const newsItem = this.editForm.value;
         newsItem.type = this.type;
+
         this.service.createOrUpdate(newsItem, this.id)
             .subscribe(data => {
+                this.location.go(this.router.createUrlTree([MaterialType[this.type].toLowerCase(), data.id, EDIT_ROUTE]).toString());
+
+                if (copyUrl) {
+                    const url = window.location.href.replace('/0', `/${data.id}`).replace('/edit', '');
+                    this.clipboard.copy(url);
+                }
                 if (!this.editForm.get('stayOnPage').value) {
                     this.router.navigate([`/${MaterialType[this.type].toLowerCase()}`, data.id]);
                 }
                 if (!this.id) {
-                    this.location.go(this.router.createUrlTree([MaterialType[this.type].toLowerCase(), data.id, EDIT_ROUTE]).toString());
                     this.id = data.id;
                     this.editForm.patchValue({id: this.id });
                     this.snackBar.open('Материал создан');
@@ -81,6 +98,9 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
             },
                 e => {
                     this.snackBar.open('Материал НЕ обновлен');
+                },
+                () => {
+                    this.isSaving = false;
                 });
         this.editForm.markAsPristine();
     }

@@ -12,6 +12,9 @@ import { AuthState } from '@auth/store';
 import { NotifierService } from '@notices/services';
 import { ConfirmationMessage } from '@notices/shared';
 import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-list-by-entity-id-query';
+import { SignalrEntity } from '@base/signalr/models/signalr-entity.model';
+import { SignalRService } from '@base/signalr';
+import { SignalREntityEnum } from '@base/signalr/models/signalr-entity-type.model';
 
 @Component({
     selector: 'comment-detail',
@@ -41,31 +44,19 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
     public commentForm: FormGroup;
     public isEditMode = false;
     public isAddingMode = false;
+    public isSaving = false;
 
     constructor(private materialCommentService: CommentService,
                 private notifier: NotifierService,
                 private cd: ChangeDetectorRef,
+                private signalR: SignalRService,
                 private formBuilder: FormBuilder) {
         super();
     }
 
     public ngOnInit(): void {
         this.initForm();
-
-        // const sub$ = this.signalRService.newComment.subscribe((data: Comment) => {
-        //     if (data.matchId === this.matchId || data.materialId === this.materialId) {
-        //         if (data.parentId === this.item.id) {
-        //             const index = this.item.children.findIndex(x => x.id === data.id);
-        //             if (index !== -1) {
-        //                 this.item.children[index] = data;
-        //             } else {
-        //                 this.item.children.push(data);
-        //             }
-        //             this.cd.markForCheck();
-        //         }
-        //     }
-        // });
-        //this.subscriptions.push(sub$);
+        this.subscribeOnSignalR();
     }
 
     public verify(): void {
@@ -106,11 +97,16 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
     }
 
     public cancelAdding(): void {
+        this.isSaving = false;
         this.isAddingMode = false;
         this.cd.markForCheck();
     }
 
     public addComment(): void {
+        if (this.isSaving) {
+            return;
+        }
+        this.isSaving = true;
         this.commentForm.markAsPending();
         const comment = this.getNewComment();
         const sub$ = this.materialCommentService.createOrUpdate(comment.id, comment)
@@ -167,7 +163,7 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
         this.cd.markForCheck();
     }
 
-    public trackByFn(index: number, item: Comment) {
+    public trackByFn(index: number, item: GetCommentListByEntityIdQuery.CommentListDto) {
         if (!item) { return null; }
         return item.id;
     }
@@ -211,19 +207,40 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
 
     private getComment(): Comment | GetCommentListByEntityIdQuery.CommentListDto {
         const comment: Comment | GetCommentListByEntityIdQuery.CommentListDto = this.item;
-        comment.message = this.commentForm.controls['message'].value;
-        comment.answer = this.commentForm.controls['answer'].value;
+        comment.message = this.commentForm.controls.message.value;
+        comment.answer = this.commentForm.controls.answer.value;
         return comment;
     }
 
     private getNewComment(): Comment | GetCommentListByEntityIdQuery.CommentListDto {
         const comment: Comment | GetCommentListByEntityIdQuery.CommentListDto = new Comment();
-        comment.message = this.commentForm.controls['message'].value;
+        comment.message = this.commentForm.controls.message.value;
         comment.materialId = this.materialId;
         comment.matchId = this.matchId;
         comment.parentId = this.item.id;
         comment.type = this.type;
         return comment;
+    }
+
+
+    private subscribeOnSignalR(): void {
+        const sub$ = this.signalR.commentUpdate.subscribe(comment => this.putComment(comment));
+        this.subscriptions.push(sub$);
+    }
+
+    private putComment(comment: SignalrEntity<GetCommentListByEntityIdQuery.CommentListDto>): void {
+
+        if (comment.entity.parentId === this.item.id && comment.type === SignalREntityEnum.Add) {
+            this.item.children.push(comment.entity);
+            this.cd.detectChanges();
+            return;
+        }
+
+        if (comment.entity.id === this.item.id && comment.type === SignalREntityEnum.Update) {
+            this.item = comment.entity;
+            this.cd.detectChanges();
+            return;
+        }
     }
 }
 

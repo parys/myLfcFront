@@ -16,13 +16,12 @@ export const userRoutes: Routes = [
             {
                 path: '',
                 component: UserDetailComponent,
-                data: { title: USER_RU },
                 resolve: { UserResolver }
             },
             {
                 path: 'settings',
                 component: UserConfigComponent,
-                data: { title: 'Настройки' },
+                data: { title: 'Настройки пользователя' },
                 canActivate: [RoleGuard]
             },
             {

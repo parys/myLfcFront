@@ -16,4 +16,7 @@ export class NotifierService {
         return this.dialog.open(ConfirmationComponent, { data }).afterClosed();
     }
 
+    public confirmDeletion(): Observable<boolean> {
+        return this.dialog.open(ConfirmationComponent, { data: { title : 'Удалить?'} }).afterClosed();
+    }
 }

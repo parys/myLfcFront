@@ -11,7 +11,6 @@ import { MaterialCoreModule } from '@materials/core/material-core.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppMaterialModule } from './app-material.module';
 import { PipesModule } from './base/pipes';
-import { SignalRModule } from '@base/signalr';
 import { AuthModule } from '@base/auth';
 import { StorageModule } from '@base/storage';
 import { LoaderModule } from '@base/loader';
@@ -22,6 +21,8 @@ import { CoreModule } from '@core/core.module';
 import { NoticesModule } from '@notices/notices.module';
 import { OdModule } from './od';
 import { NavbarModule } from './home/navbar/navbar.module';
+import { AuthState } from '@auth/store';
+import { CoreState } from '@core/store';
 
 registerLocaleData(localeRU);
 
@@ -48,14 +49,13 @@ export function runAppInitializerFactories(injector: Injector): () => Promise<an
         CommonModule,
         BrowserModule.withServerTransition({ appId: 'mylfc' }),
         CoreModule.forRoot(),
-        NgxsModule.forRoot([]),
+        NgxsModule.forRoot([AuthState, CoreState]),
         HttpClientModule,
         MaterialCoreModule,
         AppRoutingModule,
         AppMaterialModule,
         PipesModule,
         StorageModule.forRoot(),
-        SignalRModule.forRoot(),
         AuthModule.forRoot(),
         LoaderModule.forRoot(),
         BreadcrumbModule.forRoot(),

@@ -1,46 +1,66 @@
-﻿<form class="full-width" name="editForm" role="form" [formGroup]="editPersonForm" (ngSubmit)="onSubmit()">
-    <mat-form-field class="full-width">
-        <input matInput placeholder="Имя на русском" formControlName="firstRussianName" #pInput>
-    </mat-form-field>
-    <mat-form-field class="full-width">
-        <input matInput placeholder="Фамилия на русском" formControlName="lastRussianName">
-    </mat-form-field>
-    <mat-form-field class="full-width">
-        <input matInput placeholder="Прозвище (Фабиньо, Роналдиньо и так далее)" formControlName="nickname">
-    </mat-form-field>
-    <mat-form-field class="full-width">
-        <mat-select placeholder="Тип" formControlName="type">
-            <mat-option *ngFor="let type of types" [value]="type.id" [textContent]="type.name">
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field class="full-width">
-        <input matInput placeholder="Номер на футболке" formControlName="number">
-    </mat-form-field>
-    <div class="full-width" *ngIf="isFull">
+﻿<ng-container *ngIf="{ types: types$ | async } as data">
+    <form class="full-width" name="editForm" role="form" [formGroup]="editPersonForm" (ngSubmit)="onSubmit()">
         <mat-form-field class="full-width">
-            <input matInput placeholder="Должность(для персонала)/позиция на поле(для игроков)" formControlName="position">
+            <input matInput placeholder="Имя на русском" formControlName="firstRussianName" #pInput>
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input matInput placeholder="Имя на английском" formControlName="firstName">
+            <input matInput placeholder="Фамилия на русском" formControlName="lastRussianName">
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input matInput placeholder="Фамилия на английском" formControlName="lastName">
+            <input matInput placeholder="Прозвище (Фабиньо, Роналдиньо и так далее)" formControlName="nickname">
         </mat-form-field>
         <mat-form-field class="full-width">
-            <input matInput placeholder="Страна рождения" formControlName="country">
+            <mat-select placeholder="Тип" formControlName="type">
+                <mat-option *ngFor="let type of data.types" [value]="type.id" [textContent]="type.name">
+                </mat-option>
+            </mat-select>
         </mat-form-field>
-        <div class="full-width top20 flex-v-c flex-space-around flex" *ngIf="editPersonForm.get('firstName').value && editPersonForm.get('lastName').value">
-            <img class="avatar" *ngIf="photo" [src]="photo" alt="" />
-            <crop-image-field (cropped)="croppedImage($event)"></crop-image-field>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Номер на футболке" formControlName="number">
+        </mat-form-field>
+        <div class="full-width" *ngIf="isFull">
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Должность(для персонала)/позиция на поле(для игроков)"
+                    formControlName="position">
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Имя на английском" formControlName="firstName">
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Фамилия на английском" formControlName="lastName">
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Страна рождения" formControlName="country">
+            </mat-form-field>
+            <div class="full-width top20 flex-v-c flex-space-around flex"
+                *ngIf="editPersonForm.get('firstName').value && editPersonForm.get('lastName').value">   
+                <div *ngIf="photo">             
+                    <img class="avatar" [src]="photo" alt="" />
+                    <button mat-raised-button (click)="clearImg()" type="button">Удалить</button>
+                 </div>
+                <crop-image-field (cropped)="croppedImage($event)"></crop-image-field>
+            </div>
+            <mat-form-field class="full-width">
+                <input matInput [matDatepicker]="datePicker" placeholder="Выберите дату рождения"
+                    formControlName="birthday">
+                <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                <mat-datepicker #datePicker startView="multi-year" touchUi="true"></mat-datepicker>
+            </mat-form-field>
         </div>
-        <mat-form-field class="full-width">
-            <input matInput [matDatepicker]="datePicker" placeholder="Выберите дату рождения" formControlName="birthday">
-            <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
-            <mat-datepicker #datePicker startView="year" touchUi="true"></mat-datepicker>
+        <div class="full-width">
+            <button mat-raised-button color="warn" class="full-width" type="submit"
+                [disabled]="!editPersonForm.valid">Сохранить</button>
+        </div>
+    </form>
+
+    <!-- <div>
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Адрес страницы игрока академии</mat-label>
+            <input matInput type="text" #academyUrl>
+            <button *ngIf="academyUrl.value" matSuffix mat-icon-button aria-label="Clear"
+                (click)="parseAcademy(academyUrl.value)">
+                <mat-icon>send</mat-icon>
+            </button>
         </mat-form-field>
-    </div>
-    <div class="full-width">
-        <button mat-raised-button color="warn" class="full-width" type="submit" [disabled]="!editPersonForm.valid">Сохранить</button>
-    </div>
-</form>
+    </div> -->
+</ng-container>

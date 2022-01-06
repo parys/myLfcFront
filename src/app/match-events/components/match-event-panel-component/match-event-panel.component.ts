@@ -1,11 +1,10 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { MatchEvent, MatchEventType } from '@domain/models';
 
 import { Observable } from 'rxjs';
 import { AuthState } from '@auth/store';
 import { Select, Store } from '@ngxs/store';
-import { ConfirmationMessage } from '@notices/shared';
 import { NotifierService } from '@notices/services';
 import { ObserverComponent } from '@domain/base';
 import { MatchEventTypeEnum } from '@match-events/models/match-event-type.enum';
@@ -37,7 +36,7 @@ export class MatchEventPanelComponent extends ObserverComponent {
         this.store.dispatch(new MatchEventActions.StartEdit(editable));
     }
 
-    public updateEvent(event: MatchEvent) {
+    public updateEvent(event: MatchEvent): void {
         if (event.id) {
             this.store.dispatch(new MatchEventActions.Edit(event));
         } else {
@@ -48,12 +47,10 @@ export class MatchEventPanelComponent extends ObserverComponent {
     }
 
     public showDeleteModal(id: number): void {
-        const sub$ = this.notifier.confirm(new ConfirmationMessage({
-            title: 'Удалить ?'
-        }))
+        const sub$ = this.notifier.confirmDeletion()
         .subscribe(result => {
             if (result) {
-                this.store.dispatch(new MatchEventActions.Remove(id))
+                this.store.dispatch(new MatchEventActions.Remove(id));
             }
         });
         this.subscriptions.push(sub$);

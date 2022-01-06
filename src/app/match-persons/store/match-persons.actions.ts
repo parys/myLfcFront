@@ -1,3 +1,4 @@
+import { BasePerson } from '@domain/models/base-person.model';
 import { MatchPerson } from '@match-persons/models/match-person.model';
 import { GetMatchPersonsListQuery, UpdateMatchPersonCommand } from '@network/shared/match-persons';
 
@@ -32,6 +33,6 @@ export namespace MatchPersonActions {
 
     export class SetSelectedPerson {
         static readonly type = '[Match Persons] Set selected  person';
-        constructor(public payload: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto) { }
+        constructor(public payload: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto | BasePerson) { }
     }
 }
