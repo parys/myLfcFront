@@ -10,7 +10,7 @@
         position: static;
 
         &::before {
-            background-color: $stratus-blue-1;
+          //  background-color: $-blue-1;
         }
     }
 
@@ -22,7 +22,7 @@
         .mat-form-field-outline-thick,
         .mat-form-field-fill-thick,
         .mat-form-field-flex {
-            color: $stratus-yellow-4;
+           // color: $-yellow-4;
         }
     }
 
@@ -60,9 +60,9 @@
 }
 
 .mat-form-field-ripple {
-    background-color: $stratus-blue-1;
+  //  background-color: $blue-1;
 }
 
 .mat-form-field-required-marker {
-    color: $stratus-yellow-4;
+  //  color: $-yellow-4;
 }

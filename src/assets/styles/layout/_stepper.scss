@@ -46,14 +46,14 @@
 
     .mat-step-header .mat-step-icon-selected,
     .mat-step-header .mat-step-icon-state-edit {
-        background-color: $stratus-yellow-1;
+      //  background-color: $yellow-1;
         border: 2px solid $white;
         height: 36px;
         width: 36px;
     }
     
     .mat-step-header .mat-step-icon-state-done {
-        background-color: $stratus-blue-2;
+       // background-color: $-blue-2;
     }
     
     .mat-raised-button {
@@ -66,7 +66,7 @@
         &:hover {
             .mat-progress-spinner circle,
             .mat-spinner  circle{
-                stroke: $stratus-yellow-1;
+              //  stroke: $yellow-1;
             }   
         }
     }

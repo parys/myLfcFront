@@ -8,14 +8,14 @@
     }
     
     &.mat-accent:not([disabled]) {
-        color: $stratus-yellow-1;
+     //   color: $;
         background-color: white;
-        border: 2px solid $stratus-yellow-1;
+       // border: 2px solid $;
     
         &:hover {
             color: white;
-            background-color: $stratus-yellow-4;
-            border: 2px solid $stratus-yellow-4;
+         //   background-color: $;
+         //   border: 2px solid $;
         }
     }
 
@@ -28,9 +28,9 @@
     }
     
     &.mat-warn:not([disabled]) {
-        color: $stratus-yellow-4;
+      //  color: $;
         background-color:  white;
-        border: 2px solid $stratus-yellow-4;
+      //  border: 2px solid $;
     }
 }
 
@@ -42,13 +42,13 @@
     
     &.mat-accent:not([disabled]) {
         color: white;
-        background-color: $stratus-yellow-1;
-        border: 2px solid $stratus-yellow-1;
+       // background-color: $;
+      //  border: 2px solid $;
     
         &:hover {
             color: white;
-            background-color: $stratus-yellow-4;
-            border: 2px solid $stratus-yellow-4;
+           // background-color: $;
+           // border: 2px solid $;
         }
     }
 
@@ -58,8 +58,8 @@
 
     &.mat-warn:not([disabled]) {
         color: white;
-        background-color: $stratus-yellow-4;
-        border: 2px solid $stratus-yellow-4;
+      //  background-color: $;
+      //  border: 2px solid $;
     }
 
     .mat-icon {
@@ -84,23 +84,23 @@
       color: $blue;
       
       &:hover {
-        color: $stratus-blue-2;
+   //     color: $;
       }
     }
 
     &.blue {
-        color: $stratus-blue-2;
+ //      color: $-blue-2;
 
         &:hover {
-          color: $stratus-blue-2;
+  //        color: $-blue-2;
         }
     }
 
     &.dark-blue {
-      color: $stratus-blue-1;
+    //  color: $-blue-1;
 
       &:hover:not(.disabled) {
-        color: $stratus-blue-2;
+     //   color: $-blue-2;
       }
     }
 
@@ -109,7 +109,7 @@
     }
 
     &.warn {
-      color: $stratus-yellow-4;
+    //  color: $-yellow-4;
     }
 
     &.purple {
@@ -117,7 +117,7 @@
     }
 
     &.yellow {
-        color: $stratus-yellow-2;
+    //    color: $yellow-2;
     }
 }
 
@@ -133,7 +133,7 @@ mat-icon {
 
   &.mat-accent{
     &:hover {
-      color: $stratus-yellow-4;
+  //    color: $yellow-4;
     }
   }
 }
