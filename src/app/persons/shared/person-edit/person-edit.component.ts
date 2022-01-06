@@ -58,6 +58,11 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
         this.editPersonForm.controls.photo.patchValue(image);
     }
 
+    public clearImg(): void {
+        this.editPersonForm.controls.photo.patchValue(null);
+        this.photo = null;
+    }
+
     public onSubmit(): void {
         const person: Person = this.parseForm();
         if (person.birthday) {
@@ -94,7 +99,9 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
         this.id = data.id;
         data.birthday = new Date(data.birthday);
         this.editPersonForm.patchValue(data);
-        this.photo = `${data?.photo}?${Math.random()}`;
+        if (data?.photo) {
+            this.photo = `${data?.photo}?${Math.random()}`;
+        }
     }
 
     private parseForm(): Person {

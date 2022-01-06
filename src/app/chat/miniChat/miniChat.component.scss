@@ -1,9 +1,12 @@
-﻿
+﻿@import 'src/assets/styles/abstracts/module';
+
 .block-minichat {
-    background-color: #731010;
+    background-color: $lfc-red-6;
 }
 
-.blocktitle {
+.title {
     text-transform: uppercase;
     color: orange;
+    padding: 4px;
+    text-align: center;
 }

@@ -15,7 +15,7 @@ export class MatchEditResolver implements Resolve<any> {
     constructor(private store: Store) { }
 
     public resolve(route: ActivatedRouteSnapshot): Observable<GetMatchDetailQuery.Response> {
-        const payload = new GetMatchDetailQuery.Request({ id: route.params.id });
+        const payload = new GetMatchDetailQuery.Request({ id: +route.params.id });
         return this.store.dispatch([
             new MatchActions.GetMatchById(payload),
             new MatchActions.GetMatchTypesList()

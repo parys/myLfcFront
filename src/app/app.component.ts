@@ -13,7 +13,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, map, distinctUntilChanged } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Store, Select } from '@ngxs/store';
-import { ChangeMobile, CoreState } from '@core/store';
+import { CoreActios, CoreState } from '@core/store';
 
 import { CustomTitleMetaService } from '@core/services';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
@@ -91,7 +91,7 @@ export class AppComponent extends ObserverComponent implements OnInit {
                 distinctUntilChanged()
             )
             .subscribe((mobile: boolean) => {
-                this.store.dispatch(new ChangeMobile(mobile));
+                this.store.dispatch(new CoreActios.ChangeMobile(mobile));
             });
 
         this.subscriptions.push(subscription);

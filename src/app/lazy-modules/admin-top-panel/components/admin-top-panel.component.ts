@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Select } from '@ngxs/store';
 
 import { AuthState } from '@auth/store';
+import { CoreState } from '@core/store';
 
 @Component({
     selector: 'admin-top-panel',
@@ -17,4 +18,6 @@ export class AdminTopPanelComponent {
     @Select(AuthState.isNewsmaker) isNewsmaker$: Observable<boolean>;
 
     @Select(AuthState.isInformer) isInformer$: Observable<boolean>;
+
+    @Select(CoreState.signalr) signalr$: Observable<boolean>;
 }

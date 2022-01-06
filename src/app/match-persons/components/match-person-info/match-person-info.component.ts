@@ -8,6 +8,7 @@ import { ConfirmationMessage } from '@notices/shared';
 import { NotifierService } from '@notices/services';
 import { MatchPerson } from '@match-persons/models/match-person.model';
 import { GetMatchPersonsListQuery } from '@network/shared/match-persons/get-match-persons-list.query';
+import { UpdateMatchPersonCommand } from '@network/shared/match-persons/update-match-person.command';
 
 @Component({
     selector: 'match-person-info',
@@ -21,6 +22,7 @@ export class MatchPersonInfoComponent extends ObserverComponent {
     @Input() public matchId: number;
     @Output() public selected = new EventEmitter<MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto>();
     @Output() public delete = new EventEmitter<MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto>();
+    @Output() public update = new EventEmitter<UpdateMatchPersonCommand.Request>();
 
     @Select(AuthState.isInformer) isInformer$: Observable<boolean>;
 
@@ -29,6 +31,20 @@ export class MatchPersonInfoComponent extends ObserverComponent {
     }
     public onSelectPerson(person: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto): void {
         this.selected.emit(person);
+    }
+
+    public onUp(person: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto): void {
+        if (person.order > 0) {
+            person.order--;
+        }
+        this.update.emit({...person, isHome: this.isHome, matchId: this.matchId});
+    }
+
+    public onDown(person: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto): void {
+        if (person.order < 255) {
+            person.order++;
+        }
+        this.update.emit({...person, isHome: this.isHome, matchId: this.matchId});
     }
 
     public showDeleteModal(person: MatchPerson | GetMatchPersonsListQuery.MatchPersonListDto): void {

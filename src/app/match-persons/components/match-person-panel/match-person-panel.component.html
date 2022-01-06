@@ -73,17 +73,20 @@
                 </i>
                 <div class="full-width" *ngFor="let person of data.persons[mpType.Team]; trackBy: trackByFn">
                     <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
-                        (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
+                        (update)="onCreateUpdate($event)"
+                        (selected)="onSelectPerson($event)"
+                        (delete)="onDelete($event)"></match-person-info>
                 </div>
                 <i class="full-width top10">
                     <b>Запасные:</b>
-                    <span *ngIf="data.isInformer && data.persons[mpType.TeamBench]?.length < 7" role="button"
-                        (click)="addMatchPerson(isHome ? (mpType.TeamBench) : (mpType.CompetitorBench), data.persons[mpType.TeamBench].length, 7, isHome ? 1 : 4)">
+                    <span role="button"
+                        (click)="addMatchPerson(isHome ? (mpType.TeamBench) : (mpType.CompetitorBench), data.persons[mpType.TeamBench].length, 0, isHome ? 1 : 4)">
                         <mat-icon>add</mat-icon>
                     </span>
                 </i>
                 <div class="full-width" *ngFor="let person of data.persons[mpType.TeamBench]; trackBy: trackByFn">
                     <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
+                        (update)="onCreateUpdate($event)"
                         (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
                 </div>
                 <div class="full-width top10" *ngIf="data.persons[mpType.Ban]?.length > 0 || data.isInformer">
@@ -133,18 +136,22 @@
                 </i>
                 <div class="full-width" *ngFor="let person of data.persons[mpType.Competitor]; trackBy: trackByFn">
                     <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
-                        (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
+                        (update)="onCreateUpdate($event)"
+                        (selected)="onSelectPerson($event)"
+                        (delete)="onDelete($event)"></match-person-info>
                 </div>
                 <i class="full-width top10">
                     <b>Запасные:</b>
-                    <span *ngIf="data.isInformer && data.persons[mpType.CompetitorBench]?.length < 7" role="button"
-                        (click)="addMatchPerson(isHome ? (mpType.CompetitorBench) : (mpType.TeamBench), data.persons[mpType.CompetitorBench]?.length, 7, isHome ? 4 : 1)">
+                    <span role="button"
+                        (click)="addMatchPerson(isHome ? (mpType.CompetitorBench) : (mpType.TeamBench), data.persons[mpType.CompetitorBench]?.length, 0, isHome ? 4 : 1)">
                         <mat-icon>add</mat-icon>
                     </span>
                 </i>
                 <div class="full-width" *ngFor="let person of data.persons[mpType.CompetitorBench]; trackBy: trackByFn">
                     <match-person-info [person]="person" [isHome]="isHome" [isPlayer]="true" [matchId]="matchId"
-                        (selected)="onSelectPerson($event)" (delete)="onDelete($event)"></match-person-info>
+                        (update)="onCreateUpdate($event)"
+                        (selected)="onSelectPerson($event)"
+                        (delete)="onDelete($event)"></match-person-info>
                 </div>
                 <div class="full-width top10" *ngIf="data.persons[mpType.BanCompetitor]?.length > 0 || data.isInformer">
                     <i class="full-width">
@@ -188,7 +195,7 @@
                     [editOptions]="data.editOptions"
                     [selected]="data.selected"
                     [isHome]="isHome"
-                    (create)="onCreate($event)">
+                    (create)="onCreateUpdate($event)">
                 </match-person-edit-panel>
             </div>
     </ng-template>

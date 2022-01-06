@@ -6,7 +6,7 @@ import { isPlatformBrowser } from '@angular/common';
     template: ` <re-captcha *ngIf="isBrowser"
                             language="ru"
                             size="small"
-                            (captchaExpired)="handleCorrectCaptcha($event)"
+                            (captchaExpired)="resetCaptch($event)"
                             (captchaResponse)="handleCorrectCaptcha($event)"
                             site_key="6Ld0AxEUAAAAAA9BH17mRd8MDPqLGDzSomOEeeIY">
                 </re-captcha>`
@@ -26,5 +26,9 @@ export class RecaptchaComponent {
         } else {
             this.isHuman.emit(false);
         }
+    }
+
+    public resetCaptch(event: any): void {
+        this.isHuman.emit(false);
     }
 }

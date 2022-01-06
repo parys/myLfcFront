@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 
 import { Pm, MatchEvent } from '@domain/models';
 import { environment } from '@environments/environment';
-import { NewPm, ReadPms, NewNotification, ReadNotifications } from '@core/store/core.actions';
+import { NewPm, ReadPms, NewNotification, ReadNotifications, CoreActios } from '@core/store/core.actions';
 import { Cookies } from '@base/cookie';
 import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages-list.query';
 import { UsersOnline } from '@network/shared/right-sidebar/user-online.model';
@@ -45,6 +45,7 @@ export class SignalRService {
 
         this.hubConnection?.stop();
         this.hubConnection = new HubConnectionBuilder()
+            .withAutomaticReconnect()
             .withUrl(`${environment.apiUrl}hubs/${hubUrl}`, options)
             .configureLogging(LogLevel.Warning)
             .build();
@@ -90,12 +91,21 @@ export class SignalRService {
                 });
         }
 
-        this.hubConnection.stop();
+        this.hubConnection.onclose(() => {
+            console.log('signalR: on close');
+            this.store.dispatch(new CoreActios.ChangeSignalr(false));
+        });
+
+        this.hubConnection.stop().then(() => {
+            console.log('signalR: stop');
+            this.store.dispatch(new CoreActios.ChangeSignalr(false));
+        });
         this.hubConnection.start()
             .then(() => {
-                console.warn('started');
+                this.store.dispatch(new CoreActios.ChangeSignalr(true));
             })
             .catch((err: Error) => {
+                this.store.dispatch(new CoreActios.ChangeSignalr(false));
                 console.error('signalr-ee', err);
             });
     }

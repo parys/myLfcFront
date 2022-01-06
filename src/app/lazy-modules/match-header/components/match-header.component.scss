@@ -14,15 +14,32 @@
 }
 
 .score-text {
-    font-size: 40px;
+    font-size: 60px;
     min-height: 0;
     display: flex;
     align-items: center;
     text-align: center;
+    flex: 1;
+    justify-content: center;
 }
 
 @media screen and (max-width: 767px) {
     .score-text  {
         font-size: 30px;
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+.main-part {
+    display: flex;
+
+    & > * {
+        flex: 1;
     }
 }

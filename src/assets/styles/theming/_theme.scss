@@ -1,0 +1,18 @@
+@import '~@angular/material/theming';
+@import 'palettes';
+
+
+@include mat-core();
+
+
+$lfc-primary: mat-palette($lfc-red, 500);
+
+$lfc-accent: mat-palette($lfc-orange, 300);
+
+$lfc-warn: mat-palette($lfc-warning, 500);
+
+
+$lfc-theme: mat-light-theme($lfc-primary, $lfc-accent, $lfc-warn);
+
+
+@include angular-material-theme($lfc-theme);

@@ -11,6 +11,7 @@ import { MatchPersonService } from '@match-persons/match-person.service';
 import { SignalRActions } from '@base/signalr/signalr.actions';
 import { MatchesState } from '@matches/store';
 import { SignalREntityEnum } from '@base/signalr/models';
+import { GetMatchPersonsListQuery } from '@network/shared/match-persons/get-match-persons-list.query';
 
 
 @State<MatchPersonsStateModel>({
@@ -78,18 +79,26 @@ export class MatchPersonsState {
     @Action(MatchPersonActions.AddEdit)
     onAddEdit({ patchState, getState }: StateContext<MatchPersonsStateModel>, { payload }: MatchPersonActions.AddEdit) {
 
+        const { editOptions, selected } = getState();
+
+        if (editOptions) {
+            editOptions.currentCount++;
+        }
+        if (!payload.order) {
+            payload.order = editOptions?.currentCount;
+        }
         return this.matchPersonNetwork.createOrUpdate(payload)
         .pipe(
             tap(response => {
-                const { editOptions, selected } = getState();
-                editOptions.currentCount++;
 
-                if (this.checkExit(editOptions.neededCount, editOptions.currentCount)) {
-                    patchState({ editOptions: null});
-                } else {
-                    patchState({ editOptions: {...editOptions }});
+                if (editOptions) {
+                    if (this.checkExit(editOptions.neededCount, editOptions.currentCount)) {
+                        patchState({ editOptions: null});
+                    } else {
+                        patchState({ editOptions: {...editOptions }});
+                    }
+                    patchState({ selected: { ...selected, id: null, personId: null, personName: null } });
                 }
-                patchState({ selected: { ...selected, id: null, personId: null, personName: null } });
         }));
     }
 
@@ -113,6 +122,7 @@ export class MatchPersonsState {
         switch (payload.type) {
             case SignalREntityEnum.Add: {
                 matchPersons[payload.entity.placeType].push(payload.entity);
+                matchPersons[payload.entity.placeType] = matchPersons[payload.entity.placeType].sort(compare);
                 patchState({ matchPersons: cloneDeep(matchPersons) });
                 break;
             }
@@ -120,6 +130,7 @@ export class MatchPersonsState {
                 const index = matchPersons[payload.entity.placeType].findIndex(x => x.personId === payload.entity.personId);
                 if (index > -1) {
                     matchPersons[payload.entity.placeType][index] = payload.entity;
+                    matchPersons[payload.entity.placeType] = matchPersons[payload.entity.placeType].sort(compare);
                     patchState({ matchPersons: cloneDeep(matchPersons) });
                 }
                 break;
@@ -155,4 +166,11 @@ export class MatchPersonsState {
     private checkExit(neededCount: number, currentCount: number): boolean {
         return currentCount === neededCount && neededCount !== 0;
     }
+}
+
+function compare(a: GetMatchPersonsListQuery.MatchPersonListDto, b: GetMatchPersonsListQuery.MatchPersonListDto) {
+    return a.order - b.order;
+    // var x = a.order;
+    // var y = b.order;
+    // return x < y ? -1 : x > y ? 1 : 0;
 }

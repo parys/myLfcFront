@@ -1,12 +1,16 @@
 ﻿<ng-container *ngIf="{ match: headerMatch$ | async } as data">
-    <div class="full-width flex" *ngIf="data.match">
+    <div class="container" *ngIf="data.match">
         <div class="full-width text-center bottom10">
             {{data.match.dateTime | customDate:false:true }}, {{data.match.typeName}}, {{data.match.stadiumName}}
         </div>
-        <div class="flex-space-between full-width">
-            <div class="">
+        <div class="flex-space-between full-width main-part">
+            <div>
                 <div class="full-width text-center">
-                    <img [src]="data.match.homeClubLogo" [alt]="data.match.homeClubName" [title]="data.match.homeClubName" class="logo" />
+                    <img [src]="data.match.homeClubLogo"
+                        [alt]="data.match.homeClubName"
+                        [title]="data.match.homeClubName"
+                        class="logo"
+                        height="72"  />
                 </div>
                 <div class="club-name full-width text-center">
                     <b [textContent]="data.match.homeClubName"></b>
@@ -19,9 +23,13 @@
                 <b
                     *ngIf="data.match.scorePenaltyHome || data.match.scorePenaltyAway">({{data.match.scorePenaltyHome}}-{{data.match.scorePenaltyAway}})</b>
             </div>
-            <div class="">
+            <div>
                 <div class="full-width text-center">
-                    <img [src]="data.match.awayClubLogo" [alt]="data.match.awayClubName" [title]="data.match.awayClubName" class="logo" />
+                    <img [src]="data.match.awayClubLogo" 
+                        [alt]="data.match.awayClubName" 
+                        [title]="data.match.awayClubName" 
+                        class="logo"
+                        height="72" />
                 </div>
                 <div class="club-name full-width text-center">
                     <b [textContent]="data.match.awayClubName"></b>
