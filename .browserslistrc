@@ -6,6 +6,6 @@
 #   npx browserslist
 
 > 0.5%
-last 2 versions
-Firefox ESR
+last 3 versions
 not dead
+Firefox ESR

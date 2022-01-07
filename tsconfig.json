@@ -8,11 +8,17 @@
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
     "lib": [
-      "es2018",
+      "es2020",
       "dom"
     ],
-    "module": "esnext",
+    "module": "ES2020",
     "moduleResolution": "node",
+    "removeComments": true,
+    "sourceMap": true,
+    "target": "es2017",
+    "strict": false,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
     "outDir": "./dist/out-tsc",
     "paths": {
       "@environments/*": [
@@ -145,9 +151,6 @@
         "./src/app/widgets/*"
       ],
     },
-    "removeComments": true,
-    "sourceMap": true,
-    "target": "es2015",
   },
   "typeRoots": [
     "node_modules/@types"
@@ -169,6 +172,7 @@
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "enableI18nLegacyMessageIdFormat": false,
   }
 }
