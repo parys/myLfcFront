@@ -134,7 +134,7 @@ export class PersonListComponent extends ObserverComponent implements OnInit, Af
             .subscribe((data: boolean) => {
                 if (data) {
                     this.items.splice(index, 1);
-                    this.paginator.length -= 1;
+                    this.paginator.length = this.paginator.length - 1;
                 }
             });
     }
