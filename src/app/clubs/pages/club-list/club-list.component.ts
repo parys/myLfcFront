@@ -108,7 +108,7 @@ export class ClubListComponent extends ObserverComponent implements AfterViewIni
             .subscribe((result: boolean) => {
                 if (result) {
                     this.items.splice(index, 1);
-                    this.paginator.length -= 1;
+                    this.paginator.length = this.paginator.length - 1;
                 }
             });
     }

@@ -111,7 +111,7 @@ export class StadiumListComponent extends ObserverComponent implements AfterView
             .subscribe((res: boolean) => {
                 if (res) {
                     this.items.splice(index, 1);
-                    this.paginator.length -= 1;
+                    this.paginator.length = this.paginator.length - 1;
                 }
             });
     }
