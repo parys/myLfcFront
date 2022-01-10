@@ -31,6 +31,14 @@ import { SignalRActions } from '@base/signalr/signalr.actions';
 @Injectable()
 export class MatchesState {
 
+    constructor(protected matchNetwork: MatchService,
+                private store: Store,
+                @Inject(PLATFORM_ID) private platformId: object,
+                protected titleService: CustomTitleMetaService) { }
+
+
+    private static COUNTDOWN$: Subscription;
+
     @Selector()
     static match(state: MatchesStateModel) {
         return state.match;
@@ -55,11 +63,6 @@ export class MatchesState {
     static timeRemaining(state: MatchesStateModel) {
         return state.timeRemaining;
     }
-
-    constructor(protected matchNetwork: MatchService,
-                private store: Store,
-                @Inject(PLATFORM_ID) private platformId: object,
-                protected titleService: CustomTitleMetaService) { }
 
     @Action(MatchActions.ChangeSort)
     @Action(MatchActions.ChangePage)
@@ -137,6 +140,7 @@ export class MatchesState {
                     .subscribe(timeRemaining => patchState({ timeRemaining }));
             } else {
                 patchState({ timeRemaining: null });
+                patchState({match: { ...match, scoreHome: '0', scoreAway: '0' } } );
             }
         }
     }
@@ -162,9 +166,6 @@ export class MatchesState {
         patchState({ match: {...match} });
     }
 
-
-    private static COUNTDOWN$: Subscription;
-
     private updateTimeRemaining(endtime: Date): string {
         const t = Date.parse(endtime.toString()) - Date.parse(new Date().toString());
         const seconds = Math.floor((t / 1000) % 60);
@@ -172,8 +173,9 @@ export class MatchesState {
         const hours = Math.floor((t / (1000 * 60 * 60)) % 24);
         const days = Math.floor(t / (1000 * 60 * 60 * 24));
         if (t < 0) {
+            MatchesState.COUNTDOWN$?.unsubscribe();
             this.store.dispatch(new MatchActions.UpdateTimeRemaining(false));
-            return 'Матч начался!';
+            return null;
         }
         return `${days}д:${hours}ч:${minutes}м:${seconds}с`;
     }
