@@ -49,20 +49,21 @@ export class CommentsState {
             );
     }
 // TODO Research how to deal with that (have comments list + signalR update + keep comments when editing)
-    // @Action(SignalRActions.UpdateComment)
-    // onUpdate({ patchState, getState, setState }: StateContext<CommentsStateModel>, { payload }: SignalRActions.UpdateComment) {
+     @Action(SignalRActions.UpdateComment)
+     onUpdate({ patchState, getState, setState }: StateContext<CommentsStateModel>, { payload }: SignalRActions.UpdateComment) {
 
-    //     const materialId = this.store.selectSnapshot(MaterialsState.material)?.id;
-    //     const matchId = this.store.selectSnapshot(MatchesState.match)?.id;
+         const materialId = this.store.selectSnapshot(MaterialsState.material)?.id;
+         const matchId = this.store.selectSnapshot(MatchesState.match)?.id;
 
-    //     if (matchId !== payload.entity.matchId && materialId !== payload.entity.materialId) {
-    //              return;
-    //     }
-    //     if (payload.type != SignalREntityEnum.Update) {
-    //         let { commentsNumber } = getState();
-    //         let diff = payload.type === SignalREntityEnum.Add ? 1 : -1;
-    //         patchState({ commentsNumber: (commentsNumber + diff) });
-    //     }
+         if (matchId !== payload.entity.matchId && materialId !== payload.entity.materialId) {
+                  return;
+         }
+
+         if (payload.type != SignalREntityEnum.Update) {
+             const { commentsNumber } = getState();
+             const diff = payload.type === SignalREntityEnum.Add ? 1 : -1;
+             patchState({ commentsNumber: (commentsNumber + diff) });
+        }
     //     const { comments } = getState();
     //     if (payload.entity.parentId == null) {
     //         const index = comments.findIndex(x => x.id === payload.entity.id);
@@ -77,7 +78,7 @@ export class CommentsState {
     //         this.updateComment(comments, payload.entity);
     //         patchState({ comments: cloneDeep(comments) });
     //     }
-    // }
+     }
 
     // private updateComment(comments: GetCommentListByEntityIdQuery.CommentListDto[],
     //         payload: GetCommentListByEntityIdQuery.CommentListDto): GetCommentListByEntityIdQuery.CommentListDto {

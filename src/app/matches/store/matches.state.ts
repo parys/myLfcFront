@@ -130,13 +130,13 @@ export class MatchesState {
         if (isPlatformBrowser(this.platformId)) {
             const { match } = getState();
 
+            MatchesState.COUNTDOWN$?.unsubscribe();
             if (payload) {
-            MatchesState.COUNTDOWN$ = interval(1000).pipe(
-                map(() => this.updateTimeRemaining(match.dateTime)))
-                .subscribe(timeRemaining => patchState({ timeRemaining }));
+                MatchesState.COUNTDOWN$ = interval(1000).pipe(
+                    map(() => this.updateTimeRemaining(match.dateTime)))
+                    .subscribe(timeRemaining => patchState({ timeRemaining }));
             } else {
-                patchState({ timeRemaining: null })
-                MatchesState.COUNTDOWN$?.unsubscribe();
+                patchState({ timeRemaining: null });
             }
         }
     }

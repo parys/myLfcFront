@@ -70,7 +70,7 @@ export class SignalRService {
         this.hubConnection.on('comment', (data: SignalrEntity<GetCommentListByEntityIdQuery.CommentListDto>) => {
             data.entity.children = data.entity.children || [];
             this.commentUpdate.next(data);
-         //   this.store.dispatch(new SignalRActions.UpdateComment(data));
+            this.store.dispatch(new SignalRActions.UpdateComment(data));
         });
         if (token) {
             this.hubConnection.on('readPm',
