@@ -79,7 +79,7 @@ export class PersonEditComponent implements OnInit, AfterViewInit {
                         this.newPerson.emit(data);
                         this.editPersonForm.get('firstRussianName').setValue(null);
                         this.editPersonForm.get('lastRussianName').setValue(null);
-                        this.editPersonForm.get('nickName').setValue(null);
+                        this.editPersonForm.get('nickname').setValue(null);
                         this.editPersonForm.get('number').setValue(null);
                     }
                 },

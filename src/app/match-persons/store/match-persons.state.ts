@@ -18,7 +18,7 @@ import { GetMatchPersonsListQuery } from '@network/shared/match-persons/get-matc
     name: 'matchPersons',
     defaults: {
         matchPersonTypes: [],
-        flatMatchPersons: null,
+        flatMatchPersons: [],
         matchPersons: null,
         editOptions: null,
         selected: null,
@@ -119,11 +119,16 @@ export class MatchPersonsState {
             return;
         }
         const { matchPersons } = getState();
+        let { flatMatchPersons } = getState();
         switch (payload.type) {
             case SignalREntityEnum.Add: {
                 matchPersons[payload.entity.placeType].push(payload.entity);
                 matchPersons[payload.entity.placeType] = matchPersons[payload.entity.placeType].sort(compare);
                 patchState({ matchPersons: cloneDeep(matchPersons) });
+
+                flatMatchPersons.push(payload.entity);
+                patchState({ flatMatchPersons: cloneDeep(flatMatchPersons) });
+
                 break;
             }
             case SignalREntityEnum.Update: {
@@ -133,6 +138,7 @@ export class MatchPersonsState {
                     matchPersons[payload.entity.placeType] = matchPersons[payload.entity.placeType].sort(compare);
                     patchState({ matchPersons: cloneDeep(matchPersons) });
                 }
+
                 break;
             }
             case SignalREntityEnum.Delete: {
@@ -141,6 +147,10 @@ export class MatchPersonsState {
                     matchPersons[payload.entity.placeType].splice(index, 1);
                     patchState({ matchPersons: cloneDeep(matchPersons) });
                 }
+
+                flatMatchPersons = flatMatchPersons.filter(x => x.id === payload.entity.id);
+                patchState({ flatMatchPersons: cloneDeep(flatMatchPersons) });
+
                 break;
             }
         }
