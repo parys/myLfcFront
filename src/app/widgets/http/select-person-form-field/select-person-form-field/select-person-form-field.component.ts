@@ -62,6 +62,7 @@ export class SelectPersonFormFieldComponent extends AbstractControlComponent<num
                     filter.name = value;
                     filter.type = this.type;
                     filter.matchId = this.matchId;
+                    filter.pageSize = 50;
                     return this.personService.getAll(filter);
                 }),
                 switchMap((pagingPersons: PagedList<Person>): Observable<Person[]> => {
