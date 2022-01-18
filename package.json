@@ -48,7 +48,7 @@
     "@angular-devkit/build-angular": "13.1.2",
     "@angular-devkit/schematics": "13.1.2",
     "@angular/cli": "13.1.2",
-    "@nguniversal/builders": "13.0.1",
+    "@nguniversal/builders": "13.0.2",
     "@ngxs/devtools-plugin": "3.7.3",
     "@ngxs/logger-plugin": "3.7.3",
     "@schematics/angular": "13.1.2",
