@@ -23,6 +23,7 @@ import { OdModule } from './od';
 import { NavbarModule } from './home/navbar/navbar.module';
 import { AuthState } from '@auth/store';
 import { CoreState } from '@core/store';
+import { NotFoundComponent } from '@core/not-found/not-found.page';
 
 registerLocaleData(localeRU);
 
@@ -66,6 +67,7 @@ export function runAppInitializerFactories(injector: Injector): () => Promise<an
     ],
     declarations: [
         AppComponent,
+        NotFoundComponent
     ],
     exports: [
     ],

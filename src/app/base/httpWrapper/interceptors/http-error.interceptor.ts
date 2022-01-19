@@ -9,23 +9,29 @@ import { ShowNotice } from '@notices/store';
 import { NoticeMessage } from '@notices/shared';
 import { isUnauthorizedError } from '@network/static';
 import { HttpStatusCode } from '@network/enums';
+import { isNotFoundError } from '@network/static/is-unauthorized-error';
+import { Router } from '@angular/router';
 
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-    constructor(private store: Store) { }
+    constructor(private store: Store, private router: Router) { }
 
     public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         return next.handle(request)
             .pipe(
-                retry(1),
+               // retryWhen(1),
 
                 catchError((error: HttpErrorResponse) => {
 
                     if (isUnauthorizedError(error) || error.error instanceof HttpErrorResponse) {
                         return throwError(error);
+                    }
+                    
+                    if (isNotFoundError(error) || error.error instanceof HttpErrorResponse) {
+                        this.router.navigate(['not-found']);
                     }
 
                     return this.parseError(error)

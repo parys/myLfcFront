@@ -177,7 +177,7 @@
 //      * The requested resource could not be found but may be available in the future.
 //      * Subsequent requests by the client are permissible.
 //      */
-//     NOT_FOUND = 404,
+    NOT_FOUND = 404,
 
 //     /**
 //      * A request method is not supported for the requested resource;

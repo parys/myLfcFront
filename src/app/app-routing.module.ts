@@ -33,6 +33,7 @@ import { MaterialHomeComponent } from '@materials/index';
 import { TITLE_RU } from '@constants/ru.constants';
 import { RoleGuard, RolesEnum } from '@base/auth';
 import { HelperType } from '@domain/enums/helper-type.enum';
+import { NotFoundComponent } from '@core/not-found/not-found.page';
 
 
 const staticPageRoutes: Routes = [
@@ -232,7 +233,9 @@ const routes: Routes = [
         path: 'editPage',
         loadChildren: () => import('./static-pages-editor/static-pages-editor.module').then(m => m.StaticPagesEditorModule)
     },
-    { path: '**', redirectTo: '/' }
+    { path: '**', pathMatch: 'full',
+     component: NotFoundComponent,
+      data: { title: `Такой страницы не существует` } }
 ];
 
 @NgModule({
