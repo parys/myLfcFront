@@ -4,7 +4,7 @@
             <mat-icon>menu</mat-icon>
         </button>
         <a class="logo-link" role="button" [routerLink]="['/']">
-            <img src="/content/logo34.png" class="logo" alt="MyLFC.ru" />
+            <img src="/content/logo34.png" class="logo" height="133" width="114" alt="MyLFC.ru" />
         </a>
         <app-dynamic-content-outlet *ngIf="!data.mobile" [componentName]="'NavbarMenuComponent'">
         </app-dynamic-content-outlet>
@@ -25,6 +25,6 @@
                 </div>
             </ng-template>
         </ng-container>
-        <od [blockName]="'R-A-255349-4'" class="od" *ngIf="showOd"></od>
+        <!-- <od [blockName]="'R-A-255349-4'" class="od" *ngIf="showOd"></od> -->
     </nav>
 </ng-container>

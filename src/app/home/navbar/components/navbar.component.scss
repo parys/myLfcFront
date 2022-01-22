@@ -1,17 +1,10 @@
 ﻿@import 'src/assets/styles/abstracts/module';
 
-.logo-link {
-    height: 77px;
-    width: 272px;
+nav {
+    height: 60px;
 }
-
-.logo {
-    max-height: 71px;
-    width: 272px;
-}
-
-
-@media(max-width: 1050px) {
+//  
+// @media(max-width: 1050px) {
     .logo-link {
         height: 33px;
         width: 114px;
@@ -20,8 +13,7 @@
         max-height: 33px;
         width: 114px;
     }
-}
-
+//}
 @media(max-width: 1810px) {
 
     /* should based on menu length? todo*/
@@ -89,6 +81,6 @@ nav {
 
 .od {
     margin-left: auto;
-    height: 90px;
+    height: 60px;
     width: calc(100% - 272px - 750px);
 }

@@ -20,6 +20,7 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { ObserverComponent } from '@domain/base';
 import { isPlatformServer } from '@angular/common';
 import { AuthState } from '@auth/store/auth.state';
+import { UpdateService } from '@base/update.service';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class AppComponent extends ObserverComponent implements OnInit {
     public showAd = true;
 
     constructor(private router: Router,
+                private updateService: UpdateService,
                 private activatedRoute: ActivatedRoute,
                 private titleService: CustomTitleMetaService,
                 private store: Store,
