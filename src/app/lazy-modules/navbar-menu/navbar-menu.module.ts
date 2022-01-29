@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 
 import { NavbarMenuComponent } from './components/navbar-menu.component';
 import { MatButtonModule } from '@angular/material/button';
+import { ILazyModule } from '@layout/ilazy-module.interface';
 
 @NgModule({
     imports: [
@@ -22,8 +23,9 @@ import { MatButtonModule } from '@angular/material/button';
         NavbarMenuComponent,
     ]
 })
-export class NavbarMenuModule {
-    static dynamicComponentsMap = {
-        NavbarMenuComponent
-    };
- }
+export class NavbarMenuModule implements ILazyModule {
+
+    getComponent() {
+        return NavbarMenuComponent;
+    }
+}

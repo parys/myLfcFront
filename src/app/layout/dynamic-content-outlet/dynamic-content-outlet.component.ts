@@ -7,7 +7,8 @@ import {
     ViewChild,
     ViewContainerRef,
     ChangeDetectorRef,
-    ChangeDetectionStrategy
+    ChangeDetectionStrategy,
+    Type
 } from '@angular/core';
 import { DynamicContentOutletService } from './dynamic-content-outlet.service';
 
@@ -19,29 +20,32 @@ import { DynamicContentOutletService } from './dynamic-content-outlet.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DynamicContentOutletComponent implements OnDestroy, OnChanges {
-    @ViewChild('container', { read: ViewContainerRef, static: true })
+    @ViewChild('container', { read: ViewContainerRef })
     container: ViewContainerRef;
 
     @Input() componentName: string;
 
     private component: ComponentRef<{}>;
 
-    constructor(private dynamicContentService: DynamicContentOutletService, private cdr: ChangeDetectorRef) { }
+    constructor(private dynamicContentService: DynamicContentOutletService,
+                private cdr: ChangeDetectorRef) { }
 
-    async ngOnChanges() {
+    public async ngOnChanges() {
         await this.renderComponent();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy() {
         this.destroyComponent();
     }
 
     private async renderComponent() {
         this.destroyComponent();
 
-        this.component = await this.dynamicContentService.GetComponent(
+        const cmp = await this.dynamicContentService.GetComponent(
             this.componentName
-        );
+        ) as Type<any>;
+        this.component = this.container.createComponent<any>(cmp);
+
         this.container.insert(this.component.hostView);
         this.cdr.markForCheck();
     }

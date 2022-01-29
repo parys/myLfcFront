@@ -1,5 +1,9 @@
 ﻿import { Component, HostListener, PLATFORM_ID, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Select, Store } from '@ngxs/store';
+import { SidebarLeftActions, SidebarLeftState } from '@lazy-modules/sidebar-left/store';
+import { Observable } from 'rxjs';
+import { Match } from '@domain/models';
 
 @Component({
     selector: 'sidebar-left',
@@ -8,6 +12,15 @@ import { isPlatformBrowser } from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarLeftComponent {
+
+    constructor(private store: Store, @Inject(PLATFORM_ID) private platformId: object) {
+        this.store.dispatch([
+            new SidebarLeftActions.GetCalendar()]);
+    }
+
+    @Select(SidebarLeftState.nextMatch) nextMatch$: Observable<Match>;
+    @Select(SidebarLeftState.lastMatch) lastMatch$: Observable<Match>;
+
     @HostListener('window:scroll', [])
     public onWindowScroll() {
         if (isPlatformBrowser(this.platformId)) {
@@ -15,8 +28,6 @@ export class SidebarLeftComponent {
 
             document.getElementById('goToTop').className = scrollPos >= 200 ? '' : 'hidden';
         }
-    }
-    constructor(@Inject(PLATFORM_ID) private platformId: object) {
     }
 
     public goToTop(): void {

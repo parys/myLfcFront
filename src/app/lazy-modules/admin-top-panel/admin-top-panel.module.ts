@@ -14,7 +14,7 @@ import { AdminTopPanelComponent } from './components/admin-top-panel.component';
     ]
 })
 export class AdminTopPanelModule {
-    static dynamicComponentsMap = {
-        AdminTopPanelComponent
-    };
+    getComponent() {
+        return AdminTopPanelComponent;
+    }
 }

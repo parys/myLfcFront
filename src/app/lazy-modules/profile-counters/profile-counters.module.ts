@@ -32,7 +32,7 @@ import { CountersComponent } from './components/counters';
     ]
 })
 export class ProfileCountersModule {
-    static dynamicComponentsMap = {
-        CountersComponent
-    };
- }
+    getComponent() {
+        return CountersComponent;
+    }
+}

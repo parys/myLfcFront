@@ -8,7 +8,7 @@
         <img loading="lazy" [src]="items[currentPersonIndex].photo" class="photo" *ngIf="items[currentPersonIndex].photo"
             [alt]="items[currentPersonIndex].russianName" [srcset]="items[currentPersonIndex].photo | img:[100]" />
     </mat-card-content>
-    <div *ngIf="items.length > 1" class="flex-space-between">
+    <div *ngIf="items?.length > 1" class="flex-space-between">
         <button mat-button (click)="goToPrevious()">
             <mat-icon>arrow_back</mat-icon>
         </button>

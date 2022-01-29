@@ -1,47 +1,23 @@
 import {
-    ComponentFactoryResolver,
-    ComponentRef,
     Injectable,
     Injector,
-    Type,
-    Compiler
+    createNgModuleRef,
 } from '@angular/core';
-import { DynamicContentOutletErrorComponent } from './dynamic-content-outlet-error.component';
+import { ILazyModule } from '@layout/ilazy-module.interface';
 import { DynamicContentOutletRegistry } from './dynamic-content-outlet.registry';
-
-type ModuleWithDynamicComponents = Type<any> & {
-    dynamicComponentsMap: {};
-};
 
 @Injectable()
 export class DynamicContentOutletService {
     constructor(
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private compiler: Compiler,
         private injector: Injector
     ) { }
 
-    async GetComponent(componentName: string): Promise<ComponentRef<any>> {
+    async GetComponent(componentName: string): Promise<any> {
 
         try {
-            const lazyModule = await this.getModuleImport(componentName);
-
-            const ngModuleFactory = await this.compiler.compileModuleAndAllComponentsAsync(lazyModule);
-
-            const moduleRef = ngModuleFactory.ngModuleFactory.create(this.injector);
-
-            const componentType = (ngModuleFactory.ngModuleFactory.moduleType as ModuleWithDynamicComponents)
-                .dynamicComponentsMap[componentName];
-
-            const componentFactory = moduleRef.componentFactoryResolver.resolveComponentFactory(componentType);
-            return componentFactory.create(this.injector);
+            return await this.createComponent(componentName);
         } catch (error) {
-            return this.getDynamicContentErrorComponent(
-                // `Unable to load module ${modulePath}.
-                ` Looked up using component: ${componentName}. Error Details: ${
-                error.message
-                }`
-            );
+            return await this.createComponent('DynamicContentOutletErrorComponent');
         }
     }
 
@@ -55,13 +31,9 @@ export class DynamicContentOutletService {
         }
     }
 
-    private getDynamicContentErrorComponent(errorMessage: string) {
-        const factory = this.componentFactoryResolver.resolveComponentFactory(
-            DynamicContentOutletErrorComponent
-        );
-        const componentRef = factory.create(this.injector);
-        const instance = componentRef.instance as any;
-        instance.errorMessage = errorMessage;
-        return componentRef;
+    private async createComponent(name: string) {
+        const lazyModule = await this.getModuleImport(name);
+        const moduleRef = createNgModuleRef(lazyModule, this.injector);
+        return (moduleRef.instance as ILazyModule).getComponent();
     }
 }

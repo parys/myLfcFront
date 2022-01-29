@@ -16,6 +16,7 @@ import { UserBirthdayComponent } from './components/user-birthday';
 import { UserOnlineCounterComponent } from './components/user-online-counter';
 import { CommentLastComponent } from './components/comment-last';
 import { SidebarRightComponent } from './components/sidebar-right';
+import { ILazyModule } from '@layout/ilazy-module.interface';
 
 @NgModule({
     imports: [
@@ -37,12 +38,12 @@ import { SidebarRightComponent } from './components/sidebar-right';
     providers: [
         SidebarRightService
     ],
-    entryComponents: [
+    bootstrap: [
         SidebarRightComponent
     ]
 })
-export class SidebarRightModule {
-    static dynamicComponentsMap = {
-        SidebarRightComponent
-    };
+export class SidebarRightModule implements ILazyModule {
+    getComponent() {
+      return SidebarRightComponent;
+    }
  }

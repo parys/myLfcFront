@@ -16,6 +16,7 @@ import { MatchService } from '@matches/match.service';
 import { CustomTitleMetaService } from '@core/services';
 import { isPlatformBrowser } from '@angular/common';
 import { SignalRActions } from '@base/signalr/signalr.actions';
+import { SidebarLeftActions } from '@lazy-modules/sidebar-left/store';
 
 
 @State<MatchesStateModel>({
@@ -142,7 +143,8 @@ export class MatchesState {
             } else {
                 patchState({ timeRemaining: null });
                 patchState({match: { ...match, scoreHome: '0', scoreAway: '0' } } );
-            //TODO call updateCalendar    dispatch(new Calendar)
+
+                dispatch(new SidebarLeftActions.GetCalendar());
             }
         }
     }

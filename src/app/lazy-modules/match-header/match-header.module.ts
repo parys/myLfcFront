@@ -29,7 +29,8 @@ import { MatchHeaderState } from './store';
     ]
 })
 export class MatchHeaderModule {
-    static dynamicComponentsMap = {
-        MatchHeaderComponent
-    };
+
+    getComponent() {
+        return MatchHeaderComponent;
+    }
 }

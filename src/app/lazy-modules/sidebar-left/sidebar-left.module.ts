@@ -15,13 +15,19 @@ import {
 import { LeftSidebarMaterialModule } from './sidebar-left-material.module';
 import { SidebarLeftService } from './sidebar-left.service';
 import { PipesModule } from '@base/pipes';
+import { NgxsModule } from '@ngxs/store';
+import { ILazyModule } from '@layout/ilazy-module.interface';
+import { DynamicContentOutletModule } from '@layout/dynamic-content-outlet/dynamic-content-outlet.module';
+import { SidebarLeftState } from './store/sidebar-left.state';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         LeftSidebarMaterialModule,
-        PipesModule
+        PipesModule,
+        DynamicContentOutletModule,
+        NgxsModule.forFeature([SidebarLeftState])
     ],
     declarations: [
         MatchCalendarComponent,
@@ -36,12 +42,12 @@ import { PipesModule } from '@base/pipes';
     providers: [
         SidebarLeftService
     ],
-    entryComponents: [
+    bootstrap: [
         SidebarLeftComponent
     ]
 })
-export class SidebarLeftModule {
-    static dynamicComponentsMap = {
-        SidebarLeftComponent
-    };
+export class SidebarLeftModule implements ILazyModule {
+  getComponent() {
+    return SidebarLeftComponent;
+  }
 }
