@@ -17,7 +17,6 @@ import { SignalRModule } from '@base/signalr';
         BrowserAnimationsModule,
      //   BrowserTransferStateModule,
         SignalRModule.forRoot(),
-        ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
         NgxsReduxDevtoolsPluginModule.forRoot({
             disabled: environment.production
         }),

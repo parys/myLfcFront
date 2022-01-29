@@ -128,7 +128,8 @@ export class MatchesState {
     }
 
     @Action(MatchActions.UpdateTimeRemaining)
-    onUpdateTimeRemaining({patchState, getState}: StateContext<MatchesStateModel>, { payload }: MatchActions.UpdateTimeRemaining ) {
+    onUpdateTimeRemaining({ patchState, getState, dispatch }: StateContext<MatchesStateModel>,
+                          { payload }: MatchActions.UpdateTimeRemaining): void {
 
         if (isPlatformBrowser(this.platformId)) {
             const { match } = getState();
@@ -141,6 +142,7 @@ export class MatchesState {
             } else {
                 patchState({ timeRemaining: null });
                 patchState({match: { ...match, scoreHome: '0', scoreAway: '0' } } );
+            //TODO call updateCalendar    dispatch(new Calendar)
             }
         }
     }

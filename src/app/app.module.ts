@@ -25,6 +25,8 @@ import { AuthState } from '@auth/store';
 import { CoreState } from '@core/store';
 import { NotFoundComponent } from '@core/not-found/not-found.page';
 import { UpdateService } from '@base/update.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '@environments/environment';
 
 registerLocaleData(localeRU);
 
@@ -64,7 +66,8 @@ export function runAppInitializerFactories(injector: Injector): () => Promise<an
         NoticesModule.forRoot(),
         DynamicContentOutletModule,
         OdModule,
-        NavbarModule
+        NavbarModule,
+        ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     ],
     declarations: [
         AppComponent,
