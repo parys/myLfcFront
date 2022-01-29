@@ -24,9 +24,9 @@ import { NavbarModule } from './home/navbar/navbar.module';
 import { AuthState } from '@auth/store';
 import { CoreState } from '@core/store';
 import { NotFoundComponent } from '@core/not-found/not-found.page';
-import { UpdateService } from '@base/update.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '@environments/environment';
+//import { UpdateService } from '@base/update.service';
 
 registerLocaleData(localeRU);
 
@@ -78,7 +78,7 @@ export function runAppInitializerFactories(injector: Injector): () => Promise<an
     providers: [
         { provide: LOCALE_ID, useValue: 'ru-RU' },
         { provide: APP_INITIALIZER, useFactory: runAppInitializerFactories, deps: [Injector], multi: true },
-        UpdateService
+  //      UpdateService
         // {
         //    provide: ErrorHandler,
         //    useClass: UIErrorHandler
