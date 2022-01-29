@@ -26,7 +26,7 @@ import { CoreState } from '@core/store';
 import { NotFoundComponent } from '@core/not-found/not-found.page';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '@environments/environment';
-//import { UpdateService } from '@base/update.service';
+import { UpdateService } from '@base/update.service';
 
 registerLocaleData(localeRU);
 
@@ -67,7 +67,7 @@ export function runAppInitializerFactories(injector: Injector): () => Promise<an
         DynamicContentOutletModule,
         OdModule,
         NavbarModule,
-        ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+        ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
     ],
     declarations: [
         AppComponent,
@@ -78,7 +78,7 @@ export function runAppInitializerFactories(injector: Injector): () => Promise<an
     providers: [
         { provide: LOCALE_ID, useValue: 'ru-RU' },
         { provide: APP_INITIALIZER, useFactory: runAppInitializerFactories, deps: [Injector], multi: true },
-  //      UpdateService
+        UpdateService
         // {
         //    provide: ErrorHandler,
         //    useClass: UIErrorHandler
