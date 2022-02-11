@@ -109,7 +109,9 @@ export class MatchesState {
                     patchState({ match });
                     if (match?.id) {
                         this.updateTitlesAndTags(match);
-                        dispatch(new MatchActions.UpdateTimeRemaining(true));
+                        if (new Date().getTime() < new Date(match.dateTime).getTime()) {
+                            dispatch(new MatchActions.UpdateTimeRemaining(true));
+                        }
                     }
                 })
             );
@@ -135,7 +137,7 @@ export class MatchesState {
             const { match } = getState();
 
             MatchesState.COUNTDOWN$?.unsubscribe();
-            if (payload) {
+            if (payload) {            
                 MatchesState.COUNTDOWN$ = interval(1000).pipe(
                     map(() => this.updateTimeRemaining(match.dateTime)))
                     .subscribe(timeRemaining => patchState({ timeRemaining }));
