@@ -54,7 +54,7 @@
     "@schematics/angular": "13.2.3",
     "@types/express": "4.17.13",
     "@types/jasmine": "3.10.3",
-    "@types/node": "16.11.21",
+    "@types/node": "16.11.25",
     "@types/tinymce": "4.6.4",
     "@types/lodash": "4.14.178",
     "codelyzer": "6.0.2",
