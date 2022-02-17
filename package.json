@@ -31,7 +31,7 @@
     "@angular/platform-server": "13.2.2",
     "@angular/router": "13.2.2",
     "@angular/service-worker": "13.2.2",
-    "@microsoft/signalr": "6.0.1",
+    "@microsoft/signalr": "6.0.2",
     "@nguniversal/common": "13.0.2",
     "@nguniversal/express-engine": "13.0.2",
     "@ngxs/store": "3.7.3",
