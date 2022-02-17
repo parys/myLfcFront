@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Clipboard } from '@angular/cdk/clipboard';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Select, Store } from '@ngxs/store';
 
 import { AuthState } from '@auth/store';
@@ -18,9 +18,12 @@ import { EDIT_ROUTE, MESSAGE } from '@constants/index';
 import { MaterialEditService } from '../materials-edit.service';
 import { MaterialsState } from '@materials/lazy/store';
 import { GetMaterialDetailQuery } from '@network/shared/materials';
-import { tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { MaterialCategoriesState } from '@material-categories/core/store';
 import { GetMaterialCategoriesListQuery } from '@network/shared/material-categories';
+import { User } from '@users/models/user.model';
+import { UserFilters } from '@users/models/user-filters.model';
+import { PagedList } from '@domain/models/pagedList.model';
 
 @Component({
     selector: 'material-edit',
@@ -34,6 +37,8 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
     public type: MaterialType;
     public additional = 'additional';
     public isSaving = false;
+    public users$: Observable<User[]>;
+    public debounceTime = 600;
 
     @Select(AuthState.isEditor) isEditor$: Observable<boolean>;
 
@@ -60,7 +65,25 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
         const userId = this.store.selectSnapshot(AuthState.userId);
         this.id = this.item ?.id ?? 0;
         this.item.userId = userId;
+        if (!this.id) {
+            this.item.userName = this.store.selectSnapshot(AuthState.userName);
+        }
         this.initForm(this.item);
+
+        this.users$ = this.editForm.controls.userName.valueChanges.pipe(
+            debounceTime(this.debounceTime),
+            distinctUntilChanged(),
+            switchMap((value: string) => {
+                const filter = new UserFilters();
+                filter.userName = value;
+                return this.service.getUsers(filter);
+            }),
+            switchMap((value: PagedList<User>) => of(value.results))
+            );
+    }
+
+    public selectUser(id: number) {
+        this.editForm.get('userId').patchValue(id);
     }
 
     public onFullSave(): void {
@@ -156,6 +179,7 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
             usePhotoInBody: [true],
             tags: [''],
             userId: [],
+            userName: [],
             type: [],
             id: []
         });

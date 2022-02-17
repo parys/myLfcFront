@@ -4,7 +4,10 @@ import { Observable } from 'rxjs';
 
 import { Material } from '@domain/models/material.model';
 import { HttpWrapper } from '@base/httpWrapper';
-import { MATERIALS_ROUTE } from '@constants/routes.constants';
+import { MATERIALS_ROUTE, USERS_ROUTE } from '@constants/routes.constants';
+import { UserFilters } from '@users/models/user-filters.model';
+import { PagedList } from '@domain/models/pagedList.model';
+import { User } from '@users/models/user.model';
 
 @Injectable()
 export class MaterialEditService {
@@ -25,5 +28,10 @@ export class MaterialEditService {
 
     public extractPhoto(url: string): Observable<string[]> {
         return this.http.get<string[]>(this.actionUrl + 'imageLinks/' + url);
+    }
+
+
+    public getUsers(filters: UserFilters): Observable<PagedList<User>> { //copy paste, need to switch to select-user widget
+        return this.http.getWithParams<PagedList<User>>(USERS_ROUTE, filters);
     }
 }

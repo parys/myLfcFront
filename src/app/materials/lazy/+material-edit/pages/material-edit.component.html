@@ -18,6 +18,14 @@
                 <bbeditor name="message" [type]="2" [value]="item?.message" [height]="400" formControlName="message">
                 </bbeditor>
             </div>
+            <mat-form-field class="full-width" *ngIf="data.isEditor">
+                <input matInput placeholder="Автор" [matAutocomplete]="user" formControlName="userName">
+                <mat-autocomplete #user="matAutocomplete">
+                    <mat-option *ngFor="let user of users$ | async" [value]="user.userName" (click)="selectUser(user.id)">
+                        <span>{{ user.userName }}</span>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
             <div class="full-width flex-space-between">
                 <button mat-raised-button color="warn" type="submit"
                     [disabled]="!editForm.valid || isSaving">Сохранить</button>
