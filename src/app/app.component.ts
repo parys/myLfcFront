@@ -34,6 +34,7 @@ export class AppComponent extends ObserverComponent implements OnInit {
 
     @Select(CoreState.mobile) mobile$: Observable<boolean>;
     @Select(AuthState.isAuthor) isAuthor$: Observable<boolean>;
+    @Select(AuthState.isNewsmaker) isNewsmaker$: Observable<boolean>;
 
     @ViewChild('sidenav') sidenav: MatSidenav;
 

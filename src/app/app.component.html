@@ -1,9 +1,9 @@
-﻿<ng-container *ngIf="{ mobile: mobile$ | async, isAuthor: isAuthor$ | async } as data">
+﻿<ng-container *ngIf="{ mobile: mobile$ | async, isAuthor: isAuthor$ | async, isNewsmaker: isNewsmaker$ | async } as data">
     <http-loader></http-loader>
     <mat-sidenav-container (backdropClick)="sidenav.close()">
         <mat-sidenav-content class="main">
             <navbar (toggle)="sidenav.open()" class="full-width"></navbar>
-            <ng-container *ngIf="data.isAuthor">
+            <ng-container *ngIf="data.isAuthor || data.isNewsmaker">
                 <app-dynamic-content-outlet [componentName]="'AdminTopPanelComponent'" class="full-width">
                 </app-dynamic-content-outlet>
             </ng-container>
