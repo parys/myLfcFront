@@ -29,8 +29,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.sub = this.route.queryParams.subscribe(params => {
-            if (params['code']) {
-                this.code = params['code'];
+            if (params.code) {
+                this.code = params.code;
             } else {
                 this.router.navigate(['/']);
             }
@@ -47,7 +47,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        if(this.sub) { this.sub.unsubscribe(); }
+        if (this.sub) { this.sub.unsubscribe(); }
     }
 
     public onSubmit(): void {

@@ -188,7 +188,6 @@
       }
     }
   },
-  "defaultProject": "angular2app",
   "cli": {
     "analytics": "c62591b2-4fa4-42dc-afe6-75838d589868"
   }

@@ -25,10 +25,6 @@ import { EnsureModuleLoadedOnceGuard } from '@domain/base/ensure-module-loaded-o
     ],
     exports: [
         NotifierComponent
-    ],
-    entryComponents: [
-        NoticeComponent,
-        ConfirmationComponent,
     ]
 })
 export class NoticesModule extends EnsureModuleLoadedOnceGuard {

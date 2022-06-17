@@ -19,9 +19,9 @@ export class FaqCategoryEditComponent implements OnInit, OnDestroy {
     private faqCategoryId: number;
 
     constructor(private service: FaqCategoryService,
-        private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
-        private snackBar: MatSnackBar) { }
+                private formBuilder: FormBuilder,
+                private route: ActivatedRoute,
+                private snackBar: MatSnackBar) { }
 
     public ngOnInit(): void {
         this.initFaqCategoryEditForm();

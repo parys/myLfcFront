@@ -17,9 +17,6 @@ import { MatButtonModule } from '@angular/material/button';
     ],
     declarations: [
         NavbarMenuComponent,
-    ],
-    entryComponents: [
-        NavbarMenuComponent,
     ]
 })
 export class NavbarMenuModule {

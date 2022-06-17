@@ -15,7 +15,6 @@ import { ChatMessageType } from '@domain/enums/chat-message-type.enum';
 import { removeMany } from '@domain/operators/remove-from-many';
 import { GetChatMessagesListQuery } from '@network/shared/chat/get-chat-messages-list.query';
 import { patch, updateItem } from '@ngxs/store/operators';
-import { appendToStartOrUpdate } from '@domain/operators/append-to-start-or-append';
 import { SignalRActions } from '@base/signalr/signalr.actions';
 
 
@@ -57,19 +56,16 @@ export class ChatState {
 
     @Action(ChatActions.CreateChatMessage)
     onCreateMessage(ctx: StateContext<ChatStateModel>, { payload }: ChatActions.CreateChatMessage) {
-        return this.chatService.create(payload).pipe(
-            tap(response => {
-            })
-        )
+        return this.chatService.create(payload);
     }
 
     @Action(ChatActions.UpdateChatMessage)
     onUpdateMessage({ dispatch }: StateContext<ChatStateModel>, { payload }: ChatActions.UpdateChatMessage) {
         return this.chatService.update(payload.id, payload).pipe(
-            tap(response => {
-                dispatch(new ShowNotice(NoticeMessage.success('Cообщение обновлено', '')))
+            tap(_ => {
+                dispatch(new ShowNotice(NoticeMessage.success('Cообщение обновлено', '')));
             })
-        )
+        );
     }
 
     @Action(ChatActions.DeleteChatMessage)
@@ -97,21 +93,24 @@ export class ChatState {
     }
 
     @Action(SignalRActions.UpdateChat)
-    onUpdateChat({ setState }: StateContext<ChatStateModel>, { payload }: SignalRActions.UpdateChat) {
+    onUpdateChat({ setState, getState, patchState }: StateContext<ChatStateModel>, { payload }: SignalRActions.UpdateChat) {
         if (payload.type === ChatMessageType.Mini) {
-            return setState(
-                patch({
-                    miniMessages: appendToStartOrUpdate<GetChatMessagesListQuery.ChatMessageListDto>
-                        (payload, item => item.id === payload.id)
-                })
-            );
+
+            const { miniMessages } = getState();
+            const existingIndex = miniMessages.findIndex(item => item.id === payload.id);
+            if (existingIndex >= 0) {
+                return setState(patch({ miniMessages: updateItem(existingIndex, payload) }));
+            } else {
+                return patchState({ miniMessages: [payload, ...miniMessages]});
+            }
         } else if (payload.type === ChatMessageType.Big) {
-            return setState(
-                patch({
-                    maxiMessages: appendToStartOrUpdate<GetChatMessagesListQuery.ChatMessageListDto>
-                        (payload, item => item.id === payload.id)
-                })
-            );
+            const { maxiMessages } = getState();
+            const existingIndex = maxiMessages.findIndex(item => item.id === payload.id);
+            if (existingIndex >= 0) {
+                return setState(patch({ maxiMessages: updateItem(existingIndex, payload) }));
+            } else {
+                return patchState({ maxiMessages: [payload, ...maxiMessages]});
+            }
         }
     }
 

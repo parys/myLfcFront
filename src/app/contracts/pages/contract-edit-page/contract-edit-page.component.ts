@@ -27,7 +27,7 @@ export class ContractEditPageComponent implements OnInit {
     }
 
     public onSubmit(): void {
-         const contract = this.contractEditForm.value;
+        const contract = this.contractEditForm.value;
 
         if (contract.id === 0) {
             this.store.dispatch(new Actions.CreateContract(contract));

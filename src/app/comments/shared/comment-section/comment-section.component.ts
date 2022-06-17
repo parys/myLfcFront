@@ -49,22 +49,22 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
     @Select(CommentsState.commentsNumber) commentsNumber$: Observable<number>;
 
     constructor(private commentService: CommentService,
-                private cd: ChangeDetectorRef,
-                private location: Location,
-                private store: Store,
-                private renderer: Renderer2,
-                public element: ElementRef,
-                private router: Router,
-                private signalR: SignalRService,
-                private cdr: ChangeDetectorRef,
-                private formBuilder: FormBuilder) {
+        private cd: ChangeDetectorRef,
+        private location: Location,
+        private store: Store,
+        private renderer: Renderer2,
+        public element: ElementRef,
+        private router: Router,
+        private signalR: SignalRService,
+        private cdr: ChangeDetectorRef,
+        private formBuilder: FormBuilder) {
         super();
     }
 
     public ngOnInit(): void {
         const sub$ = this.comments$.subscribe(comments => this.comments = comments);
         this.subscriptions.push(sub$);
-      //  this.update();
+        //  this.update();
         this.commentAddForm = this.formBuilder.group({
             message: ['', Validators.compose([
                 Validators.required, Validators.minLength(3)])]
@@ -159,10 +159,11 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
             return;
         }
         this.isSaving = true;
-        const comment: Comment = this.commentAddForm.value;
-        comment.materialId = this.materialId;
-        comment.matchId = this.matchId;
-        comment.type = this.type ? this.type : 3; // todo
+        const comment: Comment = { ...this.commentAddForm.value,
+            materialId: this.materialId,
+            matchId: this.matchId,
+            type: this.type ? this.type : 3 }; // todo
+
         const sub$ = this.commentService.createOrUpdate(comment.id, comment)
             .subscribe((data: any) => {
                 this.commentAddForm.controls.message.patchValue('');
@@ -191,7 +192,7 @@ export class CommentSectionComponent extends ObserverComponent implements OnInit
         }
 
         if (comment.type === SignalREntityEnum.Add) {
-            this.comments.push(comment.entity);
+            this.comments = [...this.comments, comment.entity];
             this.cdr.detectChanges();
         }
         // TODO implement remove comments

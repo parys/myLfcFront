@@ -50,8 +50,7 @@ export class ChatWindowComponent extends ObserverComponent implements OnInit {
         message.type = this.type;
 
         if (this.selectedEditIndex != null) {
-            message = this.messages[this.selectedEditIndex];
-            message.message = this.messageForm.get(MESSAGE).value;
+            message = { ...this.messages[this.selectedEditIndex], message: this.messageForm.get(MESSAGE).value };
             this.updateMessage.emit(message);
         } else {
             this.createMessage.emit(message);

@@ -64,9 +64,9 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
         this.item = this.store.selectSnapshot(MaterialsState.material) || new GetMaterialDetailQuery.Response();
         const userId = this.store.selectSnapshot(AuthState.userId);
         this.id = this.item ?.id ?? 0;
-        this.item.userId = userId;
+        this.item = { ...this.item, userId};
         if (!this.id) {
-            this.item.userName = this.store.selectSnapshot(AuthState.userName);
+            this.item = { ...this.item, userName: this.store.selectSnapshot(AuthState.userName)};
         }
         this.initForm(this.item);
 
@@ -97,8 +97,7 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
             return;
         }
         this.isSaving = true;
-        const newsItem = this.editForm.value;
-        newsItem.type = this.type;
+        const newsItem = {...this.editForm.value, type: this.type };
 
         this.service.createOrUpdate(newsItem, this.id)
             .subscribe(data => {
@@ -165,7 +164,7 @@ export class MaterialEditComponent extends ObserverComponent implements OnInit {
 
     private initForm(material: GetMaterialDetailQuery.Response): void {
         this.editForm = this.formBuilder.group({
-            categoryId: [Validators.required],
+            categoryId: [, Validators.required],
             title: ['', Validators.required],
             brief: ['', Validators.required],
             message: ['', Validators.required],

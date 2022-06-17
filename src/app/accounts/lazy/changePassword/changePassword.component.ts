@@ -15,8 +15,8 @@ export class ChangePasswordComponent extends ObserverComponent implements OnInit
     public passwordForm: FormGroup;
 
     constructor(private service: AccountService,
-        private snackBar: MatSnackBar,
-        private formBuilder: FormBuilder) {
+                private snackBar: MatSnackBar,
+                private formBuilder: FormBuilder) {
             super();
     }
 

@@ -36,9 +36,6 @@ import { SidebarRightComponent } from './components/sidebar-right';
     ],
     providers: [
         SidebarRightService
-    ],
-    entryComponents: [
-        SidebarRightComponent
     ]
 })
 export class SidebarRightModule {

@@ -35,9 +35,6 @@ import { PipesModule } from '@base/pipes';
     ],
     providers: [
         SidebarLeftService
-    ],
-    entryComponents: [
-        SidebarLeftComponent
     ]
 })
 export class SidebarLeftModule {

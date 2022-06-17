@@ -92,12 +92,12 @@ export class SignalRService {
         }
 
         this.hubConnection.onclose(() => {
-            console.log('signalR: on close');
+          //  console.log('signalR: on close');
             this.store.dispatch(new CoreActios.ChangeSignalr(false));
         });
 
         this.hubConnection.stop().then(() => {
-            console.log('signalR: stop');
+         //   console.log('signalR: stop');
             this.store.dispatch(new CoreActios.ChangeSignalr(false));
         });
         this.hubConnection.start()
@@ -106,7 +106,7 @@ export class SignalRService {
             })
             .catch((err: Error) => {
                 this.store.dispatch(new CoreActios.ChangeSignalr(false));
-                console.error('signalr-ee', err);
+          //      console.error('signalr-ee', err);
             });
     }
 

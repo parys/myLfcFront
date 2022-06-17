@@ -49,24 +49,24 @@ export class RightSidebarState {
         return this.sidebarService.getLastComments()
             .pipe(
                 tap(latestComments => {
-                    patchState({latestComments: latestComments.results});
+                    patchState({ latestComments: latestComments.results });
                 }));
     }
 
     @Action(SignalRActions.UpdateComment)
     onUpdateComment({ setState, patchState, getState }: StateContext<RightSidebarStateModel>,
-         { payload }: SignalRActions.UpdateComment) {
+                    { payload }: SignalRActions.UpdateComment) {
         const { latestComments } = getState();
         switch (payload.type) {
             case (SignalREntityEnum.Add): {
-                latestComments.pop();
-                patchState({ latestComments: [payload.entity, ... latestComments] });
+                patchState({ latestComments: [payload.entity, ...latestComments.slice(0, -1)] });
                 break;
             }
             case (SignalREntityEnum.Update): {
                 setState(
                     patch({
-                        latestComments: updateItem<GetLatestCommentListQuery.LastCommentListDto | GetCommentListByEntityIdQuery.CommentListDto>
+                        latestComments:
+                        updateItem<GetLatestCommentListQuery.LastCommentListDto | GetCommentListByEntityIdQuery.CommentListDto>
                             (item => item.id === payload.entity.id, payload.entity)
                     })
                 );
@@ -75,7 +75,8 @@ export class RightSidebarState {
             case (SignalREntityEnum.Delete): {
                 setState(
                     patch({
-                        latestComments: removeItem<GetLatestCommentListQuery.LastCommentListDto | GetCommentListByEntityIdQuery.CommentListDto>
+                        latestComments:
+                        removeItem<GetLatestCommentListQuery.LastCommentListDto | GetCommentListByEntityIdQuery.CommentListDto>
                             (item => item.id === payload.entity.id)
                     })
                 );
@@ -89,7 +90,7 @@ export class RightSidebarState {
         return this.sidebarService.getUsersBirthdays()
             .pipe(
                 tap(response => {
-                    patchState({userBirthdays: response.results});
+                    patchState({ userBirthdays: response.results });
                 }));
     }
 
@@ -105,6 +106,6 @@ export class RightSidebarState {
             tap(response => {
                 patchState({ usersOnline: response });
             })
-        )
+        );
     }
 }

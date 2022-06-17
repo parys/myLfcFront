@@ -26,9 +26,6 @@ import { CountersComponent } from './components/counters';
     ],
     providers: [
         ProfileCountersService
-    ],
-    entryComponents: [
-        CountersComponent
     ]
 })
 export class ProfileCountersModule {

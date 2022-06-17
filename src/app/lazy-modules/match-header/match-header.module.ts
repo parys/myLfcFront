@@ -23,9 +23,6 @@ import { MatchHeaderState } from './store';
     ],
     providers: [
         MatchHeaderService
-    ],
-    entryComponents: [
-        MatchHeaderComponent
     ]
 })
 export class MatchHeaderModule {

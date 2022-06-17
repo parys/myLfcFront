@@ -5,19 +5,15 @@ import { DynamicContentOutletComponent } from './dynamic-content-outlet.componen
 import { DynamicContentOutletService } from './dynamic-content-outlet.service';
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: [
-    DynamicContentOutletComponent,
-    DynamicContentOutletErrorComponent
-  ],
-  exports: [DynamicContentOutletComponent],
-  providers: [
-    DynamicContentOutletService
-  ],
-  entryComponents: [
-    DynamicContentOutletComponent,
-    DynamicContentOutletErrorComponent
-  ]
+    imports: [CommonModule],
+    declarations: [
+        DynamicContentOutletComponent,
+        DynamicContentOutletErrorComponent
+    ],
+    exports: [DynamicContentOutletComponent],
+    providers: [
+        DynamicContentOutletService
+    ]
 })
 export class DynamicContentOutletModule {
 

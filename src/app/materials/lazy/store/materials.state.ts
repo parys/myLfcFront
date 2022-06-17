@@ -133,8 +133,7 @@ export class MaterialsState {
             tap(result => {
                 const { material } = getState();
                 if (result && material && payload === material.id) {
-                    material.pending = false;
-                    patchState({ material: { ...material } });
+                    patchState({ material: { ...material, pending: false } });
 
                 }
                 setState(
@@ -175,9 +174,9 @@ export class MaterialsState {
         return this.network.addView(payload).pipe(
             tap(result => {
                 const { material } = getState();
-                material.reads++;
+
                 if (result && material && payload === material.id) {
-                    patchState({ material });
+                    patchState({ material: {...material, reads: material.reads + 1 }});
                 }
             })
         );

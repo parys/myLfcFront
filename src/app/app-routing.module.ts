@@ -242,7 +242,7 @@ const routes: Routes = [
     imports: [
         RouterModule.forRoot(routes, {
     onSameUrlNavigation: 'reload',
-    initialNavigation: 'enabled',
+    initialNavigation: 'enabledBlocking' ,
     anchorScrolling: 'enabled',
     scrollPositionRestoration: 'enabled',
     relativeLinkResolution: 'legacy'

@@ -64,7 +64,7 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
             .verify(this.item.id)
             .subscribe(data => {
                 if (data) {
-                    this.item.isVerified = true;
+                    this.item = { ...this.item, isVerified: true };
                     this.cd.markForCheck();
                 }
             });
@@ -117,9 +117,8 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
     }
 
     public vote(positive: boolean): void {
-        const vote: CommentVote = new CommentVote();
-        vote.positive = positive;
-        vote.commentId = this.item.id;
+        const vote: CommentVote = { positive, commentId: this.item.id };
+
         const sub$ = this.materialCommentService.vote(vote).subscribe(data => {
             if (data) {
                 this.updateVotes(positive);
@@ -176,7 +175,7 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
                     this.item.children.forEach((x: Comment) => {
                         if (this.parent) {
                             x.parentId = this.parent.id;
-                            this.parent.children.push(x);
+                            this.parent.children = [...this.parent.children, x];
                         } else {
                             x.parentId = undefined;
                         }
@@ -206,9 +205,13 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
     }
 
     private getComment(): Comment | GetCommentListByEntityIdQuery.CommentListDto {
-        const comment: Comment | GetCommentListByEntityIdQuery.CommentListDto = this.item;
-        comment.message = this.commentForm.controls.message.value;
-        comment.answer = this.commentForm.controls.answer.value;
+        const comment: Comment | GetCommentListByEntityIdQuery.CommentListDto =
+        {
+            ...this.item,
+            message: this.commentForm.controls.message.value,
+            answer: this.commentForm.controls.answer.value
+        };
+
         return comment;
     }
 
@@ -231,7 +234,8 @@ export class CommentDetailComponent extends ObserverComponent implements OnInit 
     private putComment(comment: SignalrEntity<GetCommentListByEntityIdQuery.CommentListDto>): void {
 
         if (comment.entity.parentId === this.item.id && comment.type === SignalREntityEnum.Add) {
-            this.item.children.push(comment.entity);
+            this.item = {...this.item, children: [...this.item.children, comment.entity] };
+
             this.cd.detectChanges();
             return;
         }
