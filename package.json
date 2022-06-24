@@ -45,9 +45,9 @@
     "zone.js": "0.11.6"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "14.0.2",
-    "@angular-devkit/schematics": "14.0.2",
-    "@angular/cli": "14.0.2",
+    "@angular-devkit/build-angular": "14.0.3",
+    "@angular-devkit/schematics": "14.0.3",
+    "@angular/cli": "14.0.3",
     "@nguniversal/builders": "14.0.1",
     "@ngxs/devtools-plugin": "3.7.4",
     "@ngxs/logger-plugin": "3.7.4",
