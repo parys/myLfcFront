@@ -32,7 +32,7 @@
     "@angular/router": "14.0.2",
     "@angular/service-worker": "14.0.2",
     "@microsoft/signalr": "6.0.6",
-    "@nguniversal/common": "14.0.1",
+    "@nguniversal/common": "14.0.2",
     "@nguniversal/express-engine": "14.0.1",
     "@ngxs/store": "3.7.4",
     "angular2-recaptcha": "1.1.0",
