@@ -1,5 +1,5 @@
 <mat-form-field class="full-width">
-    <input matInput #selectSeason placeholder="Сезон" [matAutocomplete]="season"
+    <input matInput #selectSeason [placeholder]="placeholder" [matAutocomplete]="season"
      [value]="seasonName"
      [formControl]="seasonCtrl">
     <mat-autocomplete #season="matAutocomplete">

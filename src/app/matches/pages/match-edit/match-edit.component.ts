@@ -53,11 +53,18 @@ export class MatchEditComponent implements OnInit {
         this.editMatchForm.get('stadiumId').patchValue(id);
     }
 
+    public onClearSeason(event: any): void {
+        this.editMatchForm.get('seasonName').patchValue(null);
+        this.editMatchForm.get('seasonId').patchValue(null);
+    }
+
     private parseForm(): Match {
         const item = this.editMatchForm.value;
         item.id = this.id;
         const date = this.editMatchForm.controls.date.value;
         const time = this.editMatchForm.controls.time.value;
+        item.stadiumId = item.stadiumName ? item.stadiumId : null;
+        item.seasonId = item.seasonName ? item.seasonId : null;
 
         item.dateTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.slice(0, 2), time.slice(3, 5));
         return item;
@@ -68,14 +75,14 @@ export class MatchEditComponent implements OnInit {
         this.editMatchForm = this.formBuilder.group({
             clubName: [match?.clubName],
             clubId: [match?.clubId, Validators.required],
-            seasonId: [match?.seasonId, Validators.required],
+            seasonId: [match?.seasonId],
             seasonName: [match?.seasonName],
-            isHome: [match?.isHome, Validators.required],
+            isHome: [match?.isHome ?? false, Validators.required],
             date: [new Date(match?.dateTime), Validators.required],
             time: [new Date(match?.dateTime).toTimeString().slice(0, 8), Validators.required],
             typeId: [match?.typeId, Validators.required],
-            stadiumId: [match?.stadiumId, Validators.required],
-            stadiumName: [match?.stadiumName, Validators.required],
+            stadiumId: [match?.stadiumId],
+            stadiumName: [match?.stadiumName],
             photoUrl: [match?.photoUrl],
             videoUrl: [match?.videoUrl],
             previewId: [match?.previewId],

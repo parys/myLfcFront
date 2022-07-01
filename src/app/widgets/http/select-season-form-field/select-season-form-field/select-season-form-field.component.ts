@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, ElementRef, ViewChild, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl, ControlValueAccessor } from '@angular/forms';
 
 import { distinctUntilChanged, debounceTime, switchMap } from 'rxjs/operators';
@@ -25,9 +25,14 @@ import { SeasonFilters } from '@seasons/models/season-filters.model';
 export class SelectSeasonFormFieldComponent extends AbstractControlComponent<number>
     implements OnInit, ControlValueAccessor {
 
+    @Input() placeholder = 'Сезон';
+
     @Input() set seasonName(value: string) {
         this.seasonCtrl.setValue(value);
     }
+
+    @Output() clearSeason = new EventEmitter();
+
     @ViewChild('selectSeason', { static: true }) selectSeason: ElementRef;
 
     public seasons$: Observable<Season[]>;
@@ -42,6 +47,10 @@ export class SelectSeasonFormFieldComponent extends AbstractControlComponent<num
             debounceTime(DEBOUNCE_TIME),
             distinctUntilChanged(),
             switchMap((value: string) => {
+                if (!value) {
+                    this.clearSeason.emit();
+                }
+
                 const filter = new SeasonFilters();
                 filter.name = value;
                 return this.seasonService.getAll(filter);

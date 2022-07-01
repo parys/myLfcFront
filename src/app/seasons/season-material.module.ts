@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
 
 const materialModules = [
     MatExpansionModule,
@@ -15,7 +16,8 @@ const materialModules = [
     MatTooltipModule,
    // MatSortModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatInputModule
 ];
 
 @NgModule({
