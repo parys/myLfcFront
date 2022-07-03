@@ -25,6 +25,8 @@ export class SeasonCalendarComponent implements OnInit, AfterViewInit {
 
     @Select(AuthState.isAdminAssistant) isAdminAssistant$: Observable<boolean>;
 
+    @Select(AuthState.isInformer) isInformer$: Observable<boolean>;
+
     constructor(private service: SeasonService,
                 private cd: ChangeDetectorRef,
                 private route: ActivatedRoute) {
@@ -45,7 +47,12 @@ export class SeasonCalendarComponent implements OnInit, AfterViewInit {
             this.id = data.value;
             this.update(false);
         });
+    }
 
+    public onUpdateCalendar(): void {
+        this.service.updateCalendar().subscribe(
+          // TODO move away, add notification.
+        );
     }
 
     private update(selectUpdate: boolean): void {

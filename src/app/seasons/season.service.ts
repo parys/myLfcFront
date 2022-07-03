@@ -37,4 +37,8 @@ export class SeasonService extends BaseRestService<Season, SeasonFilters> {
     public setAsCurrent(id: number): Observable<boolean> {
         return this.http.put<boolean>(this.actionUrl + id + '/setAsCurrent', '');
     }
+
+    public updateCalendar(): Observable<boolean> {
+        return this.http.put<boolean>('matches/calendar', '');
+    }
 }

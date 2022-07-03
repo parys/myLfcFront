@@ -1,7 +1,9 @@
-﻿<ng-container *ngIf="{ isAdminAssistant: isAdminAssistant$ | async } as data">
+﻿<ng-container *ngIf="{ isAdminAssistant: isAdminAssistant$ | async, isInformer: isInformer$ | async } as data">
+    <div class="full-width" *ngIf="data.isInformer" (click)="onUpdateCalendar()">
+        <button mat-raised-button color="primary">Обновить календарь</button>
+    </div>
     <mat-form-field class="full-width">
         <mat-select #seasonSelect placeholder="Сезон">
-            <!--<mat-option>Выберите сезон</mat-option>-->
             <mat-option *ngFor="let season of seasons" [value]="season.id"
                 [textContent]="season.startSeasonYear + '-' + season.endSeasonYear">
 
