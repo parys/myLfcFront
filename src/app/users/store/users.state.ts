@@ -77,7 +77,7 @@ export class UsersState {
     }
 
     constructor(protected network: RoleGroupService, protected usersNetwork: UserService,
-                private titleService: CustomTitleMetaService) { }
+        private titleService: CustomTitleMetaService) { }
 
     @Action(ChangeSort)
     @Action(ChangePage)
@@ -161,6 +161,29 @@ export class UsersState {
                 tap(path => {
                     const { user } = getState();
                     patchState({ user: { ...user, photo: `${path}?${Math.random()}` } });
+                })
+            );
+    }
+
+    @Action(UserActions.UnbanUser)
+    onUnbanUser({ patchState, getState }: StateContext<UsersStateModel>, { payload }: UserActions.UnbanUser) {
+        return this.usersNetwork.unban(payload)
+            .pipe(
+                tap(path => {
+                    const { user } = getState();
+                    patchState({ user: { ...user, lockoutEnd: null } });
+                })
+            );
+    }
+
+    @Action(UserActions.BanUser)
+    onBanUser({ patchState, getState }: StateContext<UsersStateModel>, { payload }: UserActions.BanUser) {
+        return this.usersNetwork.ban(payload.userId, payload.days)
+            .pipe(
+                tap(path => {
+                    const { user } = getState();
+                    const time = new Date();
+                    patchState({ user: { ...user, lockoutEnd: new Date(time.setHours(time.getHours() + payload.days * 24 * 60 * 60)) } });
                 })
             );
     }

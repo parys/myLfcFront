@@ -3,8 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { AuthService } from '@base/auth';
 
-import { UserService } from '@users/user.service';
-import { ObserverComponent } from '@domain/base';
 import { Store, Select } from '@ngxs/store';
 import { AuthState } from '@auth/store';
 import { Observable } from 'rxjs';
@@ -21,11 +19,10 @@ import { RoleGroup } from '@role-groups/models/role-group.model';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class UserDetailComponent extends ObserverComponent implements OnInit {
+export class UserDetailComponent implements OnInit {
     public roleGroups: RoleGroup[];
     public banForm: FormGroup;
     public selectedUserId: number;
-    public banDaysCount = 0;
 
     @Select(AuthState.isAdminAssistant) isAdminAssistant$: Observable<boolean>;
 
@@ -38,13 +35,11 @@ export class UserDetailComponent extends ObserverComponent implements OnInit {
     @Select(AuthState.isMainModerator) isMainModerator$: Observable<boolean>;
 
     constructor(
-        private service: UserService,
         public dialog: MatDialog,
         private store: Store,
         private formBuilder: FormBuilder,
         private cd: ChangeDetectorRef,
         private authService: AuthService) {
-        super();
     }
 
     public ngOnInit(): void {
@@ -56,17 +51,9 @@ export class UserDetailComponent extends ObserverComponent implements OnInit {
     }
 
     public onSubmitBan(userId: number): void {
-        const banDaysCount = this.banForm.controls['banDaysCount'].value;
-        const sub = this.service.ban(userId, banDaysCount)
-            .subscribe((data: boolean) => {
-                if (data) {
-                    const time = new Date();
-                  // todo  this.item.lockoutEnd = new Date(time.setHours(time.getHours() + banDaysCount * 24 * 60 * 60));
-                    this.banForm.controls['banDaysCount'].patchValue(null);
-                }
-            });
-
-        this.subscriptions.push(sub);
+        const days: number = this.banForm.controls.banDaysCount.value;
+        this.store.dispatch(new UserActions.BanUser({ userId, days}));
+        this.banForm.reset();
     }
 
     public onChangeAvatar(event: any): void {
@@ -85,13 +72,7 @@ export class UserDetailComponent extends ObserverComponent implements OnInit {
     }
 
     public unban(userId: number): void {
-        const sub = this.service.unban(userId)
-            .subscribe((data: boolean) => {
-                if (data) {
-                 // todo   this.item.lockoutEnd = null;
-                }
-            });
-        this.subscriptions.push(sub);
+        this.store.dispatch(new UserActions.UnbanUser(userId));
     }
 
     public writePm(userId: number): void {
@@ -115,7 +96,7 @@ export class UserDetailComponent extends ObserverComponent implements OnInit {
 
     private initBanForm(): void {
         this.banForm = this.formBuilder.group({
-            banDaysCount: ['', Validators.min(1)]
+            banDaysCount: [null, [Validators.min(1), Validators.required]]
         });
     }
 }

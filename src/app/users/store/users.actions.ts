@@ -17,7 +17,7 @@ export class GetUsersList {
 
 export class SetPmReceiverId {
     static readonly type = '[Users] Set pm receiver id';
-    constructor(public payload: { id: number, userName: string}) { }
+    constructor(public payload: { id: number, userName: string }) { }
 }
 
 export class ChangeSort {
@@ -53,5 +53,15 @@ export namespace UserActions {
     export class UpdateAvatar {
         static readonly type = '[Users] Upload user avatar';
         constructor(public readonly payload: File) { }
+    }
+
+    export class UnbanUser {
+        static readonly type = '[Users] Unban user';
+        constructor(public readonly payload: number) { }
+    }
+
+    export class BanUser {
+        static readonly type = '[Users] Ban user';
+        constructor(public readonly payload: { userId: number, days: number }) { }
     }
 }
