@@ -56,7 +56,7 @@
     "@types/jasmine": "4.0.3",
     "@types/node": "16.11.49",
     "@types/tinymce": "4.6.5",
-    "@types/lodash": "4.14.183",
+    "@types/lodash": "4.14.184",
     "codelyzer": "6.0.2",
     "source-map-explorer": "2.5.2",
     "tinymce": "4.9.11",
