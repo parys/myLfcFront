@@ -48,7 +48,7 @@
     "@angular-devkit/build-angular": "14.2.2",
     "@angular-devkit/schematics": "14.2.2",
     "@angular/cli": "14.2.2",
-    "@nguniversal/builders": "14.1.0",
+    "@nguniversal/builders": "14.2.0",
     "@ngxs/devtools-plugin": "3.7.5",
     "@ngxs/logger-plugin": "3.7.5",
     "@schematics/angular": "14.2.2",
