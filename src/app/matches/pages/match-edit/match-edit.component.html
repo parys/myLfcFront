@@ -39,6 +39,11 @@
                 <mat-datepicker #datePicker startView="year" touchUi="true"></mat-datepicker>
             </mat-form-field>
         </div>
+        <div class="full-width text-center">
+            <mat-slide-toggle formControlName="postponed" color="warn">
+                Отложен
+            </mat-slide-toggle>
+        </div>
         <mat-form-field class="full-width">
             <input matInput placeholder="Превью id" formControlName="previewId">
         </mat-form-field>

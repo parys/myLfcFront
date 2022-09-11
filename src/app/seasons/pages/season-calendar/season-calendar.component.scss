@@ -26,7 +26,13 @@
         width: 82px;
     }
 
+
     .score {
         font-size: 30px;
+
+        .postponed {
+            font-size: 15px;
+        }
     }
+    
 }

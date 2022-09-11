@@ -27,4 +27,5 @@
     public previewId: string;
     public reportId: string;
     public commentCount: number;
+    public postponed: boolean;
 }

@@ -29,7 +29,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                     if (isUnauthorizedError(error) || error.error instanceof HttpErrorResponse) {
                         return throwError(error);
                     }
-                    
+
                     if (isNotFoundError(error) || error.error instanceof HttpErrorResponse) {
                         this.router.navigate(['not-found']);
                     }
@@ -56,13 +56,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         let message = '';
 
         for (const prop in errors) {
-            if (errors.hasOwnProperty(prop)) {
+            if (errors.hasOwnProperty(prop) && prop !== 'error') {
                 message += errors[prop];
             }
         }
 
-        const title = err.error.title || `Status Code: ${err.status || err.error.status}`;
-        message = message || `Message: ${err.message}`;
+        const title = err.error.title || `Ответ сервера: ${err.status || err.error.status}`;
+        message = message || `Ошибка: ${err.message}`;
 
         return of(NoticeMessage.error(title, message));
     }
@@ -73,12 +73,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         const obs = new Observable((observer: Observer<NoticeMessage>) => {
             reader.onloadend = (e) => {
                 const error = JSON.parse(reader.result as any);
-                const title = `Status Code: ${error.status || HttpStatusCode.BAD_REQUEST}`;
+                const title = `Ответ сервера: ${error.status || HttpStatusCode.BAD_REQUEST}`;
                 const message = error.errors || error.error || error.message
 
                 observer.next(NoticeMessage.error(title, message));
                 observer.complete();
-            }
+            };
         });
 
         reader.readAsText(err.error);

@@ -40,10 +40,13 @@
                                 </span>
                                 <span class="text-center score">
                                     <a [routerLink]="['/matches', match.id]">
+                                        <span *ngIf="match.postponed; else live" class="postponed">Перенесён</span>
+                                        <ng-template #live>
                                         <span *ngIf="match.scoreHome == null; else score">-:-</span>
                                         <ng-template #score>
                                             <b [textContent]="match.scoreHome"></b>:<b [textContent]="match.scoreAway"></b>
                                         </ng-template>
+                                    </ng-template>
                                     </a>
                                 </span>
                                 <span class="club text-center">

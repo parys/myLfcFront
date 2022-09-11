@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { tap, catchError, flatMap, retry } from 'rxjs/operators';
+import { tap, catchError, mergeMap, retry } from 'rxjs/operators';
 import { Observable, Subscription, of, interval, throwError } from 'rxjs';
 
 import { StorageService } from '@base/storage';
@@ -112,7 +112,7 @@ export class AuthService {
         // refresh every half the total expiration time
         if (this.tokens) {
             this.refreshSubscription$ = interval(this.tokens.expires_in * 500).pipe(
-                flatMap(() => this.refreshTokens()))
+                mergeMap(() => this.refreshTokens()))
                 .subscribe();
         }
     }

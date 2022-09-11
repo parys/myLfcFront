@@ -80,6 +80,7 @@ export class MatchEditComponent implements OnInit {
             isHome: [match?.isHome ?? false, Validators.required],
             date: [new Date(match?.dateTime), Validators.required],
             time: [new Date(match?.dateTime).toTimeString().slice(0, 8), Validators.required],
+            postponed: [match?.postponed ?? false],
             typeId: [match?.typeId, Validators.required],
             stadiumId: [match?.stadiumId],
             stadiumName: [match?.stadiumName],

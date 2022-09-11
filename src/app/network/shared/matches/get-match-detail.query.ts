@@ -40,5 +40,6 @@ export namespace GetMatchDetailQuery {
         public previewId: string;
         public reportId: string;
         public hideTeams: boolean;
+        public postponed: boolean;
     }
 }

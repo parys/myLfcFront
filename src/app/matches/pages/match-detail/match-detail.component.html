@@ -1,6 +1,6 @@
 ﻿<ng-container *ngIf="{ isInformer: isInformer$ | async,
                         match: match$ | async } as data">
-    <div class="full-width" >
+    <div class="full-width">
         <div *ngIf="data.isInformer" class="flex-space-between">
             <button mat-raised-button color="primary" (click)="pin(data.match.id)">Закрепить на главной</button>
             <button mat-raised-button (click)="pin(0)">Открепить от главной</button>
@@ -15,14 +15,15 @@
         <div class="full-width flex-v-c flex-space-between">
             <div>
                 <div class="full-width text-center">
-                    <img [src]="data.match.homeClubLogo" [alt]="data.match.homeClubName" [title]="data.match.homeClubName" />
+                    <img [src]="data.match.homeClubLogo" [alt]="data.match.homeClubName"
+                        [title]="data.match.homeClubName" />
                 </div>
                 <div class="full-width text-center">
                     <b class="font-size20" [textContent]="data.match.homeClubName"></b>
                 </div>
             </div>
             <div class="text-center">
-                <div class="score" *ngIf="data.match.scoreHome != null; else countDown;">
+                <div class="score" *ngIf="data.match.scoreHome != null && !data.match.postponed; else countDown;">
                     <b class=""><span [textContent]="data.match.scoreHome"></span></b>
                     <span class="padding5">:</span>
                     <b class=""><span [textContent]="data.match.scoreAway"></span></b>
@@ -30,13 +31,18 @@
                         *ngIf="data.match.scorePenaltyHome || data.match.scorePenaltyAway">({{data.match.scorePenaltyHome}}-{{data.match.scorePenaltyAway}})</b>
                 </div>
                 <ng-template #countDown>
-                    <span [textContent]="timeRemaining$ | async" class="color-gold color-back-maroon counter"></span>
+                    <span class="postponed" *ngIf="data.match.postponed; else countDown2;">Перенесён</span>
+                    <ng-template #countDown2>
+                        <span [textContent]="timeRemaining$ | async"
+                            class="color-gold color-back-maroon counter"></span>
+                    </ng-template>
                 </ng-template>
             </div>
 
             <div>
                 <div class="full-width text-center">
-                    <img [src]="data.match.awayClubLogo" [alt]="data.match.awayClubName" [title]="data.match.awayClubName" />
+                    <img [src]="data.match.awayClubLogo" [alt]="data.match.awayClubName"
+                        [title]="data.match.awayClubName" />
                 </div>
                 <div class="full-width text-center">
                     <b class="font-size20" [textContent]="data.match.awayClubName"></b>
@@ -45,13 +51,14 @@
         </div>
         <mat-tab-group mat-stretch-tabs color="primary" [selectedIndex]="data.match.scoreHome != null ? 1 : 0">
             <mat-tab label="Состав" isActive="data.match.scoreHome == null">
-                <match-person-panel [hideTeams]="data.match.hideTeams" [matchId]="data.match.id" [isHome]="data.match.homeClubId === 1">  
+                <match-person-panel [hideTeams]="data.match.hideTeams" [matchId]="data.match.id"
+                    [isHome]="data.match.homeClubId === 1">
                 </match-person-panel>
             </mat-tab>
             <mat-tab label="События">
                 <match-event-panel [matchId]="data.match.id" [isHome]="data.match.homeClubId === 1"></match-event-panel>
-                    <!-- <button mat-raised-button class="full-width" (click)="ngOnInit()">Обновить события матча</button> -->
-                
+                <!-- <button mat-raised-button class="full-width" (click)="ngOnInit()">Обновить события матча</button> -->
+
             </mat-tab>
         </mat-tab-group>
         <div class="full-width top10">
