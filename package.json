@@ -58,7 +58,7 @@
     "@types/tinymce": "4.6.5",
     "@types/lodash": "4.14.186",
     "codelyzer": "6.0.2",
-    "source-map-explorer": "2.5.2",
+    "source-map-explorer": "2.5.3",
     "tinymce": "4.9.11",
     "ts-loader": "9.3.1",
     "ts-node": "10.9.1",
