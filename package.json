@@ -31,7 +31,7 @@
     "@angular/platform-server": "14.2.8",
     "@angular/router": "14.2.8",
     "@angular/service-worker": "14.2.8",
-    "@microsoft/signalr": "6.0.10",
+    "@microsoft/signalr": "7.0.0",
     "@nguniversal/common": "14.2.1",
     "@nguniversal/express-engine": "14.2.1",
     "@ngxs/store": "3.7.5",
