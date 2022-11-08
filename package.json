@@ -33,7 +33,7 @@
     "@angular/service-worker": "14.2.8",
     "@microsoft/signalr": "6.0.10",
     "@nguniversal/common": "14.2.1",
-    "@nguniversal/express-engine": "14.2.0",
+    "@nguniversal/express-engine": "14.2.1",
     "@ngxs/store": "3.7.5",
     "angular2-recaptcha": "1.1.0",
     "blob-polyfill": "7.0.20220408",
