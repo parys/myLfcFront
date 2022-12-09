@@ -59,7 +59,7 @@
     "@types/lodash": "4.14.191",
     "codelyzer": "6.0.2",
     "source-map-explorer": "2.5.3",
-    "tinymce": "4.9.11",
+    "tinymce": "5.10.7",
     "ts-loader": "9.4.2",
     "ts-node": "10.9.1",
     "tslint": "6.1.3",
