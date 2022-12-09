@@ -1,18 +1,23 @@
-@import '~@angular/material/theming';
+@use '@angular/material' as mat;
+
+@include mat.core();
+
 @import 'palettes';
 
+$lfc-primary: mat.define-palette($lfc-red, 500);
 
-@include mat-core();
+$lfc-accent: mat.define-palette($lfc-orange, 300);
 
-
-$lfc-primary: mat-palette($lfc-red, 500);
-
-$lfc-accent: mat-palette($lfc-orange, 300);
-
-$lfc-warn: mat-palette($lfc-warning, 500);
+$lfc-warn: mat.define-palette($lfc-warning, 500);
 
 
-$lfc-theme: mat-light-theme($lfc-primary, $lfc-accent, $lfc-warn);
+$lfc-theme: mat.define-light-theme((
+    color: (
+      primary: $lfc-primary,
+      accent: $lfc-accent,
+      warn: $lfc-warn,
+    )
+));
 
 
-@include angular-material-theme($lfc-theme);
+@include mat.all-component-themes($lfc-theme);

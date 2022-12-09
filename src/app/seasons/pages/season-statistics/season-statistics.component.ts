@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatSelect, MatSelectChange } from '@angular/material/select';
+import { MatLegacySelect as MatSelect, MatLegacySelectChange as MatSelectChange } from '@angular/material/legacy-select';
 import { Sort } from '@angular/material/sort';
 
 import { PersonStatistics } from '@seasons/models/person-statistics.model';

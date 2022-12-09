@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Output } from '@angular/cor
 import { EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 
 import { AuthService } from '@base/auth';
 import { ACCOUNT_ROUTE } from '@constants/routes.constants';

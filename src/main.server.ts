@@ -10,4 +10,4 @@ global.Blob = Blob;
 
 export { AppServerModule } from './app/app.module.server';
 export { ngExpressEngine } from '@nguniversal/express-engine';
-export { renderModule } from '@angular/platform-server';
+

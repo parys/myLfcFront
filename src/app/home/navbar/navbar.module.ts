@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 
 import { NavbarComponent } from './components/navbar.component';
 import { OdModule } from '@od/od.module';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { DynamicContentOutletModule } from '@layout/dynamic-content-outlet/dynamic-content-outlet.module';
 
 @NgModule({

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatLegacyPaginatorModule as MatPaginatorModule, MatLegacyPaginatorIntl as MatPaginatorIntl } from '@angular/material/legacy-paginator';
 
 import { getRussianPaginatorIntl } from './russian-paginator-intl';
 
