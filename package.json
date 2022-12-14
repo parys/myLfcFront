@@ -52,7 +52,7 @@
     "@ngxs/devtools-plugin": "3.7.6",
     "@ngxs/logger-plugin": "3.7.6",
     "@schematics/angular": "15.0.3",
-    "@types/express": "4.17.14",
+    "@types/express": "4.17.15",
     "@types/jasmine": "4.3.1",
     "@types/node": "18.11.14",
     "@types/tinymce": "4.6.5",
