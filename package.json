@@ -53,7 +53,7 @@
     "@ngxs/logger-plugin": "3.7.6",
     "@schematics/angular": "15.1.6",
     "@types/jasmine": "4.3.1",
-    "@types/node": "18.11.18",
+    "@types/node": "18.13.0",
     "@types/tinymce": "4.6.5",
     "@types/lodash": "4.14.191",
     "codelyzer": "6.0.2",
