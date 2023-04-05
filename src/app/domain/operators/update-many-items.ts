@@ -1,7 +1,7 @@
 import { StateOperator } from '@ngxs/store';
 
-import { Predicate } from '@ngxs/store/operators/internals';
-import { findIndices, invalidIndexs, isArrayNumber, isObject, isPredicate, isStateOperator } from './utils';
+import { findIndices, invalidIndexs, isArrayNumber, isObject, isPredicate, isStateOperator, Predicate } from './utils';
+import { ExistingState } from '@ngxs/store/operators';
 
 /**
  * @param selector - Array of indices or a predicate function
@@ -33,7 +33,7 @@ export function updateManyItems<T>(
         let values: Record<number, T> = {};
 
         if (isStateOperator(operatorOrValue)) {
-            values = indices.reduce((acc, it) => ({ ...acc, [it]: operatorOrValue(existing[it]) }), {});
+            values = indices.reduce((acc, it) => ({ ...acc, [it]: operatorOrValue(existing[it] as ExistingState<T>) }), {});
         } else {
             values = indices.reduce(
                 (acc, it) =>

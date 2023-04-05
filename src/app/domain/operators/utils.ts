@@ -1,5 +1,6 @@
-import { Predicate } from '@ngxs/store/operators/internals';
 import { StateOperator } from '@ngxs/store';
+
+export type Predicate<T = any> = (value: T | Readonly<T>) => boolean;
 
 export function isPredicate<T>(value: Predicate<T> | boolean | number | number[]): value is Predicate<T> {
     return typeof value === 'function';

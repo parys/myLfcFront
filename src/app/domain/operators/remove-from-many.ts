@@ -1,4 +1,4 @@
-import { Predicate } from '@ngxs/store/operators/internals';
+import { Predicate } from './utils';
 
 /**
  * @param selector - predicate to remove multiple items from an array by predicate
