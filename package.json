@@ -57,7 +57,7 @@
     "@types/tinymce": "4.6.5",
     "@types/lodash": "4.14.202",
     "@types/express-serve-static-core": "4.17.41",
-    "@types/express": "4.17.17",
+    "@types/express": "4.17.21",
     "codelyzer": "6.0.2",
     "source-map-explorer": "2.5.3",
     "tinymce": "4.9.11",
