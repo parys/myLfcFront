@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BreadcrumbService } from '@base/breadcrumbs';
-import { RecaptchaModule } from '@widgets/recaptcha';
+import { RecaptchaModuleE } from '@widgets/recaptcha';
 import { WISHES_ROUTE } from '@constants/routes.constants';
 import { WISHES_RU } from '@constants/ru.constants';
 import { PaginationModule } from '@base/pagination/pagination.module';
@@ -20,7 +20,7 @@ import { WishMaterialModule } from '@wishes/wish-material.module';
         FormsModule,
         ReactiveFormsModule,
         RouterModule.forChild(wishRoutes),
-        RecaptchaModule,
+        RecaptchaModuleE,
         WishMaterialModule,
         PaginationModule
     ],

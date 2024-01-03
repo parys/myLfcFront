@@ -5,5 +5,8 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:1669/',
-  port: 4000
+  port: 4000,
+  recaptcha: {
+    siteKey: '6LeZ4EMpAAAAAEifs-w0SiUosKvzeLKgoaV2uv7R',
+  },
 };

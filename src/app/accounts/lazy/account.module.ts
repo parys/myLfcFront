@@ -13,7 +13,7 @@ import { ForgotPasswordComponent } from './forgotPassword';
 import { ResetPasswordComponent } from './resetPassword';
 import { UnconfirmedEmailComponent } from './unconfirmedEmail';
 import { AccountValidators } from './account.validators';
-import { RecaptchaModule } from '@widgets/recaptcha';
+import { RecaptchaModuleE } from '@widgets/recaptcha';
 import { BreadcrumbService } from '@base/breadcrumbs';
 import { AccountService } from './account.service';
 import { ACCOUNT_ROUTE } from '@constants/index';
@@ -23,7 +23,7 @@ import { CommonModule } from '@angular/common';
     imports: [
         CommonModule,
         RouterModule.forChild(accountRoutes),
-        RecaptchaModule,
+        RecaptchaModuleE,
         FormsModule,
         ReactiveFormsModule,
         MatCheckboxModule,
