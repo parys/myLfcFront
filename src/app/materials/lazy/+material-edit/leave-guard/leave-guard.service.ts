@@ -1,15 +1,11 @@
 ﻿import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-    CanDeactivate,
-    ActivatedRouteSnapshot,
-    RouterStateSnapshot
-} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { MaterialEditComponent } from '../pages/material-edit.component';
 
 @Injectable()
-export class MaterialLeaveGuard implements CanDeactivate<MaterialEditComponent> {
+export class MaterialLeaveGuard  {
     canDeactivate(
         component: MaterialEditComponent,
         route: ActivatedRouteSnapshot,

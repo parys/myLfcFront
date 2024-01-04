@@ -1,4 +1,4 @@
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import { MatchActions } from '@matches/store/matches.actions';
 
 
 @Injectable()
-export class MatchEditResolver implements Resolve<any> {
+export class MatchEditResolver  {
 
     constructor(private store: Store) { }
 

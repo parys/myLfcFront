@@ -1,4 +1,4 @@
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { MaterialCategoryActions } from '@material-categories/core/store';
 
 
 @Injectable()
-export class EditMaterialResolver implements Resolve<any> {
+export class EditMaterialResolver  {
 
     constructor(private store: Store) { }
 

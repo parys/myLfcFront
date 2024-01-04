@@ -1,4 +1,4 @@
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
@@ -9,7 +9,7 @@ import { Actions } from '@contracts/store/contracts.actions';
 
 
 @Injectable()
-export class ContractResolver implements Resolve<any> {
+export class ContractResolver  {
 
     constructor(private store: Store) { }
 

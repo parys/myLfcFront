@@ -1,4 +1,4 @@
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { GetCommentListByEntityIdQuery } from '@network/comments/get-comment-lis
 
 
 @Injectable()
-export class MaterialResolver implements Resolve<any> {
+export class MaterialResolver  {
 
     constructor(private store: Store) { }
 
