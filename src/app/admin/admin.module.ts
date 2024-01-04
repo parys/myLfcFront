@@ -1,8 +1,8 @@
 ﻿import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MatLegacyMenuModule as MatMenuModule} from '@angular/material/legacy-menu';
-import { MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
+import { MatMenuModule} from '@angular/material/menu';
+import { MatButtonModule} from '@angular/material/button';
 
 import { NgxsModule, Store } from '@ngxs/store';
 
