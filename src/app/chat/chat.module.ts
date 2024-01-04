@@ -2,8 +2,8 @@
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatLegacyButtonModule as MatButtonModule} from '@angular/material/legacy-button';
-import { MatLegacyTabsModule as MatTabsModule} from '@angular/material/legacy-tabs';
+import { MatButtonModule} from '@angular/material/button';
+import { MatTabsModule} from '@angular/material/tabs';
 
 import { NgxsModule } from '@ngxs/store';
 

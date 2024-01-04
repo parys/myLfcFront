@@ -8,7 +8,7 @@ import { AuthState } from '@auth/store';
 import { Observable } from 'rxjs';
 import { UserActions, UsersState } from '@users/store';
 import { GetUserDetailQuery } from '@network/shared/users';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ChangeRoleGroupDialogData, ChangeRoleGroupDialogComponent } from '@users/components/change-role-group-dialog/change-role-group-dialog.component';
 import { RoleGroup } from '@role-groups/models/role-group.model';
 

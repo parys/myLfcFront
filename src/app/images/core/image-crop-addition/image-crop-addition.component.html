@@ -10,6 +10,7 @@
                    [resizeToWidth]="300"
                    [aspectRatio]="15 / 7"
                    format="jpeg"
+                   output="base64"
                    (imageCropped)="imageCropped($event)"></image-cropper>
     <button mat-raised-button color="warn" *ngIf="imageChangedEvent" (click)="crop()" type="button">Обрезать</button>
 </div>
