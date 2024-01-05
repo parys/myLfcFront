@@ -102,15 +102,15 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "port": 4500,
-            "browserTarget": "angular2app:build",
-            "proxyConfig": "proxy.conf.json"
+            "proxyConfig": "proxy.conf.json",
+            "buildTarget": "angular2app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular2app:build:production"
+              "buildTarget": "angular2app:build:production"
             },
             "test": {
-              "browserTarget": "angular2app:build:test"
+              "buildTarget": "angular2app:build:test"
             }
           }
         },
@@ -157,7 +157,7 @@
           }
         },
         "serve-ssr": {
-          "builder": "@nguniversal/builders:ssr-dev-server",
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
           "options": {
             "browserTarget": "angular2app:build",
             "serverTarget": "angular2app:server"
@@ -174,7 +174,7 @@
           }
         },
         "prerender": {
-          "builder": "@nguniversal/builders:prerender",
+          "builder": "@angular-devkit/build-angular:prerender",
           "options": {
             "browserTarget": "angular2app:build:production",
             "serverTarget": "angular2app:server:production",

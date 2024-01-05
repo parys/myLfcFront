@@ -9,5 +9,5 @@ if (environment.production) {
 global.Blob = Blob;
 
 export { AppServerModule } from './app/app.module.server';
-export { ngExpressEngine } from '@nguniversal/express-engine';
+export { ngExpressEngine } from '@angular/ssr';
 
